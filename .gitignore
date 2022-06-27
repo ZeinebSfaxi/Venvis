@@ -26,6 +26,8 @@ server/node/package-lock.json
 .eslintcache
 
 client/.idea
+client/.env
+serve/node/.env
 server/node/.idea
 /.vscode
 

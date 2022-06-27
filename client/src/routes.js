@@ -3,6 +3,10 @@ export const Routes = {
     // pages
     Presentation: { path: "/" },
     DashboardOverview: { path: "/dashboard/overview" },
+
+    //newpages
+    Shops: { path: "/shops" },
+
     Transactions: { path: "/transactions" },
     Settings: { path: "/settings" },
     Upgrade: { path: "/upgrade" },
@@ -17,8 +21,6 @@ export const Routes = {
     NotFound: { path: "/examples/404" },
     ServerError: { path: "/examples/500" },
 
-    //newpages
-    Shops: { path: "/shops" },
 
 
     // docs
