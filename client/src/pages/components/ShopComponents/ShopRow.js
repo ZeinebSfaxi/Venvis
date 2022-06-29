@@ -2,10 +2,17 @@ import React, {useState} from "react";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
+import {useHistory} from "react-router";
 
 export default ({shop}) => {
 
     //goToDetails
+    const shopId = shop._id;
+    const history = useHistory ();
+    const goToSingleShop = () => {
+
+        history.push(`/shops/shopDetails/${shopId}`);
+    };
 
 
 
@@ -45,7 +52,9 @@ export default ({shop}) => {
             </td>
 
             <td>
-                <FontAwesomeIcon  icon={faEye} style={{color: "#00aa9b"}}
+                <FontAwesomeIcon  icon={faEye}
+                                  style={{color: "#00aa9b"}}
+                                  onClick={() => goToSingleShop()}
                                  className="me-2"/>
                 <FontAwesomeIcon icon={faTrashAlt} style={{color: "#ef4641"}} className="me-2"/>
             </td>

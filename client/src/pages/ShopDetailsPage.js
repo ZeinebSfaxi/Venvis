@@ -1,32 +1,28 @@
 import {Button, Col, Dropdown, Row} from "@themesberg/react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faBoxOpen, faCartArrowDown, faChartPie,
-    faChevronDown,
-    faClipboard,
-    faCommentDots,
-    faFileAlt,
-    faPlus,
-    faRocket, faStore
-} from "@fortawesome/free-solid-svg-icons";
-import {GeneralInfoForm} from "../components/Forms";
 import {ChoosePhotoWidget, ProfileCardWidget} from "../components/Widgets";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import React, {useEffect} from "react";
+import SingleShopDetails from "./components/ShopComponents/SingleShopDetails";
+import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {getShop, getShops} from "../actions/shops";
-import AddShop from "./components/AddShop";
-import ShopDetails from "./components/ShopDetails";
+import {shopDetails} from "../actions/shopAction";
+
 
 
 export default () => {
 
     const routeParams = useParams();
     const idShop = routeParams.shopId;
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
+    useEffect(() => {
+        dispatch(shopDetails(idShop))
+    }, [dispatch, idShop])
 
+    const singleShopDetails = useSelector(state => state.shopDetails)
+    const loading = singleShopDetails.loading
+    const shop = singleShopDetails.shop
+    const error = singleShopDetails.error
 
     return (
         <>
@@ -87,7 +83,8 @@ export default () => {
 
             <Row>
                 <Col xs={12} xl={8}>
-                    { shop ? (<ShopDetails shop={shop} />): null}
+
+                    <SingleShopDetails shop={shop} />
                 </Col>
 
                 <Col xs={12} xl={4}>

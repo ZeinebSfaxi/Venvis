@@ -49,6 +49,7 @@ import Tabs from "./components/Tabs";
 import Tooltips from "./components/Tooltips";
 import Toasts from "./components/Toasts";
 import ShopsPage from "./ShopsPage";
+import ShopDetailsPage from "./ShopDetailsPage";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -119,6 +120,7 @@ export default () => (
 
       {/* new pages */}
       <RouteWithSidebar exact path={Routes.Shops.path} component={ShopsPage} />
+      <RouteWithSidebar exact path={Routes.ShopDetails.path} component={ShopDetailsPage}/>
 
     {/* components */}
     <RouteWithSidebar exact path={Routes.Accordions.path} component={Accordion} />
