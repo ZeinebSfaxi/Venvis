@@ -6,7 +6,7 @@ export const shopListReducer = (state = { shops: [] }, action) => {
         case "SHOP_LIST_SUCCESS":
             return {
                 loading: false,
-                products: action.payload.shops,
+                shops: action.payload,
             }
         case "SHOP_LIST_FAIL":
             return { loading: false, error: action.payload }
