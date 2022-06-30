@@ -1,5 +1,5 @@
-import {Button, Card, Col, Form, InputGroup, Row} from "@themesberg/react-bootstrap";
-import React, {useEffect, useState} from "react";
+import {Button, Card, Col, Form, Row} from "@themesberg/react-bootstrap";
+import React, { useState} from "react";
 import {useDispatch} from "react-redux";
 import {createShop, listShops} from "../../../actions/shopAction";
 

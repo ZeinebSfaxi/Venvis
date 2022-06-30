@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faCheck, faCog, faHome, faPlus, faSearch} from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown } from '@themesberg/react-bootstrap';
+import {faHome, faPlus, faSearch} from '@fortawesome/free-solid-svg-icons';
+import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup } from '@themesberg/react-bootstrap';
 import {ListShop} from "./components/ShopComponents/ListShop";
 import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import AddShopForm from "./components/ShopComponents/AddShopForm";

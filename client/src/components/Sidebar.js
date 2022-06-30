@@ -5,19 +5,11 @@ import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faBook,
-  faBoxOpen,
   faChartPie,
-  faCog,
-  faFileAlt,
   faHandHoldingUsd,
   faSignOutAlt,
-  faTable,
   faTimes,
-  faCalendarAlt,
   faMapPin,
-  faInbox,
-  faRocket,
   faTruck, faTags, faShoppingBasket, faPhone, faUserSecret
 } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';

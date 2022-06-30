@@ -1,12 +1,12 @@
-import {Button, Col, Dropdown, Row} from "@themesberg/react-bootstrap";
+import {Col, Row} from "@themesberg/react-bootstrap";
 import {ChoosePhotoWidget, ProfileCardWidget} from "../components/Widgets";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import SingleShopDetails from "./components/ShopComponents/SingleShopDetails";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {GetshopDetails} from "../actions/shopAction";
-import {Box, Card, CircularProgress} from "@mui/material";
+import {Box, CircularProgress} from "@mui/material";
 import {Alert} from "@mui/lab";
 
 
