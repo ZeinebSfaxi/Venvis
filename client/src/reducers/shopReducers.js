@@ -62,3 +62,18 @@ export const deleteShopReducer = (state = {}, action) => {
             return state
     }
 }
+
+export const shopCreateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case "SHOP_CREATE_REQUEST":
+            return { loading: true }
+        case "SHOP_CREATE_SUCCESS":
+            return { loading: false, success: true, shop: action.payload }
+        case "SHOP_CREATE_FAIL":
+            return { loading: false, error: action.payload }
+        case "SHOP_CREATE_RESET":
+            return {}
+        default:
+            return state
+    }
+}

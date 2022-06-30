@@ -1,10 +1,22 @@
-import React from "react";
+import React, {useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCog, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faCog, faHome, faPlus, faSearch} from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown } from '@themesberg/react-bootstrap';
 import {ListShop} from "./components/ShopComponents/ListShop";
+import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import AddShopForm from "./components/ShopComponents/AddShopForm";
 
 export default () => {
+
+    //search
+    const [search, setSearch] = useState('');
+
+    // Dialogue Stats
+    const [dialogueForm, setDialogueForm] = useState(false);
+    const handleCloseDialogue = value => {
+        setDialogueForm(false);
+    };
+
     return (
         <>
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -36,26 +48,35 @@ export default () => {
                         </InputGroup>
                     </Col>
                     <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
-                        <Dropdown as={ButtonGroup}>
-                            <Dropdown.Toggle split as={Button} variant="link" className="text-dark m-0 p-0">
-                <span className="icon icon-sm icon-gray">
-                  <FontAwesomeIcon icon={faCog} />
-                </span>
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu className="dropdown-menu-xs dropdown-menu-right">
-                                <Dropdown.Item className="fw-bold text-dark">Show</Dropdown.Item>
-                                <Dropdown.Item className="d-flex fw-bold">
-                                    10 <span className="icon icon-small ms-auto"><FontAwesomeIcon icon={faCheck} /></span>
-                                </Dropdown.Item>
-                                <Dropdown.Item className="fw-bold">20</Dropdown.Item>
-                                <Dropdown.Item className="fw-bold">30</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        <Button variant="secondary" size="sm" onClick={() => {
+                            setDialogueForm(true)
+                        }} className="text-dark ">
+                            <FontAwesomeIcon
+                                className="justify-content-between flex-md-nowrap" icon={faPlus}/> New
+                        </Button>
                     </Col>
                 </Row>
             </div>
 
         <ListShop />
+
+            <Dialog
+                fullWidth
+                open={dialogueForm}
+                onClose={handleCloseDialogue}
+                aria-labelledby="draggable-dialog-title"
+                // TransitionComponent={Transition}
+            >
+                <DialogTitle id="draggable-dialog-title">
+                    Add A New Shop
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        <h1>eeee</h1>
+                        <AddShopForm />
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
 
         </>
     );

@@ -65,3 +65,19 @@ export const deleteShop = (id) => async (dispatch) => {
         })
     }
 }
+
+export const createShop = (newShop) => async (dispatch) => {
+    try {
+        dispatch({type: "SHOP_CREATE_REQUEST"})
+
+        const {data} = await axios.post( `http://localhost:5000/shops/`, newShop)
+        dispatch({type: "SHOP_CREATE_SUCCESS", payload: data })
+
+
+    } catch (error) {
+        dispatch({type: "SHOP_CREATE_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
