@@ -46,3 +46,19 @@ export const updateShopReducer = (state = { shop: {} }, action) => {
             return state
     }
 }
+
+export const deleteShopReducer = (state = {}, action) => {
+    switch (action.type) {
+        case "SHOP_DELETE_REQUEST":
+            return { loading: true }
+        case "SHOP_DELETE_SUCCESS":
+            return {
+                loading: false,
+                success: true
+            }
+        case "SHOP_DELETE_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
