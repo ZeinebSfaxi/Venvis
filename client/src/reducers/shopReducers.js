@@ -20,7 +20,10 @@ export const shopDetailsReducer = (state = { shop: {} }, action) => {
         case "SHOP_DETAILS_REQUEST":
             return { ...state, loading: true }
         case "SHOP_DETAILS_SUCCESS":
-            return { loading: false, shop: action.payload }
+            return {
+                loading: false,
+                shop: action.payload
+            }
         case "SHOP_DETAILS_FAIL":
             return { loading: false, error: action.payload }
         default:

@@ -1,28 +1,43 @@
 import {Button, Col, Dropdown, Row} from "@themesberg/react-bootstrap";
 import {ChoosePhotoWidget, ProfileCardWidget} from "../components/Widgets";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import SingleShopDetails from "./components/ShopComponents/SingleShopDetails";
-import {useParams} from "react-router";
+import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {shopDetails} from "../actions/shopAction";
+import {GetshopDetails} from "../actions/shopAction";
+import {Box, Card, CircularProgress} from "@mui/material";
+import {Alert} from "@mui/lab";
 
 
 
 export default () => {
+
 
     const routeParams = useParams();
     const idShop = routeParams.shopId;
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(shopDetails(idShop))
+        dispatch(GetshopDetails(idShop))
     }, [dispatch, idShop])
 
     const singleShopDetails = useSelector(state => state.shopDetails)
     const loading = singleShopDetails.loading
     const shop = singleShopDetails.shop
     const error = singleShopDetails.error
+    console.log("hedhi single shop", singleShopDetails)
+    console.log("hedhi shop id", idShop)
+
+    // useEffect(() => {
+    // fetch(`http://localhost:5000/shops/${idShop}`)
+    //     .then( res=> {
+    //         return res.json();
+    //     })
+    //     .then( data => {
+    //         setShopData(data);
+    //     });
+    // }, [])
 
     return (
         <>
@@ -84,7 +99,31 @@ export default () => {
             <Row>
                 <Col xs={12} xl={8}>
 
-                    <SingleShopDetails shop={shop} />
+
+                    {/*{loading ? (*/}
+                    {/*    <Box sx={{ display: 'flex' }}>*/}
+                    {/*        <CircularProgress />*/}
+                    {/*    </Box>*/}
+                    {/*) : error ? (*/}
+
+                    {/*    <Alert variant="filled" severity="error">*/}
+                    {/*        Ay ay ay! looks like you have network problems :(*/}
+                    {/*        try reloading your page*/}
+                    {/*        try checking your internet connection*/}
+                    {/*        Error: {error}*/}
+                    {/*    </Alert>*/}
+
+                    {/*) : (*/}
+                    {/*    <>*/}
+                    {/*        { shop &&*/}
+                    {/*        ( <SingleShopDetails shop ={shop} />)  }*/}
+                    {/*    </>*/}
+                    {/*)}*/}
+                    {
+                        shop? <SingleShopDetails shop ={shop} /> : <h1>eeee</h1>
+                    }
+
+
                 </Col>
 
                 <Col xs={12} xl={4}>
