@@ -44,7 +44,7 @@ export default () => {
                             <InputGroup.Text>
                                 <FontAwesomeIcon icon={faSearch} />
                             </InputGroup.Text>
-                            <Form.Control type="text" placeholder="Search" />
+                            <Form.Control type="text" placeholder="Search"    onChange={(e) => setSearch(e.target.value)}/>
                         </InputGroup>
                     </Col>
                     <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
@@ -58,7 +58,7 @@ export default () => {
                 </Row>
             </div>
 
-        <ListShop />
+        <ListShop search={search} />
 
             <Dialog
                 fullWidth
