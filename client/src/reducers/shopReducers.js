@@ -30,3 +30,19 @@ export const shopDetailsReducer = (state = { shop: {} }, action) => {
             return state
     }
 }
+
+export const updateShopReducer = (state = { shop: {} }, action) => {
+    switch (action.type) {
+        case "SHOP_UPDATE_REQUEST":
+            return { loading: true }
+        case "SHOP_UPDATE_SUCCESS":
+            return {
+                loading: false,
+                shop: action.payload
+            }
+        case "SHOP_UPDATE_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}

@@ -26,18 +26,9 @@ export default () => {
     const loading = singleShopDetails.loading
     const shop = singleShopDetails.shop
     const error = singleShopDetails.error
-    console.log("hedhi single shop", singleShopDetails)
-    console.log("hedhi shop id", idShop)
 
-    // useEffect(() => {
-    // fetch(`http://localhost:5000/shops/${idShop}`)
-    //     .then( res=> {
-    //         return res.json();
-    //     })
-    //     .then( data => {
-    //         setShopData(data);
-    //     });
-    // }, [])
+
+
 
     return (
         <>
@@ -100,28 +91,25 @@ export default () => {
                 <Col xs={12} xl={8}>
 
 
-                    {/*{loading ? (*/}
-                    {/*    <Box sx={{ display: 'flex' }}>*/}
-                    {/*        <CircularProgress />*/}
-                    {/*    </Box>*/}
-                    {/*) : error ? (*/}
+                    {loading ? (
+                        <Box sx={{ display: 'flex' }}>
+                            <CircularProgress />
+                        </Box>
+                    ) : error ? (
 
-                    {/*    <Alert variant="filled" severity="error">*/}
-                    {/*        Ay ay ay! looks like you have network problems :(*/}
-                    {/*        try reloading your page*/}
-                    {/*        try checking your internet connection*/}
-                    {/*        Error: {error}*/}
-                    {/*    </Alert>*/}
+                        <Alert variant="filled" severity="error">
+                            Ay ay ay! looks like you have network problems :(
+                            try reloading your page
+                            try checking your internet connection
+                            Error: {error}
+                        </Alert>
 
-                    {/*) : (*/}
-                    {/*    <>*/}
-                    {/*        { shop &&*/}
-                    {/*        ( <SingleShopDetails shop ={shop} />)  }*/}
-                    {/*    </>*/}
-                    {/*)}*/}
-                    {
-                        shop? <SingleShopDetails shop ={shop} /> : <h1>eeee</h1>
-                    }
+                    ) : (
+                        <>
+                            { shop &&
+                            ( <SingleShopDetails shop ={shop} />)  }
+                        </>
+                    )}
 
 
                 </Col>

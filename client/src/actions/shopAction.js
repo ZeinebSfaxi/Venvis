@@ -32,3 +32,20 @@ export const GetshopDetails = (id) => async (dispatch) => {
         })
     }
 }
+
+
+export const updateShop = (id, updatedShop) => async (dispatch) => {
+    try {
+        dispatch({type: "SHOP_UPDATE_REQUEST"})
+
+        const {data} = await axios.patch( `http://localhost:5000/shops/${id}`, updatedShop)
+        dispatch({type: "SHOP_UPDATE_SUCCESS", payload: data })
+        console.log("hedhi data", data)
+
+    } catch (error) {
+        dispatch({type: "SHOP_UPDATE_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
