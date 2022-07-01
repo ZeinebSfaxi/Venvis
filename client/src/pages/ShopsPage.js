@@ -23,8 +23,8 @@ export default () => {
                 <div className="d-block mb-4 mb-md-0">
                     <Breadcrumb className="d-none d-md-inline-block" listProps={{ className: "breadcrumb-dark breadcrumb-transparent" }}>
                         <Breadcrumb.Item><FontAwesomeIcon icon={faHome} /></Breadcrumb.Item>
-                        <Breadcrumb.Item>Volt</Breadcrumb.Item>
-                        <Breadcrumb.Item active>Transactions</Breadcrumb.Item>
+                        <Breadcrumb.Item>Venvis</Breadcrumb.Item>
+                        <Breadcrumb.Item active>Shops</Breadcrumb.Item>
                     </Breadcrumb>
                     <h4>Your Shops</h4>
                     <p className="mb-0">Your web analytics dashboard template.</p>
@@ -72,7 +72,6 @@ export default () => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <h1>eeee</h1>
                         <AddShopForm />
                     </DialogContentText>
                 </DialogContent>

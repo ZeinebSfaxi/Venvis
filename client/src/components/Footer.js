@@ -15,7 +15,7 @@ export default (props) => {
             <p className="mb-0 text-center text-xl-left">
               Copyright © 2019-{`${currentYear} `}
               <Card.Link href="https://inetum.com" target="_blank" className="text-blue text-decoration-none fw-normal">
-                Inetum
+                Venvis
               </Card.Link>
             </p>
           </Col>

@@ -1,6 +1,6 @@
 import {Button, Card, Col, Form, Row} from "@themesberg/react-bootstrap";
-import React, { useState} from "react";
-import {useDispatch} from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {createShop, listShops} from "../../../actions/shopAction";
 
 export default () => {
@@ -17,12 +17,17 @@ export default () => {
         zipcode: '',
 
     });
+    const shopCreate = useSelector (state => state.shopCreate);
+    const loading = shopCreate.loading
     const handleSubmit = () => {
-        console.log(shopData);
         dispatch(createShop(shopData));
-        dispatch(listShops());
-        window.location.reload();
     }
+
+    useEffect(()=> {
+        if (loading === false) {
+            dispatch(listShops());
+        }
+    },[loading])
 
     return (
         <Card border="light" className="bg-white shadow-sm mb-4">

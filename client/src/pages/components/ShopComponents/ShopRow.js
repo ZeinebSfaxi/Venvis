@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
 import {useHistory} from "react-router";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import { deleteShop, listShops} from "../../../actions/shopAction";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 export default ({shop}) => {
 
@@ -20,9 +20,13 @@ export default ({shop}) => {
     //delete shop
     const dispatch = useDispatch();
     const [dialogue, setDialogue]= useState(false)
+    const shopDelete = useSelector (state => state.shopDelete);
+    const loading = shopDelete.loading
     const handleCloseDialogue = value => {
         setDialogue(false);
     };
+
+
 
   return (
     <>
@@ -94,7 +98,11 @@ export default ({shop}) => {
                         onClick={(e) => {
                             e.preventDefault();
                             dispatch(deleteShop(shopId))
-                            dispatch(listShops())
+                            if (loading === false) {
+                                dispatch(listShops())
+                            }
+                            handleCloseDialogue()
+                            window.location.reload();
                         }}>Delete</Button>
 
             </DialogActions>

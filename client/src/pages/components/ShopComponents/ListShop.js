@@ -60,20 +60,22 @@ export const ListShop = ({search}) => {
                         ) : (
                             <>
 
-                                    {shops?.filter((row) => {
-                                        if (search === "") {
-                                            return row;
-                                        } else if (
-                                            (row.name.toLowerCase().includes(search.toLowerCase()))
-                                            || (row.streetName.toLowerCase().includes(search.toLowerCase()))
-                                        ) {
-                                            return row;
-                                        }
-                                    }).map((shop) => (
-                                        <ShopRow key= {shop._id} shop={shop}/>
-                                    ))}
+                                {shops?.filter((row) => {
+                                    if (search === "") {
+                                        return row;
+                                    } else if (
+                                        (row.name.toLowerCase().includes(search.toLowerCase()))
+                                        || (row.streetName.toLowerCase().includes(search.toLowerCase()))
+                                    ) {
+                                        return row;
+                                    }
+                                }).map((shop) => (
+                                    <ShopRow key= {shop._id} shop={shop}/>
+                                ))}
                             </>
                         )}
+
+
 
                         </tbody>
                     </Table>
