@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {GetshopDetails} from "../actions/shopAction";
 import {Box, CircularProgress} from "@mui/material";
 import {Alert} from "@mui/lab";
+import {ShopManagerCard} from "./components/ShopManagerComponents/ShopManagerCard";
 
 
 
@@ -117,7 +118,7 @@ export default () => {
                 <Col xs={12} xl={4}>
                     <Row>
                         <Col xs={12}>
-                            <ProfileCardWidget />
+                            <ShopManagerCard />
                         </Col>
                         <Col xs={12}>
                             <ChoosePhotoWidget

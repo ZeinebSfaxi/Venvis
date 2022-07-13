@@ -8,13 +8,18 @@ import {
     shopListReducer,
     updateShopReducer
 } from "./reducers/shopReducers";
+import {ManagerByShopReducer} from "./reducers/shopManagerReducers";
+
 
 const reducer = combineReducers({
     shopList: shopListReducer,
     shopDetails: shopDetailsReducer,
     shopUpdate: updateShopReducer,
     shopDelete: deleteShopReducer,
-    shopCreate: shopCreateReducer
+    shopCreate: shopCreateReducer,
+
+
+    managerByShop: ManagerByShopReducer
 })
 
 const initialState= {}
