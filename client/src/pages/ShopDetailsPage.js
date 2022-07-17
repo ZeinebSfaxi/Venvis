@@ -9,6 +9,7 @@ import {GetshopDetails} from "../actions/shopAction";
 import {Box, CircularProgress} from "@mui/material";
 import {Alert} from "@mui/lab";
 import {ShopManagerCard} from "./components/ShopManagerComponents/ShopManagerCard";
+import Card from "@mui/material/Card";
 
 
 
@@ -89,6 +90,7 @@ export default () => {
             </div>
 
             <Row>
+
                 <Col xs={12} xl={8}>
 
 
@@ -112,8 +114,12 @@ export default () => {
                         </>
                     )}
 
+                    {/*<Card>*/}
+                    {/*    eeeee*/}
+                    {/*</Card>*/}
 
                 </Col>
+
 
                 <Col xs={12} xl={4}>
                     <Row>
@@ -129,6 +135,8 @@ export default () => {
                     </Row>
                 </Col>
             </Row>
+
+
         </>
     );
 };

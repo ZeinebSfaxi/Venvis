@@ -50,6 +50,7 @@ import Tooltips from "./components/Tooltips";
 import Toasts from "./components/Toasts";
 import ShopsPage from "./ShopsPage";
 import ShopDetailsPage from "./ShopDetailsPage";
+import ManagersPage from "./ManagersPage";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -121,6 +122,7 @@ export default () => (
       {/* new pages */}
       <RouteWithSidebar exact path={Routes.Shops.path} component={ShopsPage} />
       <RouteWithSidebar exact path={Routes.ShopDetails.path} component={ShopDetailsPage}/>
+      <RouteWithSidebar exact path={Routes.Managers.path} component={ManagersPage} />
 
     {/* components */}
     <RouteWithSidebar exact path={Routes.Accordions.path} component={Accordion} />
