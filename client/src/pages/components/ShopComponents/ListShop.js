@@ -50,7 +50,7 @@ export const ListShop = ({search}) => {
                             </Box>
                         ) : error ? (
 
-                            <Alert variant="filled" severity="error">
+                            <Alert  sx={{ width: '100%' }} variant="filled" severity="error">
                                 Ay ay ay! looks like you have network problems :(
                                 try reloading your page
                                 try checking your internet connection

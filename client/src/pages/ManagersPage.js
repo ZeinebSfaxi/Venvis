@@ -6,6 +6,7 @@ import {ListShop} from "./components/ShopComponents/ListShop";
 import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import AddShopForm from "./components/ShopComponents/AddShopForm";
 import {ListManagers} from "./components/ShopManagerComponents/ListManagers";
+import AddManagerForm from "./components/ShopManagerComponents/AddManagerForm";
 
 export default () => {
 
@@ -69,11 +70,11 @@ export default () => {
                 // TransitionComponent={Transition}
             >
                 <DialogTitle id="draggable-dialog-title">
-                    Add A New Shop
+                    Add A New Manager
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <AddShopForm />
+                        <AddManagerForm />
                     </DialogContentText>
                 </DialogContent>
             </Dialog>

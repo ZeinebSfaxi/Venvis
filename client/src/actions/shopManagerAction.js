@@ -56,8 +56,26 @@ export const updateManager = (id, updatedManager) => async (dispatch) => {
         dispatch({type: "MANAGER_UPDATE_SUCCESS", payload: data })
 
 
+
     } catch (error) {
         dispatch({type: "MANAGER_UPDATE_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
+export const affectManagerToShop = (id, updatedManager) => async (dispatch) => {
+    try {
+        dispatch({type: "AFFECT_MANAGER_TO_SHOP_REQUEST"})
+
+        const {data} = await axios.patch( `http://localhost:5000/shopManagers/affectManagerToShop/${id}`, updatedManager)
+        dispatch({type: "AFFECT_MANAGER_TO_SHOP_SUCCESS", payload: data })
+
+
+
+    } catch (error) {
+        dispatch({type: "AFFECT_MANAGER_TO_SHOP_FAIL", payload: error.response && error.response.data.message?
                 error.response.data.message
                 : error.message
         })

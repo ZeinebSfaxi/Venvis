@@ -46,6 +46,23 @@ export const updateManagerReducer = (state = { manager: {} }, action) => {
     }
 }
 
+
+export const affectManagerToShopReducer = (state = { manager: {} }, action) => {
+    switch (action.type) {
+        case "AFFECT_MANAGER_TO_SHOP_REQUEST":
+            return { loading: true }
+        case "AFFECT_MANAGER_TO_SHOP_SUCCESS":
+            return {
+                loading: false,
+                manager: action.payload
+            }
+        case "AFFECT_MANAGER_TO_SHOP_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
 export const deleteManagerReducer = (state = {}, action) => {
     switch (action.type) {
         case "MANAGER_DELETE_REQUEST":

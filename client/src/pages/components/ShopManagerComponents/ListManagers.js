@@ -49,7 +49,7 @@ export const ListManagers = ({search}) => {
                             </Box>
                         ) : error ? (
 
-                            <Alert variant="filled" severity="error">
+                            <Alert variant="filled"  sx={{ width: '100%' }} severity="error">
                                 Ay ay ay! looks like you have network problems :(
                                 try reloading your page
                                 try checking your internet connection
