@@ -2,13 +2,13 @@
 
 # dependencies
 
-client/node_modules
+node_modules/
 server/node/node_modules
-client/-FRONT--pfe--force-de-vente
-client/__MACOSX
-client/yarn.lock
-client/.yarn
-client/package-lock.json
+-FRONT--pfe--force-de-vente
+__MACOSX
+yarn.lock
+.yarn
+package-lock.json
 server/node/package-lock.json
 
 # testing
@@ -25,8 +25,8 @@ server/node/package-lock.json
 .env.production.local
 .eslintcache
 
-client/.idea
-client/.env
+.idea
+.env
 serve/node/.env
 server/node/.idea
 /.vscode
