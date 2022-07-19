@@ -2,7 +2,7 @@
 
 # dependencies
 
-node_modules/
+/node_modules
 server/node/node_modules
 -FRONT--pfe--force-de-vente
 __MACOSX
