@@ -5,6 +5,8 @@ import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup } from '@th
 import {ListShop} from "./components/ShopComponents/ListShop";
 import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import AddShopForm from "./components/ShopComponents/AddShopForm";
+import {ListManagers} from "./components/ShopManagerComponents/ListManagers";
+import AddManagerForm from "./components/ShopManagerComponents/AddManagerForm";
 
 export default () => {
 
@@ -24,9 +26,9 @@ export default () => {
                     <Breadcrumb className="d-none d-md-inline-block" listProps={{ className: "breadcrumb-dark breadcrumb-transparent" }}>
                         <Breadcrumb.Item><FontAwesomeIcon icon={faHome} /></Breadcrumb.Item>
                         <Breadcrumb.Item>Venvis</Breadcrumb.Item>
-                        <Breadcrumb.Item active>Shops</Breadcrumb.Item>
+                        <Breadcrumb.Item active>Managers</Breadcrumb.Item>
                     </Breadcrumb>
-                    <h4>Your Shops</h4>
+                    <h4>Your Shop Managers</h4>
                     <p className="mb-0">Your web analytics dashboard template.</p>
                 </div>
                 <div className="btn-toolbar mb-2 mb-md-0">
@@ -58,7 +60,7 @@ export default () => {
                 </Row>
             </div>
 
-        <ListShop search={search} />
+            <ListManagers search={search} />
 
             <Dialog
                 fullWidth
@@ -68,11 +70,11 @@ export default () => {
                 // TransitionComponent={Transition}
             >
                 <DialogTitle id="draggable-dialog-title">
-                    Add A New Shop
+                    Add A New Manager
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <AddShopForm />
+                        <AddManagerForm />
                     </DialogContentText>
                 </DialogContent>
             </Dialog>

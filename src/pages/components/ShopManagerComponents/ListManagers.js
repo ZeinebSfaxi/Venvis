@@ -1,29 +1,27 @@
 import {Card,  Nav, Pagination, Table} from "@themesberg/react-bootstrap";
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {listShops} from "../../../actions/shopAction";
-import ShopRow from "./ShopRow";
 import {Alert} from "@mui/lab";
 import {Box, CircularProgress} from "@mui/material";
+import {listManagers} from "../../../actions/shopManagerAction";
+import ManagerRow from "./ManagerRow";
 
 
 
-export const ListShop = ({search}) => {
+export const ListManagers = ({search}) => {
 
-    //display shops
+    //display managers
     const dispatch = useDispatch();
 
-    const shopList = useSelector (state => state.shopList);
-    const shops = shopList.shops
-    const loading = shopList.loading
-    const error = shopList.error
+    const managerList = useSelector (state => state.managerList);
+    const managers = managerList.managers
+    const loading = managerList.loading
+    const error = managerList.error
 
     useEffect(() => {
-        dispatch(listShops())
+        dispatch(listManagers())
 
     }, [dispatch])
-
-
 
 
     return (
@@ -34,14 +32,15 @@ export const ListShop = ({search}) => {
                         <thead>
                         <tr>
                             <th className="border-bottom">ID</th>
-                            <th className="border-bottom">Name</th>
-                            <th className="border-bottom">Address</th>
-                            <th className="border-bottom">Country</th>
+                            <th className="border-bottom">First Name</th>
+                            <th className="border-bottom">Last Name</th>
+                            <th className="border-bottom">E-mail</th>
                             <th className="border-bottom">PhoneNumber</th>
                             <th className="border-bottom">Action</th>
                         </tr>
                         </thead>
                         <tbody>
+
 
 
                         {loading ? (
@@ -50,7 +49,7 @@ export const ListShop = ({search}) => {
                             </Box>
                         ) : error ? (
 
-                            <Alert  sx={{ width: '100%' }} variant="filled" severity="error">
+                            <Alert variant="filled"  sx={{ width: '100%' }} severity="error">
                                 Ay ay ay! looks like you have network problems :(
                                 try reloading your page
                                 try checking your internet connection
@@ -60,7 +59,7 @@ export const ListShop = ({search}) => {
                         ) : (
                             <>
 
-                                {shops?.filter((row) => {
+                                {managers?.filter((row) => {
                                     if (search === "") {
                                         return row;
                                     } else if (
@@ -69,8 +68,9 @@ export const ListShop = ({search}) => {
                                     ) {
                                         return row;
                                     }
-                                }).map((shop) => (
-                                    <ShopRow key= {shop._id} shop={shop}/>
+                                }).map((manager) => (
+                                    // <ShopRow key= {shop._id} shop={shop}/>
+                                    <ManagerRow key= {manager._id} manager={manager} />
                                 ))}
                             </>
                         )}
