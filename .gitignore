@@ -6,7 +6,7 @@
 server/node/node_modules
 -FRONT--pfe--force-de-vente
 __MACOSX
-yarn.lock
+
 .yarn
 
 server/node/package-lock.json
