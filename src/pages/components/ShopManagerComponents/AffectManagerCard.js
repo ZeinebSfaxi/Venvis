@@ -3,12 +3,12 @@ import React, {useState} from "react";
 import {Typography} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {updateShop} from "../../../actions/shopAction";
-import {affectManagerToShop, GetManagerByShop} from "../../../actions/shopManagerAction";
+import {affectManagerToShop, GetManagerByShop, listManagers} from "../../../actions/shopManagerAction";
 import {useParams} from "react-router-dom";
 import {faUserCheck, faUserEdit, faUserSlash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-export const AffectManagerCard = ({manager}) => {
+export const AffectManagerCard = ({manager, setDialogueForm}) => {
 
     const routeParams = useParams();
     const idShop = routeParams.shopId;
@@ -22,12 +22,13 @@ export const AffectManagerCard = ({manager}) => {
     console.log("hedha shop id", idShop)
 
     const dispatch = useDispatch()
-    const affect = () => {
+    const affect = async () => {
         if (manager._id ) {
-            dispatch (affectManagerToShop(manager._id, updatedManager))
-            dispatch(GetManagerByShop(idShop))
+           await dispatch (affectManagerToShop(manager._id, updatedManager))
+           await dispatch(GetManagerByShop(idShop))
+           await dispatch(listManagers())
         }
-        // window.location.reload();
+        //window.location.reload();
     };
     return (
 
@@ -52,6 +53,8 @@ export const AffectManagerCard = ({manager}) => {
                                                 <Button variant="danger" size="sm" onClick={(e) => {
                                                     e.preventDefault();
                                                     affect();
+                                                    setDialogueForm(false);
+
 
                                                 }}>
                                                     <FontAwesomeIcon icon={faUserSlash} className="me-1" />
@@ -62,6 +65,8 @@ export const AffectManagerCard = ({manager}) => {
                                             <Button variant="primary"  size="sm" onClick={(e) => {
                                                 e.preventDefault();
                                                 affect();
+                                                setDialogueForm(false);
+
 
                                             }}>
                                                 <FontAwesomeIcon icon={faUserCheck} className="me-1" />
