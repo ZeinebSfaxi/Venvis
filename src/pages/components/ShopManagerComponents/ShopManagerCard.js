@@ -153,15 +153,15 @@ export const ShopManagerCard = () => {
                                 </div>
                                 { checked?
                                   (  managers?.map((manager) => (
-                                    // <ShopRow key= {shop._id} shop={shop}/>
+                                    // manager doesnt have shopID
                                       !manager.shop_id &&
-                                    <AffectManagerCard key= {manager._id} manager={manager} />
+                                    <AffectManagerCard key= {manager._id} dialogueForm={dialogueForm} manager={manager} />
                                 )))
                                      :
                                     (
                                         managers?.map((manager) => (
                                     // <ShopRow key= {shop._id} shop={shop}/>
-                                    <AffectManagerCard key= {manager._id} manager={manager} />
+                                    <AffectManagerCard key= {manager._id} setDialogueForm={setDialogueForm} manager={manager} />
                                     )))
                                 }
 

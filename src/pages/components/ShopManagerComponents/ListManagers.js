@@ -64,7 +64,8 @@ export const ListManagers = ({search}) => {
                                         return row;
                                     } else if (
                                         (row.name.toLowerCase().includes(search.toLowerCase()))
-                                        || (row.streetName.toLowerCase().includes(search.toLowerCase()))
+                                        || (row.lastName.toLowerCase().includes(search.toLowerCase()))
+                                        || (row.email.toLowerCase().includes(search.toLowerCase()))
                                     ) {
                                         return row;
                                     }
