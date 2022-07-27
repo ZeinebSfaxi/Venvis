@@ -64,16 +64,19 @@ export const ShopManagerCard = () => {
 
 
         {loading ? (
-                <Box sx={{ display: 'flex' }}>
-                    <CircularProgress />
-                </Box>
-            ) : error ? (
+            <Box className="m-5" sx={{ display: 'flex',alignItems: 'center',
+                justifyContent: 'center',  }} >
+                <CircularProgress style={{color:"#323854"}} />
+            </Box>
+        ) : error ? (
 
-            <Alert sx={{ width: '100%' }} variant="filled" severity="error">
+            <Alert className="m-2" sx={{ width: '100%' }} variant="filled" severity="error">
                 Ay ay ay! looks like you have network problems :(
-                try reloading your page
-                try checking your internet connection
-                Error: {error}
+                <ul>
+                    <li> try reloading your page </li>
+                    <li>  try checking your internet connection</li>
+                </ul>
+                {"\n"} <strong>Error: {error} </strong>
             </Alert>
 
             ) : (
@@ -101,12 +104,12 @@ export const ShopManagerCard = () => {
                             <Card.Body className="pb-5">
                                 <Card.Title> No managers for this shop</Card.Title>
                                 <Card.Subtitle className="fw-normal">No manager is available for this shop</Card.Subtitle>
-                                <Card.Text className="text-gray mb-4">Would you like to affect a new one ?</Card.Text>
+                                <Card.Text className="text-gray mb-4">Would you like to assign a new manager ?</Card.Text>
 
                                 <Button variant="primary" size="sm" className="me-2" onClick={() => {
                                     setDialogueForm(true)
                                 }}>
-                                    <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Affect
+                                    <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Assign
                                 </Button>
                             </Card.Body>
                         ) }
@@ -124,7 +127,7 @@ export const ShopManagerCard = () => {
                 // TransitionComponent={Transition}
             >
                 <DialogTitle id="draggable-dialog-title">
-                   Affect A Manager
+                   Assign a manager
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
