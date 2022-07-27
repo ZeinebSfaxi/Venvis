@@ -33,7 +33,7 @@ export default ({shop}) => {
         <tr>
             <td>
           <span className="fw-normal">
-          PVC-{shop._id?.slice(0, 10).toUpperCase()}
+          PVC-{shop._id?.slice(shop._id.length -5, shop._id.length).toUpperCase()}
 
           </span>
             </td>
