@@ -95,16 +95,19 @@ export default () => {
 
 
                     {loading ? (
-                        <Box sx={{ display: 'flex' }}>
-                            <CircularProgress />
+                        <Box className="m-5" sx={{ display: 'flex',alignItems: 'center',
+                            justifyContent: 'center',  }} >
+                            <CircularProgress style={{color:"#323854"}} />
                         </Box>
                     ) : error ? (
 
-                        <Alert sx={{ width: '100%' }} variant="filled" severity="error">
+                        <Alert className="m-2" sx={{ width: '100%' }} variant="filled" severity="error">
                             Ay ay ay! looks like you have network problems :(
-                            try reloading your page
-                            try checking your internet connection
-                            Error: {error}
+                            <ul>
+                                <li> try reloading your page </li>
+                                <li>  try checking your internet connection</li>
+                            </ul>
+                            {"\n"} <strong>Error: {error} </strong>
                         </Alert>
 
                     ) : (

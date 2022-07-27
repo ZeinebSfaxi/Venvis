@@ -40,7 +40,8 @@ export default ({manager}) => {
         name:manager.name,
         lastName: manager.lastName,
         email: manager.email,
-        phoneNumber: manager.phoneNumber
+        phoneNumber: manager.phoneNumber,
+        shop_id: manager.shop_id
     })
     const editWhenClick = e => {
         if (e.key === 'Enter') {
@@ -75,7 +76,7 @@ export default ({manager}) => {
             <tr>
                 <td>
           <span className="fw-normal">
-          MAN-{manager._id?.slice(0, 10).toUpperCase()}
+          MAN-{manager._id?.slice(manager._id.length -5, manager._id.length).toUpperCase()}
 
           </span>
                 </td>
@@ -170,6 +171,21 @@ export default ({manager}) => {
                 </td>
 
                 <td>
+
+                    {data.shop_id ? (
+
+                        <span className="fw-normal" style={{color: "#00aa9b"}}>
+           Assigned
+          </span>
+                    ) : (
+
+                        <span className="fw-normal"  style={{color: "#ef4641"}}>
+           Not Assigned
+          </span>
+                    )}
+                </td>
+
+                <td>
                     {manager.shop_id? <FontAwesomeIcon icon={faStore}
                                       style={{color: "#00aa9b"}}
                                       onClick={() => history.push(`/shops/shopDetails/${manager.shop_id}`)}
@@ -253,7 +269,7 @@ export default ({manager}) => {
             <Snackbar open={open}  autoHideDuration={6000} sx={{ backgroundColor: "#F57C00", color:"#F57C00" }} onClose={handleClose}>
                 <Alert variant="filled" severity="warning" sx={{ width: '100%' }} onClose={handleClose}>
                     <AlertTitle>Warning!</AlertTitle>
-                    Manager <strong> {manager.name} {manager.lastName} </strong>  is not affected to a store yet!
+                    Manager <strong> {manager.name} {manager.lastName} </strong>  is not assigned to a shop yet!
                 </Alert>
             </Snackbar>
 

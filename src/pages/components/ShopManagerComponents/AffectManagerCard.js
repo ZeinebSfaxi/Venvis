@@ -47,7 +47,7 @@ export const AffectManagerCard = ({manager, setDialogueForm}) => {
                                     <div className="text-gray small">{manager.phoneNumber}</div>
                                         { manager.shop_id ?
                                             <>
-                                           <Typography style={{color: "#D64541"}} className="mt-2">Already affected
+                                           <Typography style={{color: "#D64541"}} className="mt-2">Already assigned
                                                 to a shop!</Typography>
                                             <div className="mt-3">
                                                 <Button variant="danger" size="sm" onClick={(e) => {
@@ -58,7 +58,7 @@ export const AffectManagerCard = ({manager, setDialogueForm}) => {
 
                                                 }}>
                                                     <FontAwesomeIcon icon={faUserSlash} className="me-1" />
-                                                    Re-affect</Button>
+                                                    Re-assign</Button>
                                             </div>
                                             </>:
                                             <div className="mt-3">
@@ -70,7 +70,7 @@ export const AffectManagerCard = ({manager, setDialogueForm}) => {
 
                                             }}>
                                                 <FontAwesomeIcon icon={faUserCheck} className="me-1" />
-                                                Affect</Button>
+                                                Assign</Button>
                                             </div>
                                             }
                                 </div>

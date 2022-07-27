@@ -57,7 +57,7 @@ export default ({shop}) => {
             <CardContent>
                 <Row className="d-flex justify-content-between align-items-center">
                     <Col className="col-auto">
-                        <h5 className="mb-4" style={{color:"#4974a5"}} >Shop: PVC-{data._id}</h5>
+                        <h5 className="mb-4" style={{color:"#4974a5"}} >Shop: PVC-{data._id.slice(data._id.length -5, data._id.length).toUpperCase()}</h5>
                     </Col>
                     <Col className="col-auto">
                         { editable ? (
@@ -94,7 +94,10 @@ export default ({shop}) => {
                                                       ...data,
                                                       name: e.target.value
                                                   })}
-                                                  /> ) : ( <Typography className="ps-2" variant="body1" > {data.name}</Typography>) }
+                                                  /> ) : (  <Form.Control required type="text" placeholder="Enter shop name"
+                                                                          value={data.name}
+                                                                         disabled
+                                /> ) }
                             </Form.Group>
                         </Col>
                         <Col md={6} className="mb-3">
@@ -108,7 +111,10 @@ export default ({shop}) => {
                                                       phoneNumber: e.target.value
                                                   })}
                                                  />):(
-                                    <Typography className="ps-2" variant="body1" > {data.phoneNumber}</Typography>
+                                    <Form.Control required type="text" placeholder="Enter shop name"
+                                                  value={data.phoneNumber}
+                                                  disabled
+                                    />
                                 )}
                             </Form.Group>
                         </Col>
@@ -130,23 +136,32 @@ export default ({shop}) => {
                                                       ...data,
                                                       streetName: e.target.value
                                                   })}
-                                    /> ) : (<Typography className="ps-2" variant="body1" > {data.streetName}</Typography>) }
+                                    /> ) : (<Form.Control required type="text" placeholder="Enter shop name"
+                                                          value={data.streetName}
+                                                          disabled
+                                />) }
                             </Form.Group>
                         </Col>
                         <Col sm={3} className="mb-3">
                             <Form.Group id="addressNumber">
                                 <Form.Label><Typography style={{color:"#4974a5"}}>No. </Typography></Form.Label>
                                 {editable ? (
+                                    <>
+
                                     <Form.Control required type="number" placeholder="No."
                                                   value={data.streetNumber}
                                                   onChange={(e) => setData({
                                                       ...data,
                                                       streetNumber: e.target.value
                                                   })}
-                                    />) : (<Typography className="ps-2" variant="body1" > {data.streetNumber}</Typography>) }
+                                    /> </>) : (<Form.Control required type="text" placeholder="Enter shop name"
+                                                             value={data.streetNumber}
+                                                             disabled
+                                />) }
 
                             </Form.Group>
                         </Col>
+
                     </Row>
                     <Row>
                         {/*dropdown countries*/}
@@ -160,7 +175,10 @@ export default ({shop}) => {
                                                       ...data,
                                                       country: e.target.value
                                                   })}
-                                    />) :(<Typography className="ps-2" variant="body1" >{data.country}</Typography>) }
+                                    />) :(<Form.Control required type="text" placeholder="Enter shop name"
+                                                        value={data.country}
+                                                        disabled
+                                />) }
                             </Form.Group>
                         </Col>
                         <Col sm={4} className="mb-3">
@@ -174,7 +192,10 @@ export default ({shop}) => {
                                                       ...data,
                                                       city: e.target.value
                                                   })}
-                                    />) :(<Typography className="ps-2" variant="body1" >{data.city}</Typography>) }
+                                    />) :(<Form.Control required type="text" placeholder="Enter shop name"
+                                                        value={data.city}
+                                                        disabled
+                                />) }
 
                             </Form.Group>
                         </Col>
@@ -188,7 +209,11 @@ export default ({shop}) => {
                                                       ...data,
                                                       zipcode: e.target.value
                                                   })}
-                                    />) :(<Typography className="ps-2" variant="body1" >{data.zipcode}</Typography>) }
+                                    />) :(<Form.Control required type="text" placeholder="Enter shop name"
+
+                                                        value={data.zipcode}
+                                                        disabled
+                                />) }
                             </Form.Group>
                         </Col>
                     </Row>
