@@ -82,6 +82,7 @@ export default ({shop}) => {
                                 <Form.Group id="firstName">
                                             <Form.Label> <Typography style={{color:"#04B3AC"}}>Name: </Typography></Form.Label>
                                             <Form.Control required type="text" placeholder="Enter shop name"
+
                                                           value={data.name}
                                                           onChange={(e) => setData({
                                                               ...data,

@@ -109,7 +109,7 @@ export default () => {
                     <Row>
 
                         <Form.Group id="email">
-                            <Form.Label>Phone</Form.Label>
+                            <Form.Label>Email:</Form.Label>
                             <Form.Control required type="email" placeholder="venvis@venvis.com"
                                           isInvalid={errorEmail}
                                           value={data.email}
