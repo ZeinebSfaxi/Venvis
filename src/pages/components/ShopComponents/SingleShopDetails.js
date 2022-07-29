@@ -63,19 +63,13 @@ export default ({shop}) => {
     const [disab, setDisab] = useState(true)
 
     useEffect(() => {
-        if (data.name !== ''
-            && data.streetName !== ''
-            && data.streetNumber !== ''
-            && data.city !== ''
-            && data.country !== ''
-            && data.zipcode !== ''
-            && data.phoneNumber.length === 8 )
+        if (errorPhoneNumber || errorZip || errorCity || errorCountry || errorStreetNumber || errorStreetName || errorName )
         {
-            setDisab(false);
+            setDisab(true);
 
-        } else setDisab(true);
+        } else setDisab(false);
 
-    }, [data]);
+    }, [errorPhoneNumber, errorZip, errorCity , errorCountry , errorStreetNumber , errorStreetName , errorName]);
 
 
     return (
@@ -242,11 +236,11 @@ export default ({shop}) => {
                                                               } else setErrorCity(false);
                                                           }}
                                             />
-
+                                    <Form.Control.Feedback type="invalid" >
+                                        City is invalid !
+                                    </Form.Control.Feedback>
                                 </Form.Group>
-                                <Form.Control.Feedback type="invalid" >
-                                    City is invalid !
-                                </Form.Control.Feedback>
+
                             </Col>
                             <Col sm={4}>
                                 <Form.Group id="zip">
