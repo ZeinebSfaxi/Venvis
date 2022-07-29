@@ -10,6 +10,7 @@ import {Box, CircularProgress} from "@mui/material";
 import {Alert} from "@mui/lab";
 import {ShopManagerCard} from "./components/ShopManagerComponents/ShopManagerCard";
 import Card from "@mui/material/Card";
+import MapSingleShop from "./components/ShopComponents/MapSingleShop";
 
 
 
@@ -130,10 +131,30 @@ export default () => {
                             <ShopManagerCard />
                         </Col>
                         <Col xs={12}>
-                            <ChoosePhotoWidget
-                                title="Select profile photo"
-                                photo={Profile3}
-                            />
+
+
+                            {loading ? (
+                                <Box className="m-5" sx={{ display: 'flex',alignItems: 'center',
+                                    justifyContent: 'center',  }} >
+                                    <CircularProgress style={{color:"#323854"}} />
+                                </Box>
+                            ) : error ? (
+
+                                <Alert className="m-2" sx={{ width: '100%' }} variant="filled" severity="error">
+                                    Ay ay ay! looks like you have network problems :(
+                                    <ul>
+                                        <li> try reloading your page </li>
+                                        <li>  try checking your internet connection</li>
+                                    </ul>
+                                    {"\n"} <strong>Error: {error} </strong>
+                                </Alert>
+
+                            ) : (
+                                <>
+                                    { shop &&
+                                    ( <MapSingleShop shop ={shop} />)  }
+                                </>
+                            )}
                         </Col>
                     </Row>
                 </Col>

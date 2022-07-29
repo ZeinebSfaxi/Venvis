@@ -5,6 +5,7 @@ import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup } from '@th
 import {ListShop} from "./components/ShopComponents/ListShop";
 import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import AddShopForm from "./components/ShopComponents/AddShopForm";
+import MapShops from "./components/ShopComponents/MapShops";
 
 export default () => {
 
@@ -57,8 +58,12 @@ export default () => {
                     </Col>
                 </Row>
             </div>
-
+<Row>
         <ListShop search={search} />
+</Row>
+        <Row>
+            <MapShops />
+    </Row>
 
             <Dialog
                 fullWidth
