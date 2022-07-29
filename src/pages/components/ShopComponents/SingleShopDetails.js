@@ -51,6 +51,32 @@ export default ({shop}) => {
     };
 
 
+    // Form validation
+    const [errorAll, setErrorAll] = useState(false)
+    const [errorName, setErrorName] = useState(false)
+    const [errorPhoneNumber, setErrorPhoneNumber] = useState(false)
+    const [errorStreetName, setErrorStreetName] = useState(false)
+    const [errorStreetNumber, setErrorStreetNumber] = useState(false)
+    const [errorCity, setErrorCity] = useState(false)
+    const [errorCountry, setErrorCountry] = useState(false)
+    const [errorZip, setErrorZip] = useState(false)
+    const [disab, setDisab] = useState(true)
+
+    useEffect(() => {
+        if (data.name !== ''
+            && data.streetName !== ''
+            && data.streetNumber !== ''
+            && data.city !== ''
+            && data.country !== ''
+            && data.zipcode !== ''
+            && data.phoneNumber.length === 8 )
+        {
+            setDisab(false);
+
+        } else setDisab(true);
+
+    }, [data]);
+
 
     return (
         <>
@@ -63,7 +89,9 @@ export default ({shop}) => {
                             <h5 className="mb-4" style={{color:"#4974a5"}} >Shop: PVC-{data._id.slice(data._id.length -5, data._id.length).toUpperCase()}</h5>
                         </Col>
                         <Col className="col-auto">
-
+                            {disab?  <Button  disabled variant="secondary" size="sm" className="me-2" >
+                                <FontAwesomeIcon icon={faCheckCircle} className="me-1" /> Save
+                            </Button>:
                                 <Button  variant="secondary" size="sm" className="me-2" onClick={(e) => {
                                     e.preventDefault();
                                     setEditable(!editable);
@@ -72,6 +100,8 @@ export default ({shop}) => {
                                 }}>
                                     <FontAwesomeIcon icon={faCheckCircle} className="me-1" /> Save
                                 </Button>
+                            }
+
 
                         </Col>
                     </Row>
@@ -82,13 +112,20 @@ export default ({shop}) => {
                                 <Form.Group id="firstName">
                                             <Form.Label> <Typography style={{color:"#04B3AC"}}>Name: </Typography></Form.Label>
                                             <Form.Control required type="text" placeholder="Enter shop name"
-
+                                                          isInvalid={errorName}
                                                           value={data.name}
-                                                          onChange={(e) => setData({
+                                                          onChange={(e) => {setData({
                                                               ...data,
                                                               name: e.target.value
-                                                          })}
+                                                          })
+                                                              if (e.target.value.length === 0 ||/^\d+$/.test(e.target.value)) {
+                                                              setErrorName(true);
+                                                          } else setErrorName(false);
+                                                          }}
                                             />
+                                    <Form.Control.Feedback type="invalid" >
+                                        Name is invalid !
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                             <Col md={6} className="mb-3">
@@ -96,12 +133,20 @@ export default ({shop}) => {
 
                                             <Form.Label> <Typography style={{color:"#04B3AC"}}>Phone: </Typography></Form.Label>
                                             <Form.Control required type="number" placeholder="Enter shop number"
+                                                          isInvalid={errorPhoneNumber}
                                                           value={data.phoneNumber}
-                                                          onChange={(e) => setData({
+                                                          onChange={(e) => {setData({
                                                               ...data,
                                                               phoneNumber: e.target.value
-                                                          })}
+                                                          })
+                                                              if (e.target.value.length !== 8 ) {
+                                                              setErrorPhoneNumber(true);
+                                                          } else setErrorPhoneNumber(false);
+                                                          }}
                                             />
+                                    <Form.Control.Feedback type="invalid" >
+                                        Phone number is invalid !
+                                    </Form.Control.Feedback>
 
                                 </Form.Group>
                             </Col>
@@ -117,12 +162,20 @@ export default ({shop}) => {
                                 <Form.Group id="address">
                                             <Form.Label> <Typography style={{color:"#04B3AC"}}>Street: </Typography></Form.Label>
                                             <Form.Control required type="text" placeholder="Enter your shop's street name"
+                                                          isInvalid={errorStreetName}
                                                           value={data.streetName}
-                                                          onChange={(e) => setData({
+                                                          onChange={(e) => {setData({
                                                               ...data,
                                                               streetName: e.target.value
-                                                          })}
+                                                          })
+                                                              if (e.target.value.length === 0 ) {
+                                                                  setErrorStreetName(true);
+                                                              } else setErrorStreetNumber(false);
+                                                          }}
                                             />
+                                    <Form.Control.Feedback type="invalid" >
+                                        Street name is invalid !
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                             <Col sm={3} className="mb-3">
@@ -130,13 +183,20 @@ export default ({shop}) => {
 
                                             <Form.Label><Typography style={{color:"#04B3AC"}}>No. </Typography></Form.Label>
                                             <Form.Control required type="number" placeholder="No."
+                                                          isInvalid={errorStreetNumber}
                                                           value={data.streetNumber}
-                                                          onChange={(e) => setData({
+                                                          onChange={(e) => {setData({
                                                               ...data,
                                                               streetNumber: e.target.value
-                                                          })}
+                                                          })
+                                                              if (e.target.value.length === 0 ) {
+                                                                  setErrorStreetNumber(true);
+                                                              } else setErrorStreetNumber(false);
+                                                          }}
                                             />
-
+                                    <Form.Control.Feedback type="invalid" >
+                                        Street number is invalid !
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
 
@@ -149,12 +209,20 @@ export default ({shop}) => {
                                             <Form.Label><Typography style={{color:"#04B3AC"}}>Country: </Typography></Form.Label>
 
                                             <Form.Control required type="text" placeholder="Country"
+                                                          isInvalid={errorCountry}
                                                           value={data.country}
-                                                          onChange={(e) => setData({
+                                                          onChange={(e) => {setData({
                                                               ...data,
                                                               country: e.target.value
-                                                          })}
+                                                          })
+                                                              if (e.target.value.length === 0 ) {
+                                                                  setErrorCountry(true);
+                                                              } else setErrorCountry(false);
+                                                          }}
                                             />
+                                    <Form.Control.Feedback type="invalid" >
+                                        Country is invalid !
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                             <Col sm={4} className="mb-3">
@@ -163,14 +231,22 @@ export default ({shop}) => {
 
                                             <Form.Label><Typography style={{color:"#04B3AC"}}>City: </Typography></Form.Label>
                                             <Form.Control required type="text" placeholder="City"
+                                                          isInvalid={errorCity}
                                                           value={data.city}
-                                                          onChange={(e) => setData({
+                                                          onChange={(e) => {setData({
                                                               ...data,
                                                               city: e.target.value
-                                                          })}
+                                                          })
+                                                              if (e.target.value.length === 0 ) {
+                                                                  setErrorCity(true);
+                                                              } else setErrorCity(false);
+                                                          }}
                                             />
 
                                 </Form.Group>
+                                <Form.Control.Feedback type="invalid" >
+                                    City is invalid !
+                                </Form.Control.Feedback>
                             </Col>
                             <Col sm={4}>
                                 <Form.Group id="zip">
@@ -178,12 +254,20 @@ export default ({shop}) => {
                                             <Form.Label><Typography style={{color:"#04B3AC"}}>ZIP: </Typography></Form.Label>
 
                                             <Form.Control required type="tel" placeholder="ZIP"
+                                                          isInvalid={errorZip}
                                                           value={data.zipcode}
-                                                          onChange={(e) => setData({
+                                                          onChange={(e) =>{ setData({
                                                               ...data,
                                                               zipcode: e.target.value
-                                                          })}
+                                                          })
+                                                              if (e.target.value.length === 0 ) {
+                                                              setErrorZip(true);
+                                                          } else setErrorZip(false);
+                                                          }}
                                             />
+                                    <Form.Control.Feedback type="invalid" >
+                                        Zipcode is invalid !
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                         </Row>
