@@ -47,6 +47,7 @@ export default ({shop}) => {
     const edit = () => {
       if (data._id) {
           dispatch (updateShop(data._id, data))
+          window.location.reload();
       }
     };
 
