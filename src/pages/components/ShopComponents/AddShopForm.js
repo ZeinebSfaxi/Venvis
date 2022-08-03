@@ -2,6 +2,8 @@ import {Button, Card, Col, Form, Row} from "@themesberg/react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {createShop, listShops} from "../../../actions/shopAction";
+import {Box, CircularProgress} from "@mui/material";
+import {Alert} from "@mui/lab";
 
 export default () => {
     const dispatch = useDispatch();
@@ -15,12 +17,19 @@ export default () => {
         streetNumber: '',
         phoneNumber: '',
         zipcode: '',
+        image:''
 
     });
     const shopCreate = useSelector (state => state.shopCreate);
     const loading = shopCreate.loading
     const handleSubmit = () => {
-        dispatch(createShop(shopData));
+
+            setTheImageToURL();
+
+                dispatch(createShop(shopData));
+
+
+
     }
 
     useEffect(()=> {
@@ -28,6 +37,56 @@ export default () => {
             dispatch(listShops());
         }
     },[loading])
+
+// Cloudinary API to get the url of the image *******************
+    const [url, setUrl] = useState('');
+    const [photo, setPhoto] = useState();
+
+    const setTheImageToURL =  () => {
+        const data = new FormData();
+        data.append("file", photo);
+        data.append('upload_preset', 'inetum_sales_force');
+        data.append('cloud_name', 'duca2eu6g');
+
+        fetch('https://api.cloudinary.com/v1_1/duca2eu6g/image/upload', {
+            method: 'post',
+            body: data
+        })
+            .then(res => res.json())
+            .then(data => {
+                setUrl(data.url);
+                console.log ("haaaaaaaaaaaaaa333", url)
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
+
+    useEffect(() => {
+        if (url) {
+            setShopData({ ...shopData, image: url });
+
+        }
+        if (shopData.image ) {
+            setUrl('');
+            console.log('shop:', shopData);
+            dispatch(createShop(shopData));
+
+            setShopData({...shopData,  name: '',
+                latitude: '',
+                longitude: '',
+                country: '',
+                city: '',
+                streetName:'' ,
+                streetNumber: '',
+                phoneNumber: '',
+                zipcode: '',
+                image:'', })
+
+        }
+
+    }, [url, shopData, dispatch]);
 
     // Form validation
     const [errorAll, setErrorAll] = useState(false)
@@ -106,15 +165,9 @@ export default () => {
                         <Form.Group id="image">
                             <Form.Label>Image:</Form.Label>
                             <Form.Control  type="file"
-                                           value={shopData.image}
                                            onChange={(e) => {
-                                               setShopData({
-                                                   ...shopData,
-                                                   image: e.target.files[0]
-                                               })
-                                               // previewFile(e.target.files[0])
-                                           }
-                                           }                            />
+                                               setPhoto(e.target.files[0]) }
+                                           }                        />
 
                         </Form.Group>
 
@@ -228,13 +281,22 @@ export default () => {
 
 
                     <div className="mt-3">
-                        {disab?  <Button disabled variant="primary" type="submit" >Add Shop</Button>
-                            :
-                            <Button variant="primary" type="submit" onClick={(e) =>  {
-                            e.preventDefault();
-                            handleSubmit();
+                        { loading ? (
+                            <Box className="m-5" sx={{ display: 'flex',alignItems: 'center',
+                                justifyContent: 'center',  }} >
+                                <CircularProgress style={{color:"#323854"}} />
+                            </Box>
+                        ) : (
 
-                        }}>Add Shop</Button>}
+                            <> {disab?  <Button disabled variant="primary" type="submit" >Add Shop</Button>
+                                :
+                                <Button variant="primary" type="submit" onClick={(e) =>  {
+                                    e.preventDefault();
+                                    setTheImageToURL();
+                                    // handleSubmit();
+
+                                }}>Add Shop</Button>} </> ) }
+
 
                     </div>
                 </Form>
