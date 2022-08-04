@@ -9,6 +9,8 @@ import marker from '../../../assets/img/store-circle-blue-512.png';
 import {useDispatch, useSelector} from "react-redux";
 // import ProfileCover from "../../assets/img/profile-cover.jpg";
 import {Button, Card} from "@themesberg/react-bootstrap";
+import ProfileCover from "../../../assets/img/profile-cover.jpg";
+import {useHistory} from "react-router";
 // import Profile1 from "../../assets/img/team/profile-picture-1.jpg";
 // import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 // import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
@@ -41,6 +43,10 @@ export default () => {
     const loading = shopList.loading
     const error = shopList.error
 
+    // go to details
+    const history = useHistory ();
+
+
     return (
         <Card className="mt-3">
 
@@ -69,13 +75,16 @@ export default () => {
                     <Popup >
                         <Card  style={{  height:"20%"}} border="light" className="shadow-sm mb-2" >
                             {/*<div style={{  backgroundImage: `url(${Profile1})`}}  className="profile-cover rounded-top" />*/}
-                            <div className="profile-cover rounded-top" />
+                            {/*<div className="profile-cover rounded-top" />*/}
+                            {row.image ? (
+                                <div style={{  backgroundImage: `url(${row.image})`}}  className="profile-cover rounded-top" />
+                            ) :  <div style={{  backgroundImage: `url(${ProfileCover})`}}  className="profile-cover rounded-top" />}
                             <Card.Body className="pb-2" >
                                 {/*<Card.Img src={Profile1} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />*/}
                                 <Card.Title>{row.name}</Card.Title>
                                 <Card.Subtitle className="fw-normal mb-2">{row.streetNumber},{row.streetName}</Card.Subtitle>
                                 <Card.Text className="text-gray mb-2">{row.country}, {row.city}</Card.Text>
-                                <Button variant="secondary" size="sm">Details</Button>
+                                <Button variant="secondary" size="sm" onClick={() =>  history.push(`/shops/shopDetails/${row._id}`)}>Details</Button>
                             </Card.Body>
                         </Card>
 

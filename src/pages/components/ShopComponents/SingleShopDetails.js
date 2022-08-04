@@ -5,9 +5,9 @@ import {  Divider, Typography} from "@mui/material";
 import {Button, Col, Form, Row} from "@themesberg/react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheckCircle, faEdit} from "@fortawesome/free-regular-svg-icons";
-import {updateShop} from "../../../actions/shopAction";
+import {createShop, updateShop} from "../../../actions/shopAction";
 import {useDispatch} from "react-redux";
-import {faUserEdit} from "@fortawesome/free-solid-svg-icons";
+import {faUpload, faUserEdit} from "@fortawesome/free-solid-svg-icons";
 
 
 export default ({shop}) => {
@@ -24,6 +24,7 @@ export default ({shop}) => {
         latitude:"",
         longitude:"",
         zipcode:"",
+        image: ""
     })
 
     useEffect(() => {
@@ -37,6 +38,7 @@ export default ({shop}) => {
                 phoneNumber: shop.phoneNumber,
                 country: shop.country,
                 zipcode: shop.zipcode,
+
             })
         }
     })
@@ -64,13 +66,57 @@ export default ({shop}) => {
     const [disab, setDisab] = useState(true)
 
     useEffect(() => {
-        if (errorPhoneNumber || errorZip || errorCity || errorCountry || errorStreetNumber || errorStreetName || errorName )
+        if (errorName
+            || errorPhoneNumber
+            || errorStreetName
+            || errorStreetNumber
+            || errorCity
+            || errorCountry
+            || errorZip)
         {
             setDisab(true);
 
         } else setDisab(false);
 
-    }, [errorPhoneNumber, errorZip, errorCity , errorCountry , errorStreetNumber , errorStreetName , errorName]);
+    }, [errorName, errorPhoneNumber, errorStreetName, errorStreetNumber, errorCity, errorCountry , errorZip]);
+
+    //cloudinary
+    const [url, setUrl] = useState('');
+    const [photo, setPhoto] = useState();
+
+    const setTheImageToURL =  () => {
+        const data = new FormData();
+        data.append("file", photo);
+        data.append('upload_preset', 'inetum_sales_force');
+        data.append('cloud_name', 'duca2eu6g');
+
+        fetch('https://api.cloudinary.com/v1_1/duca2eu6g/image/upload', {
+            method: 'post',
+            body: data
+        })
+            .then(res => res.json())
+            .then(data => {
+                setUrl(data.url);
+                console.log ("haaaaaaaaaaaaaa333", url)
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        if (url) {
+            setData({ ...data, image: url });
+
+        }
+        if (data.image ) {
+            setUrl('');
+            console.log('shop:', data);
+            dispatch(updateShop(data._id, data));
+
+        }
+
+    }, [url, data, dispatch]);
 
 
     return (
@@ -147,6 +193,36 @@ export default ({shop}) => {
                             </Col>
 
                         </Row>
+                        <Row>
+                            <Col md={6} className="mb-3">
+                            <Form.Group id="image">
+                                <Form.Label>Image:</Form.Label>
+                                <Form.Control type="file"
+
+                                              onChange={(e) => {
+                                                  setPhoto(e.target.files[0]) }
+                                              }                        />
+                                <Form.Control.Feedback type="invalid" >
+                                    Please select an image for your shop !
+                                </Form.Control.Feedback>
+
+                            </Form.Group>
+                            </Col>
+                            <Col md={6} className="mt-3 mb-3">
+                                {!data.image &&
+                                <Button  variant="secondary" size="sm" className="me-2" onClick={(e) => {
+                                    e.preventDefault();
+                                   setTheImageToURL();
+                                    // console.log("houniii dispatchi el update")
+                                }}>
+
+                                    <FontAwesomeIcon icon={faUpload} className="me-1" /> upload
+                                </Button>
+                                }
+                            </Col>
+
+                        </Row>
+
                         <Divider className="m-3"/>
 
                         <h5 className="my-4"  style={{color:"#4974a5"}}>Address</h5>

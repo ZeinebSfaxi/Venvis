@@ -9,6 +9,7 @@ import marker from '../../../assets/img/store-circle-blue-512.png';
 import {useDispatch, useSelector} from "react-redux";
 // import ProfileCover from "../../assets/img/profile-cover.jpg";
 import {Button, Card} from "@themesberg/react-bootstrap";
+import ProfileCover from "../../../assets/img/profile-cover.jpg";
 // import Profile1 from "../../assets/img/team/profile-picture-1.jpg";
 // import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 // import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
@@ -61,13 +62,15 @@ export default ({shop}) => {
                             <Popup >
                                 <Card  style={{  height:"20%"}} border="light" className="shadow-sm mb-2" >
                                     {/*<div style={{  backgroundImage: `url(${Profile1})`}}  className="profile-cover rounded-top" />*/}
-                                    <div className="profile-cover rounded-top" />
+                                    {shop.image ? (
+                                        <div style={{  backgroundImage: `url(${shop.image})`}}  className="profile-cover rounded-top" />
+                                    ) :  <div style={{  backgroundImage: `url(${ProfileCover})`}}  className="profile-cover rounded-top" />}
                                     <Card.Body className="pb-2" >
                                         {/*<Card.Img src={Profile1} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />*/}
                                         <Card.Title>{shop.name}</Card.Title>
                                         <Card.Subtitle className="fw-normal mb-2">{shop.streetNumber},{shop.streetName}</Card.Subtitle>
                                         <Card.Text className="text-gray mb-2">{shop.country}, {shop.city}</Card.Text>
-                                        <Button variant="secondary" size="sm">Details</Button>
+
                                     </Card.Body>
                                 </Card>
 
