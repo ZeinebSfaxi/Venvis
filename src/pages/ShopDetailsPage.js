@@ -128,7 +128,7 @@ export default () => {
                 <Col xs={12} xl={4}>
                     <Row>
                         <Col xs={12}>
-                            <ShopManagerCard />
+                            <ShopManagerCard shop ={shop} />
                         </Col>
                         <Col xs={12}>
 

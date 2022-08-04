@@ -8,7 +8,16 @@ import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 import {affectManagerToShop, GetManagerByShop, listManagers} from "../../../actions/shopManagerAction";
-import {Box, Checkbox, CircularProgress, Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {
+    Avatar,
+    Box,
+    Checkbox,
+    CircularProgress,
+    Dialog,
+    DialogContent,
+    DialogContentText,
+    DialogTitle
+} from "@mui/material";
 import {Alert} from "@mui/lab";
 import {AffectManagerCard} from "./AffectManagerCard";
 
@@ -20,7 +29,7 @@ function CategoryIcon() {
     return null;
 }
 
-export const ShopManagerCard = () => {
+export const ShopManagerCard = ({shop}) => {
 
     const routeParams = useParams();
     const idShop = routeParams.shopId;
@@ -84,9 +93,11 @@ export const ShopManagerCard = () => {
                     { shopmanager ?
                     (
                         <>
-                        <div style={{ backgroundImage: `url(${ProfileCover})` }} className="profile-cover rounded-top" />
+                            {shop.image?  <div style={{ backgroundImage: `url(${shop.image})` }} className="profile-cover rounded-top" /> :
+                                <div style={{ backgroundImage: `url(${ProfileCover})` }} className="profile-cover rounded-top"/>}
                         <Card.Body className="pb-5">
-                            <Card.Img src={Profile1} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />
+                            <Avatar className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" sx={{ bgcolor: "#262b40", fontSize:"300%" }}>{shopmanager.name.charAt(0).toUpperCase()} {shopmanager.lastName.charAt(0).toUpperCase()}</Avatar>
+                            {/*<Card.Img  alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" > {shopmanager.name.charAt(0).toUpperCase()} {shopmanager.lastName.charAt(0).toUpperCase()}</Card.Img>*/}
                             <Card.Title>{shopmanager.name} {shopmanager.lastName}</Card.Title>
                             <Card.Subtitle className="fw-normal">{shopmanager.email}</Card.Subtitle>
                             <Card.Text className="text-gray mb-4">{shopmanager.phoneNumber}</Card.Text>
@@ -94,7 +105,7 @@ export const ShopManagerCard = () => {
                             <Button variant="primary" size="sm" className="me-2"  onClick={() => {
                                 setDialogueForm(true)
                             }}>
-                                <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Replace
+                                <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Replace Manager
                             </Button>
                             <Button variant="secondary" size="sm">Send Message</Button>
                         </Card.Body>
