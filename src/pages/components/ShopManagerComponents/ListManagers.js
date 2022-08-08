@@ -1,7 +1,7 @@
-import {Card,  Nav, Pagination, Table} from "@themesberg/react-bootstrap";
+import {Card,  Nav,  Table} from "@themesberg/react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Alert} from "@mui/lab";
+import {Alert, Pagination} from "@mui/lab";
 import {Box, CircularProgress, Stack} from "@mui/material";
 import {listManagers} from "../../../actions/shopManagerAction";
 import ManagerRow from "./ManagerRow";
@@ -100,7 +100,6 @@ export const ListManagers = ({search}) => {
                                             color="primary"
                                             variant="outlined" shape="rounded"
                                         />
-
 
                                     </Stack>
                                 </Card.Footer>
