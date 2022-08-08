@@ -1,10 +1,11 @@
-import {Card,  Nav, Pagination, Table} from "@themesberg/react-bootstrap";
-import React, {useEffect} from "react";
+import {Card,  Nav,  Table} from "@themesberg/react-bootstrap";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {listShops} from "../../../actions/shopAction";
 import ShopRow from "./ShopRow";
 import {Alert} from "@mui/lab";
-import {Box, CircularProgress} from "@mui/material";
+import {Box, CircularProgress, Stack} from "@mui/material";
+import Pagination from '@mui/material/Pagination';
 
 
 
@@ -23,8 +24,13 @@ export const ListShop = ({search}) => {
 
     }, [dispatch])
 
-
-
+    /****** PAGINATION****/
+    const [activePage, setActivePage] = useState(1);
+    const handleChange = (event, value) => {
+        // dispatch(getCoursesUdemyByIdStudent());
+        setActivePage(value);
+        console.log(value);
+    };
 
     return (
         <>
@@ -71,30 +77,43 @@ export const ListShop = ({search}) => {
                                     ) {
                                         return row;
                                     }
-                                }).map((shop) => (
+                                }).slice((activePage - 1) * 5, activePage * 5).map((shop) => (
                                     <ShopRow key= {shop._id} shop={shop}/>
                                 ))}
                             </tbody>
                             </Table>
-                                <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
-                                    <Nav>
-                                        <Pagination className="mb-2 mb-lg-0">
-                                            <Pagination.Prev>
-                                                Previous
-                                            </Pagination.Prev>
-                                            <Pagination.Item active>1</Pagination.Item>
-                                            <Pagination.Item>2</Pagination.Item>
-                                            <Pagination.Item>3</Pagination.Item>
-                                            <Pagination.Item>4</Pagination.Item>
-                                            <Pagination.Item>5</Pagination.Item>
-                                            <Pagination.Next>
-                                                Next
-                                            </Pagination.Next>
-                                        </Pagination>
-                                    </Nav>
-                                    <small className="fw-bold">
-                                        Showing <b>AA</b> out of <b>25</b> entries
-                                    </small>
+                                <Card.Footer className="px-2 border-0 d-lg-flex align-items-center justify-content-between">
+                                    <Stack spacing={2}>
+
+
+                                        <Pagination
+                                            count={Math.trunc(shops.length / 5)}
+                                            page={activePage}
+                                            onChange={handleChange}
+                                            color="primary"
+                                            variant="outlined" shape="rounded"
+                                        />
+
+
+                                    </Stack>
+                                    {/*<Nav>*/}
+                                    {/*    <Pagination className="mb-2 mb-lg-0">*/}
+                                    {/*        <Pagination.Prev>*/}
+                                    {/*            Previous*/}
+                                    {/*        </Pagination.Prev>*/}
+                                    {/*        <Pagination.Item active>1</Pagination.Item>*/}
+                                    {/*        <Pagination.Item>2</Pagination.Item>*/}
+                                    {/*        <Pagination.Item>3</Pagination.Item>*/}
+                                    {/*        <Pagination.Item>4</Pagination.Item>*/}
+                                    {/*        <Pagination.Item>5</Pagination.Item>*/}
+                                    {/*        <Pagination.Next>*/}
+                                    {/*            Next*/}
+                                    {/*        </Pagination.Next>*/}
+                                    {/*    </Pagination>*/}
+                                    {/*</Nav>*/}
+                                    {/*<small className="fw-bold">*/}
+                                    {/*    Showing <b>AA</b> out of <b>25</b> entries*/}
+                                    {/*</small>*/}
                                 </Card.Footer>
                             </>
                         )}

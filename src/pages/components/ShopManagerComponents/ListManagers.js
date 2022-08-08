@@ -1,8 +1,8 @@
 import {Card,  Nav, Pagination, Table} from "@themesberg/react-bootstrap";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@mui/lab";
-import {Box, CircularProgress} from "@mui/material";
+import {Box, CircularProgress, Stack} from "@mui/material";
 import {listManagers} from "../../../actions/shopManagerAction";
 import ManagerRow from "./ManagerRow";
 
@@ -23,6 +23,14 @@ export const ListManagers = ({search}) => {
 
     }, [dispatch])
 
+    /****** PAGINATION****/
+    const [activePage, setActivePage] = useState(1);
+
+    const handleChange = (event, value) => {
+        // dispatch(getCoursesUdemyByIdStudent());
+        setActivePage(value);
+        console.log(value);
+    };
 
     return (
         <>
@@ -74,7 +82,7 @@ export const ListManagers = ({search}) => {
                                     ) {
                                         return row;
                                     }
-                                }).map((manager) => (
+                                }).slice((activePage - 1) * 5, activePage * 5).map((manager) => (
                                     // <ShopRow key= {shop._id} shop={shop}/>
                                     <ManagerRow key= {manager._id} manager={manager} />
                                 ))}
@@ -82,24 +90,19 @@ export const ListManagers = ({search}) => {
                             </Table>
 
                                 <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
-                                    <Nav>
-                                        <Pagination className="mb-2 mb-lg-0">
-                                            <Pagination.Prev>
-                                                Previous
-                                            </Pagination.Prev>
-                                            <Pagination.Item active>1</Pagination.Item>
-                                            <Pagination.Item>2</Pagination.Item>
-                                            <Pagination.Item>3</Pagination.Item>
-                                            <Pagination.Item>4</Pagination.Item>
-                                            <Pagination.Item>5</Pagination.Item>
-                                            <Pagination.Next>
-                                                Next
-                                            </Pagination.Next>
-                                        </Pagination>
-                                    </Nav>
-                                    <small className="fw-bold">
-                                        Showing <b>AA</b> out of <b>25</b> entries
-                                    </small>
+                                    <Stack spacing={2}>
+
+
+                                        <Pagination
+                                            count={Math.trunc(managers.length / 5)}
+                                            page={activePage}
+                                            onChange={handleChange}
+                                            color="primary"
+                                            variant="outlined" shape="rounded"
+                                        />
+
+
+                                    </Stack>
                                 </Card.Footer>
                             </>
                         )}

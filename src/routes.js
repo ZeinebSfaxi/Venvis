@@ -8,6 +8,7 @@ export const Routes = {
     Shops: { path: "/shops" },
     ShopDetails: {path: `/shops/shopDetails/:shopId`},
     Managers: { path: "/managers" },
+    Competitors: { path: "/competitors" },
 
     Transactions: { path: "/transactions" },
     Settings: { path: "/settings" },
