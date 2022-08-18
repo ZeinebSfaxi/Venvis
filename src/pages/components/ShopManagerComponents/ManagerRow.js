@@ -318,12 +318,12 @@ export default ({manager}) => {
 
                     {data.shop_id ? (
 
-                        <span className="fw-normal" style={{color: "#00aa9b"}}>
+                        <span className="fw-bolder" style={{color: "#00aa9b"}}>
            Assigned
           </span>
                     ) : (
 
-                        <span className="fw-normal"  style={{color: "#ef4641"}}>
+                        <span className="fw-bolder"  style={{color: "#ef4641"}}>
            Not Assigned
           </span>
                     )}

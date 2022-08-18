@@ -14,6 +14,7 @@ import {
     managerCreateReducer, ManagerListReducer,
     updateManagerReducer
 } from "./reducers/shopManagerReducers";
+import {OrderListReducer} from "./reducers/ordersReducers";
 
 
 const reducer = combineReducers({
@@ -28,7 +29,9 @@ const reducer = combineReducers({
     managerCreate: managerCreateReducer,
     managerUpdate: updateManagerReducer,
     managerDelete: deleteManagerReducer,
-    managerList: ManagerListReducer
+    managerList: ManagerListReducer,
+
+    orderList: OrderListReducer
 
 })
 
