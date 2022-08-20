@@ -52,7 +52,7 @@ export const stateOrder = (id, updatedOrder ) => async (dispatch) => {
     try {
         dispatch({type: "STATE_ORDER_REQUEST"})
 
-        const {data} = await axios.patch( `http://localhost:4000/orders/validate/${id}`, updatedOrder)
+        const {data} = await axios.patch( `http://localhost:4000/orders/state/${id}`, updatedOrder)
         dispatch({type: "STATE_ORDER_SUCCESS", payload: data })
 
 

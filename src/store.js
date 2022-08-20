@@ -34,7 +34,7 @@ const reducer = combineReducers({
     orderList: OrderListReducer,
     singleOrder: singleOrderReducer,
     validateOrder: validateOrderReducer,
-    stateOrderReducer: stateOrderReducer,
+    stateOrder: stateOrderReducer,
 
 })
 

@@ -1,19 +1,10 @@
-import {Button, ButtonGroup, Card, Dropdown, Nav, Pagination, Table} from "@themesberg/react-bootstrap";
+import {Button, ButtonGroup, Card, Dropdown, Nav, Table} from "@themesberg/react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Alert} from "@mui/lab";
-import {Box, CircularProgress} from "@mui/material";
+import {Alert, Pagination} from "@mui/lab";
+import {Box, CircularProgress, Stack} from "@mui/material";
 import {ListOrder} from "../../../actions/orderAction";
-import moment from 'moment';
 import OrderRow from "./OrderRow";
-import {GetshopDetails} from "../../../actions/shopAction";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faEllipsisH, faEye, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-import {faArrowAltCircleDown} from "@fortawesome/free-regular-svg-icons";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 export const ListOrders = ({search}) => {
 
@@ -35,6 +26,12 @@ export const ListOrders = ({search}) => {
 
     }, [dispatch])
 
+    /****** PAGINATION****/
+    const [activePage, setActivePage] = useState(1);
+    const handleChange = (event, value) => {
+        setActivePage(value);
+        console.log(value);
+    };
 
 
     return (
@@ -86,31 +83,26 @@ export const ListOrders = ({search}) => {
                                     ) {
                                         return row;
                                     }
-                                }).map((order) => (
+                                }).slice((activePage - 1) * 4, activePage * 4).map((order) => (
                                     <OrderRow key= {order._id} order={order} />
                                 ))}
                                 </tbody>
                             </Table>
 
                             <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
-                                <Nav>
-                                    <Pagination className="mb-2 mb-lg-0">
-                                        <Pagination.Prev>
-                                            Previous
-                                        </Pagination.Prev>
-                                        <Pagination.Item active>1</Pagination.Item>
-                                        <Pagination.Item>2</Pagination.Item>
-                                        <Pagination.Item>3</Pagination.Item>
-                                        <Pagination.Item>4</Pagination.Item>
-                                        <Pagination.Item>5</Pagination.Item>
-                                        <Pagination.Next>
-                                            Next
-                                        </Pagination.Next>
-                                    </Pagination>
-                                </Nav>
-                                <small className="fw-bold">
-                                    Showing <b>AA</b> out of <b>25</b> entries
-                                </small>
+                                <Stack spacing={2}>
+
+
+                                    <Pagination
+                                        count={Math.trunc(orders.length / 4)}
+                                        page={activePage}
+                                        onChange={handleChange}
+                                        color="primary"
+                                        variant="outlined" shape="rounded"
+                                    />
+
+
+                                </Stack>
                             </Card.Footer>
                         </>
                     )}

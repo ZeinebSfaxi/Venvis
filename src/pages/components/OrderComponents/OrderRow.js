@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import {useDispatch} from "react-redux";
 import {faBan, faCheck} from "@fortawesome/free-solid-svg-icons";
-import {ListOrder, validateOrder} from "../../../actions/orderAction";
+import {ListOrder, stateOrder, validateOrder} from "../../../actions/orderAction";
 import {ShopDetailsCard} from "./ShopDetailsCard";
 
 
@@ -36,6 +36,7 @@ export default ({order}) => {
     //validate
     const [accept, setAccept] =useState({validated: "accepted"});
     const [refuse, setRefuse] =useState({validated: "rejected"});
+    const [rejectedState, setRejectedState] =useState({state: "rejected"});
 
     const acceptValidation = async () => {
         if (order._id ) {
@@ -48,6 +49,7 @@ export default ({order}) => {
     const refuseValidation = async () => {
         if (order._id ) {
             await dispatch (validateOrder(order._id, refuse));
+            await dispatch (stateOrder(order._id, rejectedState));
             await dispatch (ListOrder());
         }
     };
