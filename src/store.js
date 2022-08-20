@@ -14,7 +14,7 @@ import {
     managerCreateReducer, ManagerListReducer,
     updateManagerReducer
 } from "./reducers/shopManagerReducers";
-import {OrderListReducer} from "./reducers/ordersReducers";
+import {OrderListReducer, singleOrderReducer, stateOrderReducer, validateOrderReducer} from "./reducers/ordersReducers";
 
 
 const reducer = combineReducers({
@@ -31,7 +31,10 @@ const reducer = combineReducers({
     managerDelete: deleteManagerReducer,
     managerList: ManagerListReducer,
 
-    orderList: OrderListReducer
+    orderList: OrderListReducer,
+    singleOrder: singleOrderReducer,
+    validateOrder: validateOrderReducer,
+    stateOrderReducer: stateOrderReducer,
 
 })
 
