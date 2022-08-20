@@ -60,6 +60,7 @@ export default () => {
             </div>
 <Row>
         <ListShop search={search} />
+
 </Row>
         <Row>
             <MapShops />
