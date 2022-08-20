@@ -116,10 +116,17 @@ export default (props = {}) => {
               <NavItem title="Shops" icon={faMapPin} link={Routes.Shops.path} />
               <NavItem title="Managers" icon={faUser} link={Routes.Managers.path} />
               <NavItem title="Commercial Agents"  icon={faTruck}/>
+
+              <Dropdown.Divider className="my-3 border-indigo" />
+
               <NavItem title="Products" icon={faTags}/>
-              <NavItem title="Orders" icon={faShoppingBasket}/>
-              <NavItem title="News" icon={faNewspaper}/>
+              <NavItem title="Orders" icon={faShoppingBasket} link={Routes.Orders.path}/>
               <NavItem title="Planning" icon={faCalendar}/>
+
+              <Dropdown.Divider className="my-3 border-indigo" />
+
+              <NavItem title="News" icon={faNewspaper}/>
+
               <NavItem title="Customer care" icon={faPhone}/>
               <NavItem title="Competitors" icon={faUserSecret} link={Routes.Competitors.path}/>
 

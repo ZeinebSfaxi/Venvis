@@ -5,18 +5,15 @@ import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup } from '@th
 import {ListShop} from "./components/ShopComponents/ListShop";
 import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import AddShopForm from "./components/ShopComponents/AddShopForm";
-import MapShops from "./components/ShopComponents/MapShops";
+import {ListManagers} from "./components/ShopManagerComponents/ListManagers";
+import AddManagerForm from "./components/ShopManagerComponents/AddManagerForm";
+import {ListOrders} from "./components/OrderComponents/ListOrders";
 
 export default () => {
 
     //search
     const [search, setSearch] = useState('');
 
-    // Dialogue Stats
-    const [dialogueForm, setDialogueForm] = useState(false);
-    const handleCloseDialogue = value => {
-        setDialogueForm(false);
-    };
 
     return (
         <>
@@ -25,10 +22,11 @@ export default () => {
                     <Breadcrumb className="d-none d-md-inline-block" listProps={{ className: "breadcrumb-dark breadcrumb-transparent" }}>
                         <Breadcrumb.Item><FontAwesomeIcon icon={faHome} /></Breadcrumb.Item>
                         <Breadcrumb.Item>Venvis</Breadcrumb.Item>
-                        <Breadcrumb.Item active>Shops</Breadcrumb.Item>
+                        <Breadcrumb.Item active>Orders</Breadcrumb.Item>
                     </Breadcrumb>
-                    <h4>Your Shops</h4>
-                    <p className="mb-0">List of all your shops and their locations.</p>
+                    <h4>Your orders </h4>
+                    <p className="mb-0">The list of all your orders received by your shops.</p>
+                    <p className="mb-0 fw-bolder">Note: It is impossible to change the order's validation if it has been accepted or rejected after 48h.</p>
                 </div>
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <ButtonGroup>
@@ -48,40 +46,35 @@ export default () => {
                             <Form.Control type="text" placeholder="Search"    onChange={(e) => setSearch(e.target.value)}/>
                         </InputGroup>
                     </Col>
-                    <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
-                        <Button variant="secondary" size="sm" onClick={() => {
-                            setDialogueForm(true)
-                        }} className="text-dark ">
-                            <FontAwesomeIcon
-                                className="justify-content-between flex-md-nowrap" icon={faPlus}/> New
-                        </Button>
-                    </Col>
+                    {/*<Col xs={4} md={2} xl={1} className="ps-md-0 text-end">*/}
+                    {/*    <Button variant="secondary" size="sm" onClick={() => {*/}
+                    {/*        setDialogueForm(true)*/}
+                    {/*    }} className="text-dark ">*/}
+                    {/*        <FontAwesomeIcon*/}
+                    {/*            className="justify-content-between flex-md-nowrap" icon={faPlus}/> New*/}
+                    {/*    </Button>*/}
+                    {/*</Col>*/}
                 </Row>
             </div>
-<Row>
-        <ListShop search={search} />
 
-</Row>
-        <Row>
-            <MapShops />
-    </Row>
+            <ListOrders search={search} />
 
-            <Dialog
-                fullWidth
-                open={dialogueForm}
-                onClose={handleCloseDialogue}
-                aria-labelledby="draggable-dialog-title"
-                // TransitionComponent={Transition}
-            >
-                <DialogTitle id="draggable-dialog-title">
-                    Add A New Shop
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        <AddShopForm />
-                    </DialogContentText>
-                </DialogContent>
-            </Dialog>
+            {/*<Dialog*/}
+            {/*    fullWidth*/}
+            {/*    open={dialogueForm}*/}
+            {/*    onClose={handleCloseDialogue}*/}
+            {/*    aria-labelledby="draggable-dialog-title"*/}
+            {/*    // TransitionComponent={Transition}*/}
+            {/*>*/}
+            {/*    <DialogTitle id="draggable-dialog-title">*/}
+            {/*        Add A New Manager*/}
+            {/*    </DialogTitle>*/}
+            {/*    <DialogContent>*/}
+            {/*        <DialogContentText>*/}
+            {/*            <AddManagerForm />*/}
+            {/*        </DialogContentText>*/}
+            {/*    </DialogContent>*/}
+            {/*</Dialog>*/}
 
         </>
     );

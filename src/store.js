@@ -15,6 +15,7 @@ import {
     updateManagerReducer
 } from "./reducers/shopManagerReducers";
 import {competitorListReducer} from "./reducers/competitorsReducer";
+import {OrderListReducer, singleOrderReducer, stateOrderReducer, validateOrderReducer} from "./reducers/ordersReducers";
 
 
 const reducer = combineReducers({
@@ -30,6 +31,11 @@ const reducer = combineReducers({
     managerUpdate: updateManagerReducer,
     managerDelete: deleteManagerReducer,
     managerList: ManagerListReducer,
+
+    orderList: OrderListReducer,
+    singleOrder: singleOrderReducer,
+    validateOrder: validateOrderReducer,
+    stateOrder: stateOrderReducer,
 
 
     competitorList: competitorListReducer,
