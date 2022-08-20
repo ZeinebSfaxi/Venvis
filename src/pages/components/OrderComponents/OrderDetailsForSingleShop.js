@@ -1,5 +1,4 @@
-import {Col, Form, Row} from "@themesberg/react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Button, Col, Form, Row} from "@themesberg/react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {CardContent, Card, Box, CircularProgress, Chip, Typography, Divider, Stack} from "@mui/material";
 import {useParams} from "react-router-dom";
@@ -7,8 +6,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {GetOrderDetails} from "../../../actions/orderAction";
 import {Alert, Pagination} from "@mui/lab";
 import moment from "moment";
-import ShopRow from "../ShopComponents/ShopRow";
 import {OrderProductsDetails} from "./OrderProductsDetails";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 
 
 export const OrderDetailsForSingleShop = () => {
@@ -59,7 +59,6 @@ export const OrderDetailsForSingleShop = () => {
                 <>
                     { order &&
                     ( <>
-
                             <Row className="d-flex justify-content-lg-start align-items-start">
                             <Col className="col-auto">
                         <h5 className="mb-4" style={{color:"#4974a5"}}> Order Details:  CMD-{order._id?.slice(order._id.length -5, order._id.length).toUpperCase()} </h5>
@@ -77,6 +76,20 @@ export const OrderDetailsForSingleShop = () => {
                                                     : order.state ==='late' &&
                                                     <Chip label="Late"  className="fw-bolder" style={{backgroundColor: "#f6a01e"}} />
                                     }
+                                </Col>
+
+                            </Row>
+                            <Row className="d-flex justify-content-lg-end align-items-end mb-3">
+                        <Col className="col-auto ">
+                            <Button  disabled variant="secondary" size="sm" className="me-2" >
+                                <FontAwesomeIcon icon={faCheckCircle} className="me-1" /> Save
+                            </Button>
+                        </Col>
+
+                                <Col className="col-auto ">
+                                    <Button  disabled variant="secondary" size="sm" className="me-2" >
+                                        <FontAwesomeIcon icon={faCheckCircle} className="me-1" /> Save
+                                    </Button>
                                 </Col>
                             </Row>
 
@@ -122,7 +135,7 @@ export const OrderDetailsForSingleShop = () => {
 
                         </Form>
 
-                        <h5 className="mb-4" style={{color:"#4974a5"}}> Porducts: ({order.products?.length}) </h5>
+                        <h5 className="mb-4" style={{color:"#4974a5"}}> Products: ({order.products?.length}) </h5>
 
                         <Row className="mt-3 ">
                             {order.products?.slice((activePage - 1) * 3, activePage * 3).map((product) => (
