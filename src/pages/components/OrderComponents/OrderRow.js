@@ -27,10 +27,11 @@ export default ({order}) => {
 
     //goToDetails
     let shopId = order.shop_id;
+    let orderId = order._id;
     const history = useHistory ();
     const goToSingleShop = () => {
 
-        history.push(`/shops/shopDetails/${shopId}`);
+        history.push(`/shops/shopDetails/${shopId}/${orderId}`);
     };
 
     //validate

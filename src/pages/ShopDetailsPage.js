@@ -1,7 +1,7 @@
 import {Col, Row} from "@themesberg/react-bootstrap";
 import {ChoosePhotoWidget, ProfileCardWidget} from "../components/Widgets";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import SingleShopDetails from "./components/ShopComponents/SingleShopDetails";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,6 +11,8 @@ import {Alert} from "@mui/lab";
 import {ShopManagerCard} from "./components/ShopManagerComponents/ShopManagerCard";
 import Card from "@mui/material/Card";
 import MapSingleShop from "./components/ShopComponents/MapSingleShop";
+import {ListOrders} from "./components/OrderComponents/ListOrders";
+import {OrderDetailsForSingleShop} from "./components/OrderComponents/OrderDetailsForSingleShop";
 
 
 
@@ -19,6 +21,7 @@ export default () => {
 
     const routeParams = useParams();
     const idShop = routeParams.shopId;
+    const idOrder = routeParams.orderId;
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -30,7 +33,7 @@ export default () => {
     const shop = singleShopDetails.shop
     const error = singleShopDetails.error
 
-
+const [search, setSearch] = useState("")
 
 
     return (
@@ -118,9 +121,8 @@ export default () => {
                         </>
                     )}
 
-                    <Card>
-                        eeeee
-                    </Card>
+                    {idOrder?  <OrderDetailsForSingleShop  /> : null }
+
                     <Card>
                         eeeee
                     </Card>
