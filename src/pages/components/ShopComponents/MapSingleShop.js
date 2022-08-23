@@ -6,13 +6,8 @@ import EsriLeafletGeoSearch from "react-esri-leaflet/plugins/EsriLeafletGeoSearc
 import L from 'leaflet';
 import {Icon} from 'leaflet'
 import marker from '../../../assets/img/store-circle-blue-512.png';
-import {useDispatch, useSelector} from "react-redux";
-// import ProfileCover from "../../assets/img/profile-cover.jpg";
 import {Button, Card} from "@themesberg/react-bootstrap";
 import ProfileCover from "../../../assets/img/profile-cover.jpg";
-// import Profile1 from "../../assets/img/team/profile-picture-1.jpg";
-// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-// import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
 
 
 export default ({shop}) => {

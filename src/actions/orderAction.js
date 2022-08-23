@@ -15,6 +15,21 @@ export const ListOrder = () => async (dispatch) => {
     }
 }
 
+export const GetOrdesrByShop = (id) => async (dispatch) => {
+    try {
+        dispatch({type: "ORDER_BY_SHOP_REQUEST"})
+
+        const {data} = await axios.get(`http://localhost:4000/orders/ordersByShop/${id}`)
+        dispatch({type: "ORDER_BY_SHOP_SUCCESS", payload: data })
+
+    } catch (error) {
+        dispatch({type: "ORDER_BY_SHOP_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
 export const GetOrderDetails = (id) => async (dispatch) => {
     try {
         dispatch({type: "ORDER_DETAILS_REQUEST"})
@@ -25,6 +40,22 @@ export const GetOrderDetails = (id) => async (dispatch) => {
 
     } catch (error) {
         dispatch({type: "ORDER_DETAILS_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
+export const getFirstOrderToDeliver = (id) => async (dispatch) => {
+    try {
+        dispatch({type: "ORDER_TO_DELIVER_REQUEST"})
+
+        const {data} = await axios.get( `http://localhost:4000/orders/LastorderByShop/${id}`)
+        dispatch({type: "ORDER_TO_DELIVER_SUCCESS", payload: data })
+
+
+    } catch (error) {
+        dispatch({type: "ORDER_TO_DELIVER_FAIL", payload: error.response && error.response.data.message?
                 error.response.data.message
                 : error.message
         })

@@ -16,6 +16,13 @@ import {
 } from "./reducers/shopManagerReducers";
 import {competitorListReducer} from "./reducers/competitorsReducer";
 import {OrderListReducer, singleOrderReducer, stateOrderReducer, validateOrderReducer} from "./reducers/ordersReducers";
+import {
+    OrderByShopReducer,
+    OrderListReducer, OrderToDeliverReducer,
+    singleOrderReducer,
+    stateOrderReducer,
+    validateOrderReducer
+} from "./reducers/ordersReducers";
 
 
 const reducer = combineReducers({
@@ -36,6 +43,8 @@ const reducer = combineReducers({
     singleOrder: singleOrderReducer,
     validateOrder: validateOrderReducer,
     stateOrder: stateOrderReducer,
+    ordersByShop: OrderByShopReducer,
+    OrderToDeliver: OrderToDeliverReducer,
 
 
     competitorList: competitorListReducer,

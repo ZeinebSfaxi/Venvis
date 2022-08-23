@@ -21,26 +21,29 @@ import {ListOrder, stateOrder, validateOrder} from "../../../actions/orderAction
 import {ShopDetailsCard} from "./ShopDetailsCard";
 
 
-export default ({order}) => {
+export default ({order, showDetailsIcon}) => {
 
     const dispatch = useDispatch();
 
     //goToDetails
     let shopId = order.shop_id;
+    let orderId = order._id;
     const history = useHistory ();
     const goToSingleShop = () => {
 
-        history.push(`/shops/shopDetails/${shopId}`);
+        history.push(`/shops/shopDetails/${shopId}/${orderId}`);
     };
 
     //validate
     const [accept, setAccept] =useState({validated: "accepted"});
     const [refuse, setRefuse] =useState({validated: "rejected"});
     const [rejectedState, setRejectedState] =useState({state: "rejected"});
+    const [reviewState, setReviewState] =useState({state: "to review"});
 
     const acceptValidation = async () => {
         if (order._id ) {
             await dispatch (validateOrder(order._id, accept));
+            await dispatch (stateOrder(order._id, reviewState));
             await dispatch (ListOrder());
         }
     };
@@ -103,48 +106,39 @@ export default ({order}) => {
           </span>
                 </td>
 
-                <td  onMouseEnter={() => setShowDetails(true) }   onMouseLeave={() => setShowDetails(false)}>
-          <span className="fw-normal"  >
-                 PVC-{order.shop_id?.slice(order.shop_id.length -5, order.shop_id.length).toUpperCase()}
+
+
+                {showDetailsIcon &&
+                    <td onMouseEnter={() => setShowDetails(true)} onMouseLeave={() => setShowDetails(false)}>
+          <span className="fw-normal">
+                 PVC-{order.shop_id?.slice(order.shop_id.length - 5, order.shop_id.length).toUpperCase()}
           </span>
-                    <Popover
-                        id="mouse-over-popover"
-                        sx={{
-                            pointerEvents: 'none',
-                        }}
-                        open={showDetails}
-                        anchorEl={null}
-                        anchorOrigin={{
-                            vertical: 'center',
-                            horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                            vertical: 'center',
-                            horizontal: 'center',
-                        }}
-                        onClose={() => setShowDetails(false)}
-                        disableRestoreFocus
-                    >
-                        <ShopDetailsCard key= {order._id} order={order} />
-                    </Popover>
-                </td>
+                        <Popover
+                            id="mouse-over-popover"
+                            sx={{
+                                pointerEvents: 'none',
+                            }}
+                            open={showDetails}
+                            anchorEl={null}
+                            anchorOrigin={{
+                                vertical: 'center',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'center',
+                                horizontal: 'center',
+                            }}
+                            onClose={() => setShowDetails(false)}
+                            disableRestoreFocus
+                        >
+                            <ShopDetailsCard key={order._id} order={order}/>
+                        </Popover>
+                    </td>
+                }
 
 
 
-                <td>
-                    { order.state === 'to review' ?
 
-                        <Chip label="Stand by" className="fw-bolder" style={{backgroundColor: "#CCCCCC"}} />
-                         : order.state=== 'delivered' ?
-                            <Chip label="Delivered" className="fw-bolder" style={{backgroundColor: "#0aae0d"}} />
-                         : order.state=== 'on going' ?
-                             <Chip label="On going" className="fw-bolder" style={{backgroundColor: "#adfcad"}} />
-                         : order.state=== 'rejected' ?
-                             <Chip label="Rejected"  className="fw-bolder" style={{backgroundColor: "#d61d1d"}} />
-                         : order.state ==='late' &&
-                             <Chip label="Late"  className="fw-bolder" style={{backgroundColor: "#f6a01e"}} />
-                           }
-                </td>
 
                 <td>
                     { order.validated === 'to review' ?
@@ -159,14 +153,30 @@ export default ({order}) => {
                         </span> }
                 </td>
 
+                <td>
+                    { order.state === 'to review' ?
 
+                        <Chip label="Stand by" className="fw-bolder" style={{backgroundColor: "#CCCCCC"}} />
+                        : order.state=== 'delivered' ?
+                            <Chip label="Delivered" className="fw-bolder" style={{backgroundColor: "#0aae0d"}} />
+                            : order.state=== 'on going' ?
+                                <Chip label="On going" className="fw-bolder" style={{backgroundColor: "#adfcad"}} />
+                                : order.state=== 'rejected' ?
+                                    <Chip label="Rejected"  className="fw-bolder" style={{backgroundColor: "#d61d1d"}} />
+                                    : order.state ==='late' &&
+                                    <Chip label="Late"  className="fw-bolder" style={{backgroundColor: "#f6a01e"}} />
+                    }
+                </td>
 
 
                 <td>
-                    <FontAwesomeIcon  icon={faEye}
-                                      style={{color: "#00aa9b"}}
-                                       onClick={() => goToSingleShop()}
-                                      className="me-2"/>
+                    {showDetailsIcon &&
+                        <FontAwesomeIcon  icon={faEye}
+                                          style={{color: "#00aa9b"}}
+                                          onClick={() => goToSingleShop()}
+                                          className="me-2"/>
+                    }
+
 
                     {order.validated === 'to review' || moment(today).format('DD-MM-YYYY') < moment(order.sendingDate).add(2,'days').format('DD-MM-YYYY')  ?
                         (<> <FontAwesomeIcon  icon={faCheck}

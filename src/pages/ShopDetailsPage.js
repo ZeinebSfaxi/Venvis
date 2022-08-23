@@ -1,16 +1,20 @@
 import {Col, Row} from "@themesberg/react-bootstrap";
 import {ChoosePhotoWidget, ProfileCardWidget} from "../components/Widgets";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import SingleShopDetails from "./components/ShopComponents/SingleShopDetails";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {GetshopDetails} from "../actions/shopAction";
-import {Box, CircularProgress} from "@mui/material";
+import {Box, CardContent, CircularProgress} from "@mui/material";
 import {Alert} from "@mui/lab";
 import {ShopManagerCard} from "./components/ShopManagerComponents/ShopManagerCard";
 import Card from "@mui/material/Card";
 import MapSingleShop from "./components/ShopComponents/MapSingleShop";
+import {ListOrders} from "./components/OrderComponents/ListOrders";
+import {OrderDetailsForSingleShop} from "./components/OrderComponents/OrderDetailsForSingleShop";
+import {OrderListByShop} from "./components/OrderComponents/OrderListByShop";
+import {OrderDetailsToDeliverShop} from "./components/OrderComponents/OrderDetailsToDeliverSingle";
 
 
 
@@ -19,6 +23,7 @@ export default () => {
 
     const routeParams = useParams();
     const idShop = routeParams.shopId;
+    const idOrder = routeParams.orderId;
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -30,7 +35,7 @@ export default () => {
     const shop = singleShopDetails.shop
     const error = singleShopDetails.error
 
-
+const [search, setSearch] = useState("")
 
 
     return (
@@ -118,12 +123,11 @@ export default () => {
                         </>
                     )}
 
-                    <Card>
-                        eeeee
-                    </Card>
-                    <Card>
-                        eeeee
-                    </Card>
+                    {idOrder?  <OrderDetailsForSingleShop  /> : <OrderDetailsToDeliverShop /> }
+
+                    {/*<Card>*/}
+                    {/*    eeeee*/}
+                    {/*</Card>*/}
                 </Col>
 
 
@@ -159,16 +163,18 @@ export default () => {
                             )}
                         </Col>
 
-                        <Card>
-                            eeeee22222
-                        </Card>
+
 
                     </Row>
                 </Col>
 
-                <Card>
-                    eeeee33
-                </Card>
+
+                    <Card border="light" className="bg-white shadow-lg mb-4 mt-4" >
+                        <CardContent>
+                            <OrderListByShop idShop={idShop} />
+                        </CardContent>
+                    </Card>
+
             </Row>
 
 
