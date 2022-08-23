@@ -1,18 +1,23 @@
-import {Button, ButtonGroup, Card, Dropdown, Nav, Table} from "@themesberg/react-bootstrap";
+import {Button, ButtonGroup, Card, Col, Dropdown, Nav, Row, Table} from "@themesberg/react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert, Pagination} from "@mui/lab";
 import {Box, CircularProgress, Stack} from "@mui/material";
-import {ListOrder} from "../../../actions/orderAction";
+import {GetOrdesrByShop, ListOrder} from "../../../actions/orderAction";
 import OrderRow from "./OrderRow";
+import {useParams} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
+import CardContent from "@mui/material/CardContent";
 
-export const ListOrders = ({search}) => {
+export const OrderListByShop = ({idShop}) => {
+
 
     //display managers
     const dispatch = useDispatch();
 
-    const orderList = useSelector (state => state.orderList);
-    const orders = orderList.orders
+    const orderList = useSelector (state => state.ordersByShop);
+    const orders = orderList.ordersByShop
     const loading = orderList.loading
     const error = orderList.error
 
@@ -21,8 +26,12 @@ export const ListOrders = ({search}) => {
     const handleState = () => setState(true);
 
 
+    //ShowDetailsIcon
+    const [showDetailsIcon, setShowDetailsIcon] = useState(false);
+
+
     useEffect(() => {
-        dispatch(ListOrder())
+        dispatch(GetOrdesrByShop(idShop))
 
     }, [dispatch])
 
@@ -33,12 +42,16 @@ export const ListOrders = ({search}) => {
         console.log(value);
     };
 
-    //ShowDetailsIcon
-    const [showDetailsIcon, setShowDetailsIcon] = useState(true);
-
 
     return (
         <>
+            <Row className="d-flex justify-content-between align-items-center">
+                <Col className="col-auto">
+                    <h5 className="mb-2" style={{color:"#4974a5"}} > List of this Shop's Orders</h5>
+                    <p className="mb-4 fw-lighter">Note: It is impossible to change the order's validation if it has been accepted or rejected after 48h.</p>
+                </Col>
+
+            </Row>
             <Card border="light" className="table-wrapper table-responsive shadow-sm">
                 <Card.Body className="pt-0">
 
@@ -66,7 +79,6 @@ export const ListOrders = ({search}) => {
                                     <th className="border-bottom">ID</th>
                                     <th className="border-bottom">Reception Date</th>
                                     <th className="border-bottom">Due Date</th>
-                                    <th className="border-bottom">Shop ID</th>
                                     <th className="border-bottom">Validated</th>
                                     <th className="border-bottom" >State</th>
                                     <th className="border-bottom">Action</th>
@@ -76,17 +88,7 @@ export const ListOrders = ({search}) => {
                                 <tbody>
 
 
-                                {orders?.filter((row) => {
-                                    if (search === "") {
-                                        return row;
-                                    } else if (
-                                        (row.validated.toLowerCase().includes(search.toLowerCase()))
-                                        || (row.state.toLowerCase().includes(search.toLowerCase()))
-                                        // || (row.email.toLowerCase().includes(search.toLowerCase()))
-                                    ) {
-                                        return row;
-                                    }
-                                }).map((order) => (
+                                {orders?.map((order) => (
                                     <OrderRow key= {order._id} showDetailsIcon={showDetailsIcon} order={order} />
                                 ))}
                                 </tbody>
@@ -97,7 +99,7 @@ export const ListOrders = ({search}) => {
 
 
                                     <Pagination
-                                        count={Math.trunc(orders.length / 4)}
+                                        count={Math.trunc(orders?.length / 4)}
                                         page={activePage}
                                         onChange={handleChange}
                                         color="primary"

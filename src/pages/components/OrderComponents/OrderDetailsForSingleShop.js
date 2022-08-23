@@ -1,14 +1,26 @@
 import {Button, Col, Form, Row} from "@themesberg/react-bootstrap";
 import React, {useEffect, useState} from "react";
-import {CardContent, Card, Box, CircularProgress, Chip, Typography, Divider, Stack} from "@mui/material";
+import {
+    CardContent,
+    Card,
+    Box,
+    CircularProgress,
+    Chip,
+    Typography,
+    Divider,
+    Stack,
+    Dialog,
+    DialogTitle, DialogContent, DialogContentText, DialogActions
+} from "@mui/material";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {GetOrderDetails} from "../../../actions/orderAction";
+import {GetOrderDetails, GetOrdesrByShop, ListOrder, stateOrder, validateOrder} from "../../../actions/orderAction";
 import {Alert, Pagination} from "@mui/lab";
 import moment from "moment";
 import {OrderProductsDetails} from "./OrderProductsDetails";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
+import {faBan, faCheck} from "@fortawesome/free-solid-svg-icons";
 
 
 export const OrderDetailsForSingleShop = () => {
@@ -18,15 +30,16 @@ export const OrderDetailsForSingleShop = () => {
     const idOrder = routeParams.orderId;
     const dispatch = useDispatch()
 
-    useEffect(() => {
-         dispatch(GetOrderDetails(idOrder))
-    }, [dispatch, idShop])
+
 
     const singleOrderDetails = useSelector(state => state.singleOrder)
     const loading = singleOrderDetails.loading
     const order = singleOrderDetails.order
     const error = singleOrderDetails.error
 
+    useEffect(() => {
+        dispatch(GetOrderDetails(idOrder))
+    }, [dispatch, idShop])
 
     /****** PAGINATION****/
     const [activePage, setActivePage] = useState(1);
@@ -35,7 +48,40 @@ export const OrderDetailsForSingleShop = () => {
         console.log(value);
     };
 
+    //validate
+    const [accept, setAccept] =useState({validated: "accepted"});
+    const [refuse, setRefuse] =useState({validated: "rejected"});
+    const [rejectedState, setRejectedState] =useState({state: "rejected"});
+    const [reviewState, setReviewState] =useState({state: "to review"});
+
+    const acceptValidation = async () => {
+        if (order._id ) {
+            await dispatch (validateOrder(order._id, accept));
+            await dispatch (stateOrder(order._id, reviewState));
+            await  dispatch(GetOrderDetails(idOrder));
+            await   dispatch(GetOrdesrByShop(idShop));
+        }
+    };
+
+    const [dialogue, setDialogue] =useState(false);
+    const refuseValidation = async () => {
+        if (order._id ) {
+            await dispatch (validateOrder(order._id, refuse));
+            await dispatch (stateOrder(order._id, rejectedState));
+            await  dispatch(GetOrderDetails(idOrder));
+            await   dispatch(GetOrdesrByShop(idShop));
+        }
+    };
+    const handleCloseDialogue = value => {
+        setDialogue(false);
+    };
+    // // today
+    const today = new Date()
+
+
     return (
+
+        <>
 
         <Card border="light" className="bg-white shadow-lg mb-4">
             <CardContent>
@@ -79,19 +125,49 @@ export const OrderDetailsForSingleShop = () => {
                                 </Col>
 
                             </Row>
-                            <Row className="d-flex justify-content-lg-end align-items-end mb-3">
-                        <Col className="col-auto ">
-                            <Button  disabled variant="secondary" size="sm" className="me-2" >
-                                <FontAwesomeIcon icon={faCheckCircle} className="me-1" /> Save
-                            </Button>
-                        </Col>
 
-                                <Col className="col-auto ">
-                                    <Button  disabled variant="secondary" size="sm" className="me-2" >
-                                        <FontAwesomeIcon icon={faCheckCircle} className="me-1" /> Save
-                                    </Button>
-                                </Col>
-                            </Row>
+                        {order.validated === 'to review' || moment(today).format('DD-MM-YYYY') < moment(order.sendingDate).add(2,'days').format('DD-MM-YYYY')  ?
+                            (<>
+                                <Row className="d-flex justify-content-lg-end align-items-end mb-3">
+                                    <Col className="col-auto ">
+                                        <Button  style={{backgroundColor: "#0aae0d", borderColor:"#0aae0d"}} size="sm" className="me-2"   onClick={(e) => {
+                                            e.preventDefault();
+                                            acceptValidation();
+
+                                        }} >
+                                            <FontAwesomeIcon icon={faCheck} className="me-1" /> Accept
+                                        </Button>
+                                    </Col>
+
+                                    <Col className="col-auto ">
+                                        <Button   style={{backgroundColor: "#ef4641", borderColor:"#ef4641"}} size="sm" className="me-2"  onClick={() => {
+                                            setDialogue(true)
+                                        }} >
+                                            <FontAwesomeIcon icon={faBan} className="me-1" /> Reject
+                                        </Button>
+                                    </Col>
+                                </Row>
+
+                            </>) : (
+                                <>
+
+                                    <Row className="d-flex justify-content-lg-end align-items-end mb-3">
+                                        <Col className="col-auto ">
+                                            <Button  disabled  size="sm" className="me-2"  >
+                                                <FontAwesomeIcon icon={faCheck} className="me-1" /> Accept
+                                            </Button>
+                                        </Col>
+
+                                        <Col className="col-auto ">
+                                            <Button  disabled  size="sm" className="me-2" >
+                                                <FontAwesomeIcon icon={faBan} className="me-1" /> Reject
+                                            </Button>
+                                        </Col>
+                                    </Row>
+
+                                </>
+                            )
+                        }
 
                         <Form>
                             <Row>
@@ -158,5 +234,42 @@ export const OrderDetailsForSingleShop = () => {
 
             </CardContent>
         </Card>
+
+    {/*Refuse Dialogue*/}
+    <Dialog open={dialogue} onClose={handleCloseDialogue} style={{width: '100%'}}>
+        <DialogTitle>
+            Are You Sure You Want To Reject This Order ?
+        </DialogTitle>
+        <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+                Please provide below a reason for the rejection. This will be sent to the shop's manager.
+
+                <Form.Group controlId="exampleForm.ControlTextarea1" required type="text" placeholder="Enter Your message here">
+                    <Form.Label>Your Message </Form.Label>
+                    <Form.Control as="textarea" rows="3" />
+                </Form.Group>
+
+            </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <Button
+                size="sm"
+                variant="primary" type="submit"
+                onClick={handleCloseDialogue}
+            >
+                Cancel
+            </Button>
+            <Button size="sm" variant="contained" color="error" type="submit"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        refuseValidation();
+                        handleCloseDialogue();
+                    }}>Reject</Button>
+
+        </DialogActions>
+
+    </Dialog>
+
+    </>
     );
 };

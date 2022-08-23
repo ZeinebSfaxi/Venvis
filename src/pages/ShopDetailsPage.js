@@ -6,13 +6,15 @@ import SingleShopDetails from "./components/ShopComponents/SingleShopDetails";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {GetshopDetails} from "../actions/shopAction";
-import {Box, CircularProgress} from "@mui/material";
+import {Box, CardContent, CircularProgress} from "@mui/material";
 import {Alert} from "@mui/lab";
 import {ShopManagerCard} from "./components/ShopManagerComponents/ShopManagerCard";
 import Card from "@mui/material/Card";
 import MapSingleShop from "./components/ShopComponents/MapSingleShop";
 import {ListOrders} from "./components/OrderComponents/ListOrders";
 import {OrderDetailsForSingleShop} from "./components/OrderComponents/OrderDetailsForSingleShop";
+import {OrderListByShop} from "./components/OrderComponents/OrderListByShop";
+import {OrderDetailsToDeliverShop} from "./components/OrderComponents/OrderDetailsToDeliverSingle";
 
 
 
@@ -121,11 +123,11 @@ const [search, setSearch] = useState("")
                         </>
                     )}
 
-                    {idOrder?  <OrderDetailsForSingleShop  /> : null }
+                    {idOrder?  <OrderDetailsForSingleShop  /> : <OrderDetailsToDeliverShop /> }
 
-                    <Card>
-                        eeeee
-                    </Card>
+                    {/*<Card>*/}
+                    {/*    eeeee*/}
+                    {/*</Card>*/}
                 </Col>
 
 
@@ -161,16 +163,18 @@ const [search, setSearch] = useState("")
                             )}
                         </Col>
 
-                        <Card>
-                            eeeee22222
-                        </Card>
+
 
                     </Row>
                 </Col>
 
-                <Card>
-                    eeeee33
-                </Card>
+
+                    <Card border="light" className="bg-white shadow-lg mb-4 mt-4" >
+                        <CardContent>
+                            <OrderListByShop idShop={idShop} />
+                        </CardContent>
+                    </Card>
+
             </Row>
 
 
