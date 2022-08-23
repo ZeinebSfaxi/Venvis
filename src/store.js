@@ -15,7 +15,6 @@ import {
     updateManagerReducer
 } from "./reducers/shopManagerReducers";
 import {competitorListReducer} from "./reducers/competitorsReducer";
-import {OrderListReducer, singleOrderReducer, stateOrderReducer, validateOrderReducer} from "./reducers/ordersReducers";
 import {
     OrderByShopReducer,
     OrderListReducer, OrderToDeliverReducer,
