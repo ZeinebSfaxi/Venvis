@@ -17,6 +17,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@react-keycloak/web": "^3.4.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
@@ -47,6 +48,7 @@
     "react-dom": "^16.13.1",
     "react-esri-leaflet": "^2.0.1",
     "react-github-btn": "^1.2.0",
+    "keycloak-js": "^17.0.1",
     "react-leaflet": "^4.0.1",
     "react-live": "^2.2.3",
     "react-redux": "^8.0.2",
