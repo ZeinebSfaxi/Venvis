@@ -54,6 +54,14 @@ import ManagersPage from "./ManagersPage";
 import CompetitorsPage from "./CompetitorsPage";
 import OrdersPage from "./OrdersPage";
 
+
+//keycloak integration
+import {ReactKeycloakProvider} from "@react-keycloak/web";
+import keycloak from "../keycloak"
+import PrivateRoute from "../helpers/PrivateRoute";
+import {useKeycloak} from "@react-keycloak/web";
+
+
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -86,10 +94,14 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
     localStorage.setItem('settingsVisible', !showSettings);
   }
 
+    const {keycloak} = useKeycloak();
+    const isLoggedIn = keycloak.authenticated;
+
   return (
     <Route {...rest} render={props => (
       <>
         <Preloader show={loaded ? false : true} />
+        <PrivateRoute>
         <Sidebar />
 
         <main className="content">
@@ -97,6 +109,7 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
           <Component {...props} />
           <Footer toggleSettings={toggleSettings} showSettings={showSettings} />
         </main>
+        </PrivateRoute>
       </>
     )}
     />
@@ -104,6 +117,7 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 };
 
 export default () => (
+    <ReactKeycloakProvider authClient={keycloak}>
   <Switch>
     <RouteWithLoader exact path={Routes.Presentation.path} component={Presentation} />
     <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
@@ -155,6 +169,7 @@ export default () => (
     <RouteWithSidebar exact path={Routes.DocsBuild.path} component={DocsBuild} />
     <RouteWithSidebar exact path={Routes.DocsChangelog.path} component={DocsChangelog} />
 
-    <Redirect to={Routes.NotFound.path} />
+    <Redirect to={Routes.Presentation.path} />
   </Switch>
+    </ReactKeycloakProvider>
 );

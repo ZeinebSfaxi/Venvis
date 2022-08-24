@@ -7,6 +7,8 @@ import { Row, Col, Nav, Form, Image, Navbar, Dropdown, Container, ListGroup, Inp
 
 import NOTIFICATIONS_DATA from "../data/notifications";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
+import {useKeycloak} from "@react-keycloak/web";
+import {Avatar} from "@mui/material";
 
 
 export default (props) => {
@@ -45,6 +47,8 @@ export default (props) => {
       </ListGroup.Item>
     );
   };
+
+  const { keycloak, initialized } = useKeycloak();
 
   return (
     <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
@@ -85,14 +89,20 @@ export default (props) => {
 
             <Dropdown as={Nav.Item}>
               <Dropdown.Toggle as={Nav.Link} className="pt-1 px-0">
-                <div className="media d-flex align-items-center">
-                  <Image src={Profile3} className="user-avatar md-avatar rounded-circle" />
-                  <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                    <span className="mb-0 font-small fw-bold">Bonnie Green</span>
-                  </div>
-                </div>
+                {!!keycloak.authenticated && (
+                    <div className="media d-flex align-items-center">
+                      <Avatar sx={{ bgcolor: "#262B40" }}>{keycloak.tokenParsed.given_name?.charAt(0).toUpperCase()}{keycloak.tokenParsed.family_name?.charAt(0).toUpperCase()}</Avatar>
+                      {/*   <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block">*/}
+                      {/*  <span className="mb-0 font-base fw-bold">{keycloak.tokenParsed.given_name} {keycloak.tokenParsed.family_name}</span>*/}
+                      {/*</div>*/}
+                    </div>)}
               </Dropdown.Toggle>
               <Dropdown.Menu className="user-dropdown dropdown-menu-right mt-2">
+                <Dropdown.Item disabled className="fw-bold">
+                  <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block">
+                    <span className="mb-0 font-base fw-bold">{keycloak.tokenParsed.given_name} {keycloak.tokenParsed.family_name}</span>
+                  </div>
+                </Dropdown.Item>
                 <Dropdown.Item className="fw-bold">
                   <FontAwesomeIcon icon={faUserCircle} className="me-2" /> My Profile
                 </Dropdown.Item>
@@ -108,8 +118,8 @@ export default (props) => {
 
                 <Dropdown.Divider />
 
-                <Dropdown.Item className="fw-bold">
-                  <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" /> Logout
+                <Dropdown.Item className="fw-bold"  onClick={() => keycloak.logout()}>
+                  <FontAwesomeIcon icon={faSignOutAlt}  className="text-danger me-2" /> Logout
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
