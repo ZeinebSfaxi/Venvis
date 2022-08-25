@@ -12,7 +12,7 @@ import {
     AlertTitle, DialogActions, DialogContentText, DialogTitle, Dialog, DialogContent
 } from "@mui/material";
 
-import {getToken, listAgents, updateAgent} from "../../../actions/agentAction";
+import {deleteAgent, getToken, listAgents, updateAgent} from "../../../actions/agentAction";
 
 export default ({agent}) => {
 
@@ -95,7 +95,7 @@ export default ({agent}) => {
             <tr>
                 <td>
           <span className="fw-normal">
-          AGT-{agent.id?.slice(agent.id.length -5, agent.id.length).toUpperCase()}
+          CA-{agent.id?.slice(agent.id.length -5, agent.id.length).toUpperCase()}
 
           </span>
                 </td>
@@ -390,16 +390,16 @@ export default ({agent}) => {
                         Cancel
                     </Button>
                     <Button size="sm" variant="contained" color="error" type="submit"
-                            // onClick={(e) => {
-                            //     e.preventDefault();
-                            //
-                            //     dispatch(deleteManager(agent.id))
-                            //     if (loading === false) {
-                            //         dispatch(listManagers())
-                            //     }
-                            //     handleCloseDialogue()
-                            //     window.location.reload();
-                            // }}
+                            onClick={(e) => {
+                                e.preventDefault();
+
+                                dispatch(deleteAgent(agent.id))
+                                if (loading === false) {
+                                    dispatch(listAgents())
+                                }
+                                handleCloseDialogue()
+                                window.location.reload();
+                            }}
                     >Delete</Button>
 
                 </DialogActions>

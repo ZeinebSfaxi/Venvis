@@ -1,323 +1,214 @@
-import {Button, Card, Col, Form, Row} from "@themesberg/react-bootstrap";
+import {Button, Card, Col, Form, InputGroup, Row} from "@themesberg/react-bootstrap";
+import Datetime from "react-datetime";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
+import moment from "moment-timezone";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+
+import {v4 as uuidv4} from 'uuid';
+import {createAgent, getToken, listAgents} from "../../../actions/agentAction";
 import {createShop, listShops} from "../../../actions/shopAction";
-import {Box, CircularProgress} from "@mui/material";
-import {Alert} from "@mui/lab";
+import {DialogContentText} from "@mui/material";
 
-export default () => {
+
+
+export default ({ setDialogueForm}) => {
+    let id = uuidv4();
     const dispatch = useDispatch();
-    const [shopData, setShopData] = useState({
-        name: '',
-        latitude: '',
-        longitude: '',
-        country: '',
-        city: '',
-        streetName:'' ,
-        streetNumber: '',
-        phoneNumber: '',
-        zipcode: '',
-        image:''
-
+    const [agentData, setAgentData] = useState({
+        attributes: {phone: ''},
+        firstName: '',
+        lastName: '',
+        username: "CA-" + id,
+        email: '',
+        enabled: false,
+        credentials: [{
+            type: "password",
+            value: 'Inetum2022',
+            temporary: true
+        }],
+        groups: ["agents"],
     });
-    const shopCreate = useSelector (state => state.shopCreate);
-    const loading = shopCreate.loading
-    const error = shopCreate.error
+
+
+    const agentCreate = useSelector (state => state.agentCreate);
+    const loading = agentCreate.loading
+    const error = agentCreate.error
+
     const handleSubmit = () => {
-        dispatch(createShop(shopData));
+        getToken();
+        dispatch(createAgent(agentData));
     }
 
     useEffect(()=> {
         if (loading === false) {
-            dispatch(listShops());
+            dispatch(listAgents());
         }
     },[loading])
 
-// Cloudinary API to get the url of the image *******************
-    const [url, setUrl] = useState('');
-    const [photo, setPhoto] = useState();
 
-    const setTheImageToURL =  () => {
-        const data = new FormData();
-        data.append("file", photo);
-        data.append('upload_preset', 'inetum_sales_force');
-        data.append('cloud_name', 'duca2eu6g');
+    //form Validation
 
-        fetch('https://api.cloudinary.com/v1_1/duca2eu6g/image/upload', {
-            method: 'post',
-            body: data
-        })
-            .then(res => res.json())
-            .then(data => {
-                setUrl(data.url);
-                console.log ("haaaaaaaaaaaaaa333", url)
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    };
-
-
-    useEffect(() => {
-        if (url) {
-            setShopData({ ...shopData, image: url });
-
-        }
-        if (shopData.image ) {
-            setUrl('');
-            console.log('shop:', shopData);
-            dispatch(createShop(shopData));
-
-            setShopData({...shopData,  name: '',
-                latitude: '',
-                longitude: '',
-                country: '',
-                city: '',
-                streetName:'' ,
-                streetNumber: '',
-                phoneNumber: '',
-                zipcode: '',
-                image:'', })
-
-        }
-
-    }, [url, shopData, dispatch]);
-
-    // Form validation
     const [errorAll, setErrorAll] = useState(false)
-    const [errorName, setErrorName] = useState(false)
+    const [errorFirstName, setErrorFirstName] = useState(false)
+    const [errorLastName, setErrorLastName] = useState(false)
+    const [errorEmail, setErrorEmail] = useState(false)
     const [errorPhoneNumber, setErrorPhoneNumber] = useState(false)
-    const [errorStreetName, setErrorStreetName] = useState(false)
-    const [errorStreetNumber, setErrorStreetNumber] = useState(false)
-    const [errorCity, setErrorCity] = useState(false)
-    const [errorCountry, setErrorCountry] = useState(false)
-    const [errorZip, setErrorZip] = useState(false)
-    const [errorImage, setErrorImage] = useState(false)
     const [disab, setDisab] = useState(true)
 
     useEffect(() => {
-        if (shopData.name !== ''
-            && shopData.streetName !== ''
-            && shopData.streetNumber !== ''
-            && shopData.city !== ''
-            && shopData.country !== ''
-            && shopData.zipcode !== ''
-            && shopData.phoneNumber.length === 8
-            // && shopData.image !== ''
-        )
-        {
+        if (agentData.name !== '' && agentData.lastName !== ''  && agentData.email !== ''  && agentData.attributes.phone.length === 8 ) {
             setDisab(false);
 
         } else setDisab(true);
 
-    }, [shopData]);
+    }, [agentData]);
 
+    /***********Send mail to change pwd ********************/
 
+    // function sendEmail(e) {
+    //     e.preventDefault();
+    //
+    //     window.Email.send({
+    //         SecureToken: "088dd6c8-5f15-4753-b4c1-9e666a535a21",
+    //         To: agentData.email,
+    //         From: "inetumSales@gmail.com",
+    //         Subject: "Inetum Sales Account Access ",
+    //         Body: "And this is the body" + data.firstname
+    //     }).then(
+    //         message => alert(message))
+    // };
 
     return (
         <Card border="light" className="bg-white shadow-sm mb-4">
+
             <Card.Body>
-                <h5 className="mb-4">Add a new Shop</h5>
+
+                <h5>General information</h5>
+                <p className="mb-4">NB: Creating an agent sends them an email with a default password.</p>
                 <Form>
                     <Row>
-                        <Form.Group id="firstName">
-                            <Form.Label>Name:</Form.Label>
-                            <Form.Control required type="text" placeholder="Enter shop name"
-                                          isInvalid={errorName}
-                                          value={shopData.name}
-                                          onChange={(e) => {
-                                              setShopData({
-                                                  ...shopData,
-                                                  name: e.target.value
+                        <Col md={6} className="mb-3">
+                            <Form.Group id="firstName">
+                                <Form.Label>First Name</Form.Label>
+
+                                <Form.Control required type="text" placeholder="Enter manager name"
+                                              isInvalid={errorFirstName}
+                                              value={agentData.firstName}
+                                              onChange={(e) => {setAgentData({
+                                                  ...agentData,
+                                                  firstName: e.target.value
                                               })
-                                              if (e.target.value.length === 0 ||/^\d+$/.test(e.target.value)) {
-                                                  setErrorName(true);
-                                              } else setErrorName(false);
-                                          }}/>
-                            <Form.Control.Feedback type="invalid" >
-                                Name is invalid !
-                            </Form.Control.Feedback>
+                                                  if (e.target.value.length === 0 ||/^\d+$/.test(e.target.value)) {
+                                                      setErrorFirstName(true);
+                                                  } else setErrorFirstName(false);
+                                              }
+                                              }
+
+                                />
+                                <Form.Control.Feedback type="invalid" >
+                                    First name is invalid !
+                                </Form.Control.Feedback>
+                            </Form.Group>
+
+                        </Col>
+
+                        <Col md={6} className="mb-3">
+                            <Form.Group id="lastName">
+                                <Form.Label>Last Name</Form.Label>
+
+                                <Form.Control required type="text" placeholder="Enter manager last name"
+                                              isInvalid={errorLastName}
+                                              value={agentData.lastName}
+                                              onChange={(e) => {setAgentData({
+                                                  ...agentData,
+                                                  lastName: e.target.value
+                                              })
+                                                  if (e.target.value.length === 0 ||/^\d+$/.test(e.target.value)) {
+                                                      setErrorLastName(true);
+                                                  } else setErrorLastName(false);
+                                              }
+                                              }/>
+
+                                <Form.Control.Feedback type="invalid" >
+                                    Last name is invalid !
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col md={6} className="mb-3">
+                            <Form.Group id="email">
+                                <Form.Label>Email: </Form.Label>
+                                <Form.Control required type="email" placeholder="name@company.com"
+                                              value={agentData.email}
+
+                                              onChange={(e) => {
+                                                  setAgentData({
+                                                      ...agentData,
+                                                      email: e.target.value
+                                                  })
+                                                  if (e.target.value.length === 0) {
+                                                      setErrorEmail(true);
+                                                  } else setErrorEmail(false);
+                                              }}/>
+                            </Form.Group>
+                        </Col>
+                        <Col md={6} className="mb-3">
+                            <Form.Group id="phone">
+                                <Form.Label>Phone</Form.Label>
+                                <Form.Control required type="text" placeholder="+216"
+                                              value={agentData.attributes.phone}
+                                              onChange={e =>
+                                              { setAgentData({
+                                                  // object that we want to update
+                                                  ...agentData, // keep all other key-value pairs
+                                                  attributes: {...agentData.attributes, phone: e.target.value} // update the value of specific key
+                                              })
+                                                  if (e.target.value.length !==8 ) {
+                                                      setErrorPhoneNumber(true);
+                                                  } else setErrorPhoneNumber(false);
+                                              }}
+                                />
+                                <Form.Control.Feedback type="invalid" >
+                                    Phone number is invalid
+                                </Form.Control.Feedback>
+                            </Form.Group>
+
+                        </Col>
+                    </Row>
+                    <div md={6} className="mb-3">
+                        <Form.Group id="Activate">
+                            <Row>
+                                <Col>
+                                    <Form.Label>Activate account</Form.Label>
+                                </Col>
+                                <Col>
+                                    <Form.Check className="ml-3"
+                                                onChange={(e) => setAgentData({
+                                                    ...agentData,
+                                                    enabled: e.target.checked
+                                                })
+                                                }
+                                                size="sm" width={50}/>
+                                </Col>
+                            </Row>
                         </Form.Group>
-                    </Row>
-                    <Row>
-
-                        <Form.Group id="phone">
-                            <Form.Label>Phone Number:</Form.Label>
-                            <Form.Control required type="number" placeholder="+216 89 456 123"
-                                          isInvalid={errorPhoneNumber}
-                                          value={shopData.phoneNumber}
-                                          onChange={(e) => {setShopData({
-                                              ...shopData,
-                                              phoneNumber: e.target.value
-                                          })
-                                              if (e.target.value.length !== 8) {
-                                                  setErrorPhoneNumber(true);
-                                              } else setErrorPhoneNumber(false);
-                                          }}/>
-                            <Form.Control.Feedback type="invalid" >
-                                Phone number is invalid !
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Row>
-                    <Row>
-                        <Form.Group id="image">
-                            <Form.Label>Image:</Form.Label>
-                            <Form.Control type="file"
-                                          isInvalid={errorImage}
-                                          onChange={(e) => {
-                                              setPhoto(e.target.files[0]) }
-                                          }                        />
-                            <Form.Control.Feedback type="invalid" >
-                                Please select an image for your shop !
-                            </Form.Control.Feedback>
-
-                        </Form.Group>
-
-                    </Row>
-
-                    <h5 className="my-4">Address</h5>
-                    <Row>
-                        <Col sm={9} className="mb-3">
-                            <Form.Group id="address">
-                                <Form.Label>Street Name:</Form.Label>
-                                <Form.Control required type="text" placeholder="Enter your shop's street name"
-                                              isInvalid={errorStreetName}
-                                              value={shopData.streetName}
-                                              onChange={(e) => {setShopData({
-                                                  ...shopData,
-                                                  streetName: e.target.value
-                                              })
-                                                  if (e.target.value.length === 0 ) {
-                                                      setErrorStreetName(true);
-                                                  } else setErrorStreetName(false);
-                                              }}
-                                />
-                                <Form.Control.Feedback type="invalid" >
-                                    Street name is invalid !
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Col>
-                        <Col sm={3} className="mb-3">
-                            <Form.Group id="addressNumber">
-                                <Form.Label>No.</Form.Label>
-                                <Form.Control required type="number" placeholder="No."  value={shopData.streetNumber}
-                                              isInvalid={errorStreetNumber}
-                                              onChange={(e) =>{ setShopData({
-                                                  ...shopData,
-                                                  streetNumber: e.target.value
-                                              })
-                                                  if (e.target.value.length === 0 ) {
-                                                      setErrorStreetNumber(true);
-                                                  } else setErrorStreetNumber(false);
-                                              }}
-                                />
-                                <Form.Control.Feedback type="invalid" >
-                                    Street Number is invalid !
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
-                        {/*dropdown countries*/}
-                        <Col sm={4} className="mb-3">
-                            <Form.Group id="country">
-                                <Form.Label>Country:</Form.Label>
-                                <Form.Control required type="text" placeholder="Country"  value={shopData.country}
-                                              isInvalid={errorCountry}
-                                              onChange={(e) =>{ setShopData({
-                                                  ...shopData,
-                                                  country: e.target.value
-                                              })
-                                                  if (e.target.value.length === 0  ||/^\d+$/.test(e.target.value) ) {
-                                                      setErrorCountry(true);
-                                                  } else setErrorCountry(false);
-                                              }}
-
-                                />
-                                <Form.Control.Feedback type="invalid" >
-                                    Country is invalid !
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Col>
-                        <Col sm={4} className="mb-3">
-
-                            <Form.Group id="city">
-                                <Form.Label>City:</Form.Label>
-                                <Form.Control required type="text" placeholder="City"  value={shopData.city}
-                                              isInvalid={errorCity}
-                                              onChange={(e) =>{ setShopData({
-                                                  ...shopData,
-                                                  city: e.target.value
-                                              })
-                                                  if (e.target.value.length === 0  ||/^\d+$/.test(e.target.value)) {
-                                                      setErrorCity(true);
-                                                  } else setErrorCity(false);
-                                              }}
-                                />
-                                <Form.Control.Feedback type="invalid" >
-                                    City is invalid !
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Col>
-                        <Col sm={4}>
-                            <Form.Group id="zip">
-                                <Form.Label>ZIP:</Form.Label>
-                                <Form.Control required type="number" placeholder="ZIP"  value={shopData.zipcode}
-                                              isInvalid={errorZip}
-                                              onChange={(e) => { setShopData({
-                                                  ...shopData,
-                                                  zipcode: e.target.value
-                                              })
-                                                  if (e.target.value.length === 0 ) {
-                                                      setErrorZip(true);
-                                                  } else setErrorZip(false);
-                                              }}
-                                />
-                                <Form.Control.Feedback type="invalid" >
-                                    Zipcode is invalid !
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Col>
-                    </Row>
-
-
+                    </div>
 
                     <div className="mt-3">
-                        <>
-                            { loading ? (
-                                <Box className="m-5" sx={{ display: 'flex',alignItems: 'center',
-                                    justifyContent: 'center',  }} >
-                                    <CircularProgress style={{color:"#323854"}} />
-                                </Box>
-                            ) : error ? (
-
-                                <Alert className="m-2" sx={{ width: '100%' }} variant="filled" severity="error">
-                                    Ay ay ay! looks like you have network problems :(
-                                    <ul>
-                                        <li> try reloading your page </li>
-                                        <li>  try checking your internet connection</li>
-                                    </ul>
-                                    {"\n"} <strong>Error: {error} </strong>
-                                </Alert>
-
-                            ) : (
-                                <>
-                                    {disab ?  (<Button disabled variant="primary" type="submit" >Add Shop</Button>)
-                                        :
-                                        (  <Button variant="primary" type="submit" onClick={(e) =>  {
-                                            if (photo) { e.preventDefault();
-                                                setTheImageToURL();
-                                            }
-                                            else {
-                                                e.preventDefault();
-                                                handleSubmit();
-                                            }
-
-                                        }}>Add Shop</Button>)} </>
-                            ) }
-                        </>
-
-
+                        {disab?
+                            <Button size="sm" variant="primary" type="submit" disabled>Save</Button> :
+                            <Button size="sm" variant="primary" type="submit" onClick={(e) => {
+                                e.preventDefault();
+                                // sendEmail(e);
+                                getToken();
+                                handleSubmit();
+                                setDialogueForm(false);
+                            }}>Save</Button>
+                        }
                     </div>
                 </Form>
             </Card.Body>

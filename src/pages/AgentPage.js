@@ -5,6 +5,7 @@ import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup } from '@th
 import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import AddShopForm from "./components/ShopComponents/AddShopForm";
 import {ListAgents} from "./components/AgentsComponents/ListAgents"
+import AddAgentForm from "./components/AgentsComponents/AddAgentForm";
 
 export default () => {
 
@@ -75,7 +76,7 @@ export default () => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <AddShopForm />
+                        <AddAgentForm setDialogueForm={setDialogueForm} />
                     </DialogContentText>
                 </DialogContent>
             </Dialog>

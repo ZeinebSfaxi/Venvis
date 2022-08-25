@@ -96,3 +96,19 @@ export const deleteAgent = (id) => async (dispatch) => {
         })
     }
 }
+
+export const createAgent = (newAgent) => async (dispatch) => {
+    try {
+        dispatch({type: "AGENT_CREATE_REQUEST"})
+
+        const {data} = await axios.post( 'http://localhost:8080/auth/admin/realms/force-de-vente/users/', newAgent, config)
+        dispatch({type: "AGENT_CREATE_SUCCESS", payload: data })
+
+
+    } catch (error) {
+        dispatch({type: "AGENT_CREATE_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}

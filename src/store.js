@@ -56,7 +56,7 @@ const reducer = combineReducers({
     agentList: AgentListReducer,
     agentDetails: agentDetailsReducer,
     agentUpdate: updateAgentReducer,
-    agenCreate: agentCreateReducer,
+    agentCreate: agentCreateReducer,
     agentDelete: deleteAgentReducer,
 
 
