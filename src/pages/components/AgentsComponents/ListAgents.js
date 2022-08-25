@@ -70,7 +70,17 @@ export const ListAgents = ({search}) => {
                                 </thead>
                                 <tbody>
 
-                                {agents?.map((agent) => (
+                                {agents?.filter((row) => {
+                                    if (search === "") {
+                                        return row;
+                                    } else if (
+                                        (row.firstName.toLowerCase().includes(search.toLowerCase()))
+                                        || (row.lastName.toLowerCase().includes(search.toLowerCase()))
+                                        || (row.email.toLowerCase().includes(search.toLowerCase()))
+                                    ) {
+                                        return row;
+                                    }
+                                }).map((agent) => (
                                     <AgentRow key= {agent._id} agent={agent}/>
                                 ))}
                                 </tbody>

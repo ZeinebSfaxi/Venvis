@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashAlt} from "@fortawesome/free-regular-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
-import {faCheckCircle, faEdit, faEye, faStore} from "@fortawesome/free-solid-svg-icons";
+import {faCheckCircle, faEdit, faEye, faStore, faTruck} from "@fortawesome/free-solid-svg-icons";
 import {useHistory} from "react-router";
 
 import {
@@ -331,7 +331,7 @@ export default ({agent}) => {
 
 
                 <td>
-                   <FontAwesomeIcon icon={faEye}
+                   <FontAwesomeIcon icon={faTruck}
                                                        style={{color: "#00aa9b"}}
                                                        // onClick={() => history.push(`/shops/shopDetails/${manager.shop_id}`)}
                                                        className="me-2"/>
