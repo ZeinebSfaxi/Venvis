@@ -115,7 +115,7 @@ export default (props = {}) => {
               {/*new*/}
               <NavItem title="Shops" icon={faMapPin} link={Routes.Shops.path} />
               <NavItem title="Managers" icon={faUser} link={Routes.Managers.path} />
-              <NavItem title="Commercial Agents"  icon={faTruck}/>
+              <NavItem title="Commercial Agents" icon={faTruck} link={Routes.Agents.path} />
 
               <Dropdown.Divider className="my-3 border-indigo" />
 

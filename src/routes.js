@@ -10,6 +10,7 @@ export const Routes = {
     Managers: { path: "/managers" },
     Competitors: { path: "/competitors" },
     Orders: { path: "/orders" },
+    Agents: { path: "/agents" },
 
     Transactions: { path: "/transactions" },
     Settings: { path: "/settings" },
