@@ -20,7 +20,7 @@ export default ({ setDialogueForm}) => {
         attributes: {phone: ''},
         firstName: '',
         lastName: '',
-        username: "CA-" + id,
+        username:'',
         email: '',
         enabled: false,
         credentials: [{
@@ -148,7 +148,8 @@ export default ({ setDialogueForm}) => {
                                               onChange={(e) => {
                                                   setAgentData({
                                                       ...agentData,
-                                                      email: e.target.value
+                                                      email: e.target.value,
+                                                      username: e.target.value
                                                   })
                                                   if (e.target.value.length === 0) {
                                                       setErrorEmail(true);

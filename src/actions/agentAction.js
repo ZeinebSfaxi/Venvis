@@ -53,7 +53,7 @@ export const GetAgentDetails = (id) => async (dispatch) => {
     try {
         dispatch({type: "AGENT_DETAILS_REQUEST"})
         await getToken();
-        const {data} = await axios.get( `http://localhost:8080/auth/admin/realms/force-de-vente/users/${id}`)
+        const {data} = await axios.get( `http://localhost:8080/auth/admin/realms/force-de-vente/users/${id}`, config)
         dispatch({type: "AGENT_DETAILS_SUCCESS", payload: data })
 
 
