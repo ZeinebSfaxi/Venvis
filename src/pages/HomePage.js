@@ -54,6 +54,16 @@ import ManagersPage from "./ManagersPage";
 import CompetitorsPage from "./CompetitorsPage";
 import OrdersPage from "./OrdersPage";
 
+
+//keycloak integration
+import {ReactKeycloakProvider} from "@react-keycloak/web";
+import keycloak from "../keycloak"
+import PrivateRoute from "../helpers/PrivateRoute";
+import {useKeycloak} from "@react-keycloak/web";
+import AgentPage from "./AgentPage";
+import AgentDetailsPage from "./AgentDetailsPage";
+
+
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -86,10 +96,14 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
     localStorage.setItem('settingsVisible', !showSettings);
   }
 
+    const {keycloak} = useKeycloak();
+    const isLoggedIn = keycloak.authenticated;
+
   return (
     <Route {...rest} render={props => (
       <>
         <Preloader show={loaded ? false : true} />
+        <PrivateRoute>
         <Sidebar />
 
         <main className="content">
@@ -97,6 +111,7 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
           <Component {...props} />
           <Footer toggleSettings={toggleSettings} showSettings={showSettings} />
         </main>
+        </PrivateRoute>
       </>
     )}
     />
@@ -104,6 +119,7 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 };
 
 export default () => (
+    <ReactKeycloakProvider authClient={keycloak}>
   <Switch>
     <RouteWithLoader exact path={Routes.Presentation.path} component={Presentation} />
     <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
@@ -124,9 +140,11 @@ export default () => (
       {/* new pages */}
       <RouteWithSidebar exact path={Routes.Shops.path} component={ShopsPage} />
       <RouteWithSidebar exact path={Routes.ShopDetails.path} component={ShopDetailsPage}/>
+      <RouteWithSidebar exact path={Routes.AgentDetails.path} component={AgentDetailsPage}/>
       <RouteWithSidebar exact path={Routes.Managers.path} component={ManagersPage} />
       <RouteWithSidebar exact path={Routes.Competitors.path} component={CompetitorsPage} />
       <RouteWithSidebar exact path={Routes.Orders.path} component={OrdersPage} />
+      <RouteWithSidebar exact path={Routes.Agents.path} component={AgentPage} />
 
     {/* components */}
     <RouteWithSidebar exact path={Routes.Accordions.path} component={Accordion} />
@@ -155,6 +173,7 @@ export default () => (
     <RouteWithSidebar exact path={Routes.DocsBuild.path} component={DocsBuild} />
     <RouteWithSidebar exact path={Routes.DocsChangelog.path} component={DocsChangelog} />
 
-    <Redirect to={Routes.NotFound.path} />
+    <Redirect to={Routes.Presentation.path} />
   </Switch>
+    </ReactKeycloakProvider>
 );

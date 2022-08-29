@@ -23,6 +23,9 @@ import ReactLogo from "../assets/img/technologies/react-logo.svg";
 import pages from "../data/pages";
 import features from "../data/features";
 
+//keycloak integration
+import { useKeycloak } from "@react-keycloak/web";
+
 export default () => {
   const PagePreview = (props) => {
     const { name, image, link } = props;
@@ -77,6 +80,9 @@ export default () => {
     );
   };
 
+  const { keycloak, initialized } = useKeycloak();
+
+
   return (
     <>
       <Navbar variant="dark" expand="lg" bg="dark" className="navbar-transparent navbar-theme-primary sticky-top">
@@ -96,7 +102,12 @@ export default () => {
                 <Nav.Link as={HashLink} to="#download">Upgrade to Pro</Nav.Link>
               </Nav>
             </Navbar.Collapse>
-            <Button as={HashLink} to="#download" variant="outline-white" className="ms-3"><FontAwesomeIcon icon={faDownload} className="me-1" /> Download</Button>
+
+            {/*<Button variant="outline-white"  className="ms-3" onClick={() => keycloak.login()} ><FontAwesomeIcon icon={faDownload} className="me-1" /> Login</Button>*/}
+            {!keycloak.authenticated && ( <Button variant="outline-white"  className="ms-3" onClick={() => keycloak.login()}><FontAwesomeIcon icon={faDownload} className="me-1" /> Login</Button> )}
+            {/*{!!keycloak.authenticated && ( <Button variant="outline-white"  className="ms-3" onClick={() => keycloak.logout()}><FontAwesomeIcon icon={faDownload} className="me-1" /> Logout</Button> )}*/}
+
+
           </div>
         </Container>
       </Navbar>

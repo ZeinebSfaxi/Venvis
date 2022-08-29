@@ -8,6 +8,7 @@ import CardContent from "@mui/material/CardContent";
 import {CounterWidget} from "../../../components/Widgets";
 import {faChartLine} from "@fortawesome/free-solid-svg-icons";
 import {CompetitorCard} from "./CompetitorCard";
+import {listAgents} from "../../../actions/agentAction";
 
 
 export const ListCompetitor = ({search}) => {
@@ -22,12 +23,12 @@ export const ListCompetitor = ({search}) => {
 
 
 
-    useEffect(() => {
+    useEffect(()=> {
 
             dispatch(listCompetitors())
 
+    }, [dispatch])
 
-    }, [ dispatch])
     // const error = false;
     // const loading = false;
     // const competitor = [

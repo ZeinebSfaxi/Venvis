@@ -22,6 +22,13 @@ import {
     stateOrderReducer,
     validateOrderReducer
 } from "./reducers/ordersReducers";
+import {
+    agentCreateReducer,
+    agentDetailsReducer,
+    AgentListReducer,
+    deleteAgentReducer,
+    updateAgentReducer
+} from "./reducers/agentsReducer";
 
 
 const reducer = combineReducers({
@@ -44,6 +51,13 @@ const reducer = combineReducers({
     stateOrder: stateOrderReducer,
     ordersByShop: OrderByShopReducer,
     OrderToDeliver: OrderToDeliverReducer,
+
+
+    agentList: AgentListReducer,
+    agentDetails: agentDetailsReducer,
+    agentUpdate: updateAgentReducer,
+    agentCreate: agentCreateReducer,
+    agentDelete: deleteAgentReducer,
 
 
     competitorList: competitorListReducer,
