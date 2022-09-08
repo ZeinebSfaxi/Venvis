@@ -99,8 +99,10 @@ export const ShopManagerCard = ({shop}) => {
                             <Avatar className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" sx={{ bgcolor: "#262b40", fontSize:"300%" }}>{shopmanager.name.charAt(0).toUpperCase()} {shopmanager.lastName.charAt(0).toUpperCase()}</Avatar>
                             {/*<Card.Img  alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" > {shopmanager.name.charAt(0).toUpperCase()} {shopmanager.lastName.charAt(0).toUpperCase()}</Card.Img>*/}
                             <Card.Title>{shopmanager.name} {shopmanager.lastName}</Card.Title>
-                            <Card.Subtitle className="fw-normal">{shopmanager.email}</Card.Subtitle>
+                            <Card.Subtitle >Shop Manager</Card.Subtitle>
+                            <Card.Text className="text-gray mb-0">{shopmanager.email}</Card.Text>
                             <Card.Text className="text-gray mb-4">{shopmanager.phoneNumber}</Card.Text>
+
 
                             <Button variant="primary" size="sm" className="me-2"  onClick={() => {
                                 setDialogueForm(true)

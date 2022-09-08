@@ -76,9 +76,12 @@ export const AgentCard = ({agent}) => {
                                     <Card.Body className="pb-5">
                                         <Avatar className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" sx={{ bgcolor: "#262b40", fontSize:"300%" }}>{agent.firstName?.charAt(0).toUpperCase()} {agent.lastName?.charAt(0).toUpperCase()}</Avatar>
                                         {/*<Card.Img  alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" > {shopmanager.name.charAt(0).toUpperCase()} {shopmanager.lastName.charAt(0).toUpperCase()}</Card.Img>*/}
+
                                         <Card.Title>{agent?.firstName} {agent?.lastName}</Card.Title>
-                                        <Card.Subtitle className="fw-normal">{agent?.email}</Card.Subtitle>
+                                        <Card.Subtitle >Commercial Agent</Card.Subtitle>
+                                        <Card.Text className="text-gray mb-0">{agent?.email}</Card.Text>
                                         <Card.Text className="text-gray mb-4">{agent.attributes?.phone}</Card.Text>
+
 
                                         {/*<Button variant="primary" size="sm" className="me-2"  onClick={() => {*/}
                                         {/*    setDialogueForm(true)*/}

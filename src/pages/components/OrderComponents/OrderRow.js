@@ -178,22 +178,8 @@ export default ({order, showDetailsIcon}) => {
                     }
 
 
-                    {order.validated === 'to review' || moment(today).format('DD-MM-YYYY') < moment(order.sendingDate).add(2,'days').format('DD-MM-YYYY')  ?
-                        (<> <FontAwesomeIcon  icon={faCheck}
-                                          style={{color: "#0aae0d"}}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              acceptValidation();
-
-                            }}
-                                          className="me-2"/>
-                        <FontAwesomeIcon  icon={faBan}
-                                          style={{color: "#ef4641"}}
-                                          onClick={() => {
-                                              setDialogue(true)
-                                          }}
-                                          className="me-2"/>
-                                          </>) : (
+                    {order.validated !== 'to review' || moment(today).format('DD-MM-YYYY') > moment(order.sendingDate).add(2,'days').format('DD-MM-YYYY')  ?
+                      (
 
                         <> <FontAwesomeIcon  icon={faCheck}
                         style={{color: "#a2a1a1"}}
@@ -203,7 +189,21 @@ export default ({order, showDetailsIcon}) => {
                         className="me-2"/>
 
                      </>
-                        )
+                        )  : (<> <FontAwesomeIcon  icon={faCheck}
+                                                  style={{color: "#0aae0d"}}
+                                                  onClick={(e) => {
+                                                      e.preventDefault();
+                                                      acceptValidation();
+
+                                                  }}
+                                                  className="me-2"/>
+                          <FontAwesomeIcon  icon={faBan}
+                                            style={{color: "#ef4641"}}
+                                            onClick={() => {
+                                                setDialogue(true)
+                                            }}
+                                            className="me-2"/>
+                      </>)
                     }
 
                 </td>

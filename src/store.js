@@ -29,6 +29,7 @@ import {
     deleteAgentReducer,
     updateAgentReducer
 } from "./reducers/agentsReducer";
+import {MissionListReducer} from "./reducers/missionReducer";
 
 
 const reducer = combineReducers({
@@ -58,6 +59,8 @@ const reducer = combineReducers({
     agentUpdate: updateAgentReducer,
     agentCreate: agentCreateReducer,
     agentDelete: deleteAgentReducer,
+
+    missionList: MissionListReducer,
 
 
     competitorList: competitorListReducer,

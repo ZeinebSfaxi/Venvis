@@ -62,6 +62,8 @@ import PrivateRoute from "../helpers/PrivateRoute";
 import {useKeycloak} from "@react-keycloak/web";
 import AgentPage from "./AgentPage";
 import AgentDetailsPage from "./AgentDetailsPage";
+import MissionPage from "./MissionPage";
+import MissionDetailsPage from "./MissionDetailsPage";
 
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
@@ -139,7 +141,9 @@ export default () => (
 
       {/* new pages */}
       <RouteWithSidebar exact path={Routes.Shops.path} component={ShopsPage} />
+      <RouteWithSidebar exact path={Routes.Missions.path} component={MissionPage} />
       <RouteWithSidebar exact path={Routes.ShopDetails.path} component={ShopDetailsPage}/>
+      <RouteWithSidebar exact path={Routes.MissionDetails.path} component={MissionDetailsPage}/>
       <RouteWithSidebar exact path={Routes.AgentDetails.path} component={AgentDetailsPage}/>
       <RouteWithSidebar exact path={Routes.Managers.path} component={ManagersPage} />
       <RouteWithSidebar exact path={Routes.Competitors.path} component={CompetitorsPage} />

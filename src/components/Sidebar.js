@@ -121,7 +121,7 @@ export default (props = {}) => {
 
               <NavItem title="Products" icon={faTags}/>
               <NavItem title="Orders" icon={faShoppingBasket} link={Routes.Orders.path}/>
-              <NavItem title="Missions" icon={faCalendar}/>
+              <NavItem title="Missions" icon={faCalendar}  link={Routes.Missions.path}/>
 
               <Dropdown.Divider className="my-3 border-indigo" />
 
