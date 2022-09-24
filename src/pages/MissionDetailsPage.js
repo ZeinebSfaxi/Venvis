@@ -20,6 +20,8 @@ import {AgentCard} from "./components/AgentsComponents/AgentCard";
 import ProfileCover from "../assets/img/profile-cover.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserEdit} from "@fortawesome/free-solid-svg-icons";
+import {GetMissionDetails} from "../actions/missionAction";
+import MissionCardDetails from "./components/MissionsComponents/MissionCardDetails";
 
 
 
@@ -28,18 +30,19 @@ export default () => {
 
     const routeParams = useParams();
     const idAgent = routeParams.agentId;
+    const idMission = routeParams.missionId;
 
     const dispatch = useDispatch()
+
+
     useEffect(() => {
+        dispatch(GetMissionDetails(idMission))
+    }, [dispatch, idMission])
 
-        dispatch(GetAgentDetails(idAgent))
-
-    }, [dispatch, idAgent])
-
-    const singleAgentDetails = useSelector(state => state.agentDetails)
-    const loading = singleAgentDetails.loading
-    const agent = singleAgentDetails.agent
-    const error = singleAgentDetails.error
+    const singleMissionDetails = useSelector(state => state.missionDetails)
+    const loading = singleMissionDetails.loading
+    const mission = singleMissionDetails.mission
+    const error = singleMissionDetails.error
 
     const [search, setSearch] = useState("")
 
@@ -124,10 +127,10 @@ export default () => {
 
                     ) : (
                         <>
-                            { agent &&
+                            { mission &&
                             (
                                 // <SingleShopDetails shop ={shop} />
-                                <h1>bbbb</h1>
+                                <MissionCardDetails mission={mission}  />
                             )
                             }
                         </>
@@ -145,34 +148,7 @@ export default () => {
                     <Row>
                         <Col xs={12}>
 
-
-                            {loading ? (
-                                <Box className="m-5" sx={{ display: 'flex',alignItems: 'center',
-                                    justifyContent: 'center',  }} >
-                                    <CircularProgress style={{color:"#323854"}} />
-                                </Box>
-                            ) : error ? (
-
-                                <Alert className="m-2" sx={{ width: '100%' }} variant="filled" severity="error">
-                                    Ay ay ay! looks like you have network problems :(
-                                    <ul>
-                                        <li> try reloading your page </li>
-                                        <li>  try checking your internet connection</li>
-                                    </ul>
-                                    {"\n"} <strong>Error: {error} </strong>
-                                </Alert>
-
-                            ) : (
-                                <>
-                                    { agent &&
-                                    (
-                                        // <SingleShopDetails shop ={shop} />
-                                        <AgentCard agent={agent} />
-                                    )
-                                    }
-                                </>
-                            )}
-
+                                 <AgentCard />
                         </Col>
 
 

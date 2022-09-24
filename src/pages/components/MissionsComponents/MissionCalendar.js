@@ -33,7 +33,7 @@ import {ListMissions} from "../../../actions/missionAction";
 import MissionRow from "./MissionRow";
 
 
-export const MissionCalendar = () => {
+export const MissionCalendar = ({setDialogueForm}) => {
 
 
     //display managers
@@ -89,15 +89,18 @@ export const MissionCalendar = () => {
                             right: "dayGridMonth,timeGridWeek,timeGridDay"
                         }}
                         dateClick={() => {
-                            console.log("ya3")
+                            setDialogueForm(true)
                         }}
                         eventClick={() => {
                             console.log("ya3")
                         }}
                         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                         events={events}
+                        eventBackgroundColor="#00aa9b"
+
                     />
                 }
+
             </Card>
 
 

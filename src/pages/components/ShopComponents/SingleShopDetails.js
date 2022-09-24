@@ -20,7 +20,7 @@ export default ({shop}) => {
         streetNumber: "",
         city:"",
         phoneNumber: "",
-        country: "",
+        country: "Tunisia",
         latitude:"",
         longitude:"",
         zipcode:"",
@@ -70,7 +70,6 @@ export default ({shop}) => {
             || errorPhoneNumber
             || errorStreetName
             || errorStreetNumber
-            || errorCity
             || errorCountry
             || errorZip)
         {
@@ -78,7 +77,7 @@ export default ({shop}) => {
 
         } else setDisab(false);
 
-    }, [errorName, errorPhoneNumber, errorStreetName, errorStreetNumber, errorCity, errorCountry , errorZip]);
+    }, [errorName, errorPhoneNumber, errorStreetName, errorStreetNumber,  errorCountry , errorZip]);
 
     //cloudinary
     const [url, setUrl] = useState('');
@@ -279,18 +278,11 @@ export default ({shop}) => {
 
                                             <Form.Label><Typography style={{color:"#04B3AC"}}>Country: </Typography></Form.Label>
 
-                                            <Form.Control required type="text" placeholder="Country"
+                                            <Form.Control required as="select"   defaultValue={data.country}  value={data.country} placeholder="Country"
                                                           isInvalid={errorCountry}
-                                                          value={data.country}
-                                                          onChange={(e) => {setData({
-                                                              ...data,
-                                                              country: e.target.value
-                                                          })
-                                                              if (e.target.value.length === 0 ) {
-                                                                  setErrorCountry(true);
-                                                              } else setErrorCountry(false);
-                                                          }}
-                                            />
+                                            >
+                                                <option value="Tunisia">Tunisia</option>
+                                            </Form.Control>
                                     <Form.Control.Feedback type="invalid" >
                                         Country is invalid !
                                     </Form.Control.Feedback>
@@ -299,20 +291,40 @@ export default ({shop}) => {
                             <Col sm={4} className="mb-3">
 
                                 <Form.Group id="city">
+                                    <Form.Label><Typography style={{color:"#04B3AC"}}>City: </Typography></Form.Label>
+                                    <Form.Control required as="select" placeholder="City" defaultValue={data.city}  value={data.city}
 
-                                            <Form.Label><Typography style={{color:"#04B3AC"}}>City: </Typography></Form.Label>
-                                            <Form.Control required type="text" placeholder="City"
-                                                          isInvalid={errorCity}
-                                                          value={data.city}
-                                                          onChange={(e) => {setData({
-                                                              ...data,
-                                                              city: e.target.value
-                                                          })
-                                                              if (e.target.value.length === 0 ) {
-                                                                  setErrorCity(true);
-                                                              } else setErrorCity(false);
-                                                          }}
-                                            />
+                                                  onChange={(e) =>{ setData({
+                                                      ...data,
+                                                      city: e.target.value
+                                                  }) }}
+                                    >
+                                        <option value="Tunis">Tunis</option>
+                                        <option value="Bizerte">Bizerte</option>
+                                        <option value="Ariana">Ariana</option>
+                                        <option value="Manouba">Manouba</option>
+                                        <option value="Ben Arous">Ben Arous</option>
+                                        <option value="Zaghouan">Zaghouan</option>
+                                        <option value="Nabeul">Nabeul</option>
+                                        <option value="Siliana">Siliana</option>
+                                        <option value="Beja">Beja</option>
+                                        <option value="Jendouba">Jendouba</option>
+                                        <option value="Kef">Kef</option>
+                                        <option value="Sousse">Sousse</option>
+                                        <option value="Monastir">Monastir</option>
+                                        <option value="Mahdia">Mahdia</option>
+                                        <option value="Kairouan">Kairouan</option>
+                                        <option value="Kaisserine">Kaisserine</option>
+                                        <option value="Sidi Bouzid">Sidi Bouzid</option>
+                                        <option value="Sfax">Sfax</option>
+                                        <option value="Gabes">Gabes</option>
+                                        <option value="Medenine">Medenine</option>
+                                        <option value="Tataouine">Tataouine</option>
+                                        <option value="Gafsa">Gafsa</option>
+                                        <option value="Tozeur">Tozeur</option>
+                                        <option value="Kebili">Kebili</option>
+
+                                    </Form.Control>
                                     <Form.Control.Feedback type="invalid" >
                                         City is invalid !
                                     </Form.Control.Feedback>

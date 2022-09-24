@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {MissionCalendar} from "./components/MissionsComponents/MissionCalendar";
 import {Alert, Pagination} from "@mui/lab";
 import MissionRow from "./components/MissionsComponents/MissionRow";
+import AddMissionForm from "./components/MissionsComponents/AddMissionForm";
 
 
 
@@ -29,21 +30,7 @@ export default () => {
         setDialogueForm(false);
     };
 
-    const events =[
-        { title: "All Day Event", start: "2022-09-05" },
-        {
-            title: "Long Event",
-            start: "2022-09-01",
-            end: "2022-09-03"
-        },
-    ]
-    // const [events, setEvents] = useState([
-    //     {}
-    // ]);
-    //
-    // useEffect(() => {
-    //     missionList.map((m)=> )
-    // }, missionList)
+
 
     return (
         <>
@@ -92,7 +79,7 @@ export default () => {
             </Row>
             <Row>
 
-               <MissionCalendar  />
+               <MissionCalendar setDialogueForm={setDialogueForm} />
 
             </Row>
 
@@ -104,11 +91,11 @@ export default () => {
                 // TransitionComponent={Transition}
             >
                 <DialogTitle id="draggable-dialog-title">
-                    Add A New Shop
+                    Add A New Mission
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <AddShopForm />
+                        <AddMissionForm />
                     </DialogContentText>
                 </DialogContent>
             </Dialog>

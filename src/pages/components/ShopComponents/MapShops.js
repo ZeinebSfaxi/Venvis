@@ -6,10 +6,12 @@ import EsriLeafletGeoSearch from "react-esri-leaflet/plugins/EsriLeafletGeoSearc
 import L from 'leaflet';
 import {Icon} from 'leaflet'
 import marker from '../../../assets/img/store-circle-blue-512.png';
+import warehouse from '../../../assets/img/warehouse-inventory-icon-33852.png';
 import {useDispatch, useSelector} from "react-redux";
 // import ProfileCover from "../../assets/img/profile-cover.jpg";
 import {Button, Card} from "@themesberg/react-bootstrap";
 import ProfileCover from "../../../assets/img/profile-cover.jpg";
+import WarehouseCover from "../../../assets/img/2308901.jpg";
 import {useHistory} from "react-router";
 // import Profile1 from "../../assets/img/team/profile-picture-1.jpg";
 // import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -18,10 +20,17 @@ import {useHistory} from "react-router";
 
 export default () => {
 
-    const position = [36.8815639, 10.3272283]
+    const position = [35.8815639, 9.316795]
+    const depotNord = [36.815429, 10.304515]
+    const depotSud = [34.724008, 10.780275]
+    const depotCentre = [35.829300, 10.640630]
 
     const myIcon = new Icon({
         iconUrl: marker,
+        iconSize: [32, 32]
+    })
+    const myWarehouse = new Icon({
+        iconUrl: warehouse,
         iconSize: [32, 32]
     })
 
@@ -50,7 +59,7 @@ export default () => {
     return (
         <Card className="mt-3">
 
-        <MapContainer className="m-2" center={position} zoom={9} scrollWheelZoom={true} maxZoom={18} minZoom={0}>
+        <MapContainer className="m-2" center={position} zoom={8} scrollWheelZoom={true} maxZoom={18} minZoom={0}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -91,6 +100,50 @@ export default () => {
                     </Popup>
                 </Marker>
             )}
+
+                <Marker position={depotCentre} icon={myWarehouse}>
+                    <Popup >
+                        <Card  style={{  height:"20%"}} border="light" className="shadow-sm mb-2" >
+
+                           <div style={{  backgroundImage: `url(${WarehouseCover})`}}  className="profile-cover rounded-top" />
+                            <Card.Body className="pb-2" >
+                                {/*<Card.Img src={Profile1} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />*/}
+                                <Card.Title>Warehouse</Card.Title>
+                                <Card.Subtitle className="fw-normal mb-2"> Center Region </Card.Subtitle>
+                            </Card.Body>
+                        </Card>
+
+                    </Popup>
+                </Marker>
+                <Marker position={depotNord} icon={myWarehouse}>
+                    <Popup >
+                        <Card  style={{  height:"20%"}} border="light" className="shadow-sm mb-2" >
+
+                            <div style={{  backgroundImage: `url(${WarehouseCover})`}}  className="profile-cover rounded-top" />
+                            <Card.Body className="pb-2" >
+                                {/*<Card.Img src={Profile1} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />*/}
+                                <Card.Title>Warehouse</Card.Title>
+                                <Card.Subtitle className="fw-normal mb-2"> North Region </Card.Subtitle>
+                            </Card.Body>
+                        </Card>
+
+                    </Popup>
+                </Marker>
+                <Marker position={depotSud} icon={myWarehouse}>
+                    <Popup >
+                        <Card  style={{  height:"20%"}} border="light" className="shadow-sm mb-2" >
+
+                            <div style={{  backgroundImage: `url(${WarehouseCover})`}}  className="profile-cover rounded-top" />
+                            <Card.Body className="pb-2" >
+                                {/*<Card.Img src={Profile1} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />*/}
+                                <Card.Title>Warehouse</Card.Title>
+                                <Card.Subtitle className="fw-normal mb-2"> South Region </Card.Subtitle>
+                            </Card.Body>
+                        </Card>
+
+                    </Popup>
+                </Marker>
+
             </>
         </MapContainer>
         </Card>

@@ -14,7 +14,10 @@ import {
     DialogTitle,
     Popover, Snackbar
 } from "@mui/material";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {GetOrdesrByMission, unaffectOrderFromMission} from "../../../actions/orderAction";
+import {deleteMission} from "../../../actions/missionAction";
+import {ListMission} from "./ListMission";
 
 
 export default ({mission}) => {
@@ -57,6 +60,18 @@ export default ({mission}) => {
 
 // // today
     const today = new Date()
+
+
+
+    const orderList = useSelector (state => state.ordersByMission);
+    const orders = orderList.ordersByMission
+    const loading = orderList.loading
+    const error = orderList.error
+
+    useEffect(() => {
+        orders.map((o) => console.log("orderssss",o._id))
+    }, [orders])
+
 
 
     return (
@@ -162,11 +177,13 @@ export default ({mission}) => {
                         Cancel
                     </Button>
                     <Button size="sm" variant="contained" color="error" type="submit"
-                            // onClick={(e) => {
-                            //     e.preventDefault();
-                            //     refuseValidation();
-                            //     handleCloseDialogue();
-                            // }}
+                            onClick={(e) => {
+                                dispatch(deleteMission(mission._id))
+                                dispatch(GetOrdesrByMission(mission._id))
+                                 console.log("aveee mariaa", mission._id)
+                                orders.map((o) => dispatch(unaffectOrderFromMission(o._id)))
+                                window.location.reload();
+                            }}
                     >Delete</Button>
 
                 </DialogActions>

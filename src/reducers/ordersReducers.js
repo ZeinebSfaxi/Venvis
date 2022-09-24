@@ -30,6 +30,40 @@ export const OrderByShopReducer = (state = { ordersByShop: [] }, action) => {
     }
 }
 
+export const OrderByRegionReducer = (state = { ordersByRegion: [] }, action) => {
+    switch (action.type) {
+        case "ORDER_BY_REGION_REQUEST":
+            return { loading: true, ordersByRegion: [] }
+        case "ORDER_BY_REGION_SUCCESS":
+            return {
+                loading: false,
+                ordersByRegion: action.payload,
+            }
+        case "ORDER_BY_REGION_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+
+
+export const OrderByMissionReducer = (state = { ordersByMission: [] }, action) => {
+    switch (action.type) {
+        case "ORDER_BY_MISSION_REQUEST":
+            return { loading: true, ordersByMission: [] }
+        case "ORDER_BY_MISSION_SUCCESS":
+            return {
+                loading: false,
+                ordersByMission: action.payload,
+            }
+        case "ORDER_BY_MISSION_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
 export const singleOrderReducer = (state = { order: {} }, action) => {
     switch (action.type) {
         case "ORDER_DETAILS_REQUEST":
@@ -77,6 +111,40 @@ export const validateOrderReducer = (state = { order: {} }, action) => {
             return state
     }
 }
+
+
+export const affectOrderToMissionReducer = (state = { order: {} }, action) => {
+    switch (action.type) {
+        case "AFFECT_ORDER_TO_MISSION_REQUEST":
+            return { loading: true }
+        case "AFFECT_ORDER_TO_MISSION_SUCCESS":
+            return {
+                loading: false,
+                order: action.payload
+            }
+        case "AFFECT_ORDER_TO_MISSION_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+export const unaffectOrderFromMissionReducer = (state = { order: {} }, action) => {
+    switch (action.type) {
+        case "UNAFFECT_ORDER_FROM_MISSION_REQUEST":
+            return { loading: true }
+        case "UNAFFECT_ORDER_FROM_MISSION_SUCCESS":
+            return {
+                loading: false,
+                order: action.payload
+            }
+        case "UNAFFECT_ORDER_FROM_MISSION_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
 
 export const stateOrderReducer = (state = { order: {} }, action) => {
     switch (action.type) {

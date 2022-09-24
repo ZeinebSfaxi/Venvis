@@ -30,6 +30,37 @@ export const GetOrdesrByShop = (id) => async (dispatch) => {
     }
 }
 
+export const GetOrdesrByRegion = (id) => async (dispatch) => {
+    try {
+        dispatch({type: "ORDER_BY_REGION_REQUEST"})
+
+        const {data} = await axios.get(`http://localhost:4000/orders/orderByRegion/${id}`)
+        dispatch({type: "ORDER_BY_REGION_SUCCESS", payload: data })
+
+    } catch (error) {
+        dispatch({type: "ORDER_BY_REGION_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
+export const GetOrdesrByMission = (id) => async (dispatch) => {
+    try {
+        dispatch({type: "ORDER_BY_MISSION_REQUEST"})
+
+        const {data} = await axios.get(`http://localhost:4000/orders/orderByMission/${id}`)
+        dispatch({type: "ORDER_BY_MISSION_SUCCESS", payload: data })
+
+    } catch (error) {
+        dispatch({type: "ORDER_BY_MISSION_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
+
 export const GetOrderDetails = (id) => async (dispatch) => {
     try {
         dispatch({type: "ORDER_DETAILS_REQUEST"})
@@ -78,6 +109,41 @@ export const validateOrder = (id, updatedOrder ) => async (dispatch) => {
         })
     }
 }
+
+
+export const affectOrderToMission = (id, updatedOrder ) => async (dispatch) => {
+    try {
+        dispatch({type: "VALIDATE_ORDER_REQUEST"})
+
+        const {data} = await axios.patch( `http://localhost:4000/orders/affectOrderToMission/${id}`, updatedOrder)
+        dispatch({type: "VALIDATE_ORDER_SUCCESS", payload: data })
+
+
+
+    } catch (error) {
+        dispatch({type: "VALIDATE_ORDER_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
+export const unaffectOrderFromMission = (id) => async (dispatch) => {
+    try {
+        dispatch({type: "UNAFFECT_ORDER_FROM_MISSION_REQUEST"})
+
+        const {data} = await axios.patch( `http://localhost:4000/orders/unaffectOrderFromMission/${id}`)
+        dispatch({type: "UNAFFECT_ORDER_FROM_MISSION_SUCCESS", payload: data })
+
+
+    } catch (error) {
+        dispatch({type: "UNAFFECT_ORDER_FROM_MISSION_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
 
 export const stateOrder = (id, updatedOrder ) => async (dispatch) => {
     try {

@@ -19,6 +19,7 @@ import {
     DialogTitle
 } from "@mui/material";
 import {Alert} from "@mui/lab";
+import {GetAgentDetails} from "../../../actions/agentAction";
 
 
 function CategoryOutlinedIcon() {
@@ -29,11 +30,23 @@ function CategoryIcon() {
     return null;
 }
 
-export const AgentCard = ({agent}) => {
+export const AgentCard = () => {
 
     const routeParams = useParams();
     const idAgent = routeParams.agentId;
     const dispatch = useDispatch()
+
+
+    useEffect(() => {
+
+        dispatch(GetAgentDetails(idAgent))
+
+    }, [dispatch, idAgent])
+
+    const singleAgentDetails = useSelector(state => state.agentDetails)
+    const loading = singleAgentDetails.loading
+    const agent = singleAgentDetails.agent
+    const error = singleAgentDetails.error
 
     // useEffect(() => {
     //     dispatch(GetManagerByShop(idShop))
@@ -55,44 +68,85 @@ export const AgentCard = ({agent}) => {
         setChecked(event.target.checked);
     };
 
-    // //get managers list
-    // const managerList = useSelector (state => state.managerList);
-    // const managers = managerList.managers
-    // const loadingList = managerList.loading
-    // const errorList = managerList.error
-
-    useEffect(() => {
-        dispatch(listManagers())
-
-    }, [dispatch])
-
 
     return (
+
         <>
-            <Card border="light" className="text-center p-0 mb-4">
+            {idAgent=== "undefined"? (
+                <>
+                    <Card border="light" className="text-center p-0 mb-4">
+                <Card.Body className="pb-5">
+                    <Card.Title> No agents for this mission</Card.Title>
+                    <Card.Subtitle className="fw-normal">No agents are available for this mission</Card.Subtitle>
+                    <Card.Text className="text-gray mb-4">Would you like to assign a new agent ?</Card.Text>
 
-                                <>
+                    <Button variant="primary" size="sm" className="me-2" onClick={() => {
+                        setDialogueForm(true)
+                    }}>
+                        <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Assign
+                    </Button>
+                </Card.Body>
+                    </Card>
+                </>
+
+                ) : (
+
+                <>
+
+
+                    {loading ? (
+                        <Box className="m-5" sx={{ display: 'flex',alignItems: 'center',
+                            justifyContent: 'center',  }} >
+                            <CircularProgress style={{color:"#323854"}} />
+                        </Box>
+                    ) : error ? (
+
+                        <Alert className="m-2" sx={{ width: '100%' }} variant="filled" severity="error">
+                            Ay ay ay! looks like you have network problems :(
+                            <ul>
+                                <li> try reloading your page </li>
+                                <li>  try checking your internet connection</li>
+                            </ul>
+                            {"\n"} <strong>Error: {error} </strong>
+                        </Alert>
+
+                    ) : (
+                        <>
+
+                            { agent &&
+                            (
+                                <Card border="light" className="text-center p-0 mb-4">
+
+                                    <>
                                         <div style={{ backgroundImage: `url(${ProfileCover})` }} className="profile-cover rounded-top"/>
-                                    <Card.Body className="pb-5">
-                                        <Avatar className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" sx={{ bgcolor: "#262b40", fontSize:"300%" }}>{agent.firstName?.charAt(0).toUpperCase()} {agent.lastName?.charAt(0).toUpperCase()}</Avatar>
-                                        {/*<Card.Img  alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" > {shopmanager.name.charAt(0).toUpperCase()} {shopmanager.lastName.charAt(0).toUpperCase()}</Card.Img>*/}
+                                        <Card.Body className="pb-5">
+                                            <Avatar className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" sx={{ bgcolor: "#262b40", fontSize:"300%" }}>{agent.firstName?.charAt(0).toUpperCase()} {agent.lastName?.charAt(0).toUpperCase()}</Avatar>
+                                            {/*<Card.Img  alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" > {shopmanager.name.charAt(0).toUpperCase()} {shopmanager.lastName.charAt(0).toUpperCase()}</Card.Img>*/}
 
-                                        <Card.Title>{agent?.firstName} {agent?.lastName}</Card.Title>
-                                        <Card.Subtitle >Commercial Agent</Card.Subtitle>
-                                        <Card.Text className="text-gray mb-0">{agent?.email}</Card.Text>
-                                        <Card.Text className="text-gray mb-4">{agent.attributes?.phone}</Card.Text>
+                                            <Card.Title>{agent?.firstName} {agent?.lastName}</Card.Title>
+                                            <Card.Subtitle >Commercial Agent</Card.Subtitle>
+                                            <Card.Text className="text-gray mb-0">{agent?.email}</Card.Text>
+                                            <Card.Text className="text-gray mb-4">{agent.attributes?.phone}</Card.Text>
 
 
-                                        {/*<Button variant="primary" size="sm" className="me-2"  onClick={() => {*/}
-                                        {/*    setDialogueForm(true)*/}
-                                        {/*}}>*/}
-                                        {/*    <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Replace Manager*/}
-                                        {/*</Button>*/}
-                                        <Button variant="secondary" size="sm">Send Message</Button>
-                                    </Card.Body>
-                                </>
+                                            {/*<Button variant="primary" size="sm" className="me-2"  onClick={() => {*/}
+                                            {/*    setDialogueForm(true)*/}
+                                            {/*}}>*/}
+                                            {/*    <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Replace Manager*/}
+                                            {/*</Button>*/}
+                                            <Button variant="secondary" size="sm">Send Message</Button>
+                                        </Card.Body>
+                                    </>
 
-            </Card>
+                                </Card>
+                            )
+                            }
+                        </>
+                    )}
+                </>
+
+            ) }
+
 
             {/*************Dialogue*/}
 
@@ -150,6 +204,7 @@ export const AgentCard = ({agent}) => {
             {/*        </DialogContentText>*/}
             {/*    </DialogContent>*/}
             {/*</Dialog>*/}
+
 
         </>
 

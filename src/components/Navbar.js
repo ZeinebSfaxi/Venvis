@@ -117,7 +117,7 @@ export default (props) => {
                 </Dropdown.Item>
 
                 <Dropdown.Divider />
-
+                {/*redirect to bye bye*/}
                 <Dropdown.Item className="fw-bold"  onClick={() => keycloak.logout()}>
                   <FontAwesomeIcon icon={faSignOutAlt}  className="text-danger me-2" /> Logout
                 </Dropdown.Item>

@@ -26,7 +26,9 @@ import features from "../data/features";
 //keycloak integration
 import { useKeycloak } from "@react-keycloak/web";
 
+
 export default () => {
+
   const PagePreview = (props) => {
     const { name, image, link } = props;
 
