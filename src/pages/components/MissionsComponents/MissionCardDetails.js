@@ -86,9 +86,7 @@ export default ({mission}) => {
 
     useEffect(() => {
         if (missionId) {
-
             dispatch(GetOrdesrByMission(missionId))
-
         }
     }, [dispatch])
 
@@ -335,6 +333,8 @@ export default ({mission}) => {
 
                                 <Button variant="primary" size="sm" className="me-2" onClick={() => {
                                     setEditable(true)
+                                    setArrayToremove([]);
+                                    setArrayOrders([]);
                                 }}>
                                     <FontAwesomeIcon icon={faEdit} className="me-1"/> Edit
                                 </Button>
