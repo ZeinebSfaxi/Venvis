@@ -10,7 +10,7 @@ import {
   faSignOutAlt,
   faTimes,
   faMapPin,
-  faTruck, faTags, faShoppingBasket, faPhone, faUserSecret, faUser, faStore, faHardHat, faHatCowboy
+  faTruck, faTags, faShoppingBasket, faPhone, faUserSecret, faUser, faStore, faHardHat, faHatCowboy, faUserTie
 } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -114,14 +114,14 @@ export default (props = {}) => {
 
               {/*new*/}
               <NavItem title="Shops" icon={faStore} link={Routes.Shops.path} />
-              <NavItem title="Managers" icon={faUser} link={Routes.Managers.path} />
+              <NavItem title="Managers" icon={faUserTie} link={Routes.Managers.path} />
               <NavItem title="Commercial Agents" icon={faTruck} link={Routes.Agents.path} />
 
               <Dropdown.Divider className="my-3 border-indigo" />
 
               <NavItem title="Products" icon={faTags}/>
               <NavItem title="Orders" icon={faShoppingBasket} link={Routes.Orders.path}/>
-              <NavItem title="Missions" icon={faCalendar}/>
+              <NavItem title="Missions" icon={faCalendar}  link={Routes.Missions.path}/>
 
               <Dropdown.Divider className="my-3 border-indigo" />
 

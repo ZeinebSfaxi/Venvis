@@ -12,7 +12,7 @@ import ProfileCover from "../../../assets/img/profile-cover.jpg";
 
 export default ({shop}) => {
 
-    const position = [36.8815639, 10.3272283]
+    const position = [35.8815639, 10.3272283]
 
     const myIcon = new Icon({
         iconUrl: marker,
@@ -32,7 +32,7 @@ export default ({shop}) => {
     return (
         <Card>
 
-            <MapContainer className="m-2" center={position} zoom={9} scrollWheelZoom={true} maxZoom={18} minZoom={0}>
+            <MapContainer className="m-2" center={position} zoom={7} scrollWheelZoom={true} maxZoom={18} minZoom={0}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

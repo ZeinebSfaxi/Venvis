@@ -1,4 +1,4 @@
-import {Col, Row} from "@themesberg/react-bootstrap";
+import {Button, Col, Row} from "@themesberg/react-bootstrap";
 import {ChoosePhotoWidget, ProfileCardWidget} from "../components/Widgets";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
 import React, {useEffect, useState} from "react";
@@ -6,7 +6,7 @@ import SingleShopDetails from "./components/ShopComponents/SingleShopDetails";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {GetshopDetails} from "../actions/shopAction";
-import {Box, CardContent, CircularProgress} from "@mui/material";
+import {Avatar, Box, CardContent, CircularProgress} from "@mui/material";
 import {Alert} from "@mui/lab";
 import {ShopManagerCard} from "./components/ShopManagerComponents/ShopManagerCard";
 import Card from "@mui/material/Card";
@@ -15,6 +15,13 @@ import {ListOrders} from "./components/OrderComponents/ListOrders";
 import {OrderDetailsForSingleShop} from "./components/OrderComponents/OrderDetailsForSingleShop";
 import {OrderListByShop} from "./components/OrderComponents/OrderListByShop";
 import {OrderDetailsToDeliverShop} from "./components/OrderComponents/OrderDetailsToDeliverSingle";
+import {GetAgentDetails, getToken} from "../actions/agentAction";
+import {AgentCard} from "./components/AgentsComponents/AgentCard";
+import ProfileCover from "../assets/img/profile-cover.jpg";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUserEdit} from "@fortawesome/free-solid-svg-icons";
+import {GetMissionDetails} from "../actions/missionAction";
+import MissionCardDetails from "./components/MissionsComponents/MissionCardDetails";
 
 
 
@@ -22,18 +29,20 @@ export default () => {
 
 
     const routeParams = useParams();
-    const idShop = routeParams.shopId;
-    const idOrder = routeParams.orderId;
+    const idAgent = routeParams.agentId;
+    const idMission = routeParams.missionId;
+
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(GetshopDetails(idShop))
-    }, [dispatch, idShop])
 
-    const singleShopDetails = useSelector(state => state.shopDetails)
-    const loading = singleShopDetails.loading
-    const shop = singleShopDetails.shop
-    const error = singleShopDetails.error
+    useEffect(() => {
+        dispatch(GetMissionDetails(idMission))
+    }, [dispatch, idMission])
+
+    const singleMissionDetails = useSelector(state => state.missionDetails)
+    const loading = singleMissionDetails.loading
+    const mission = singleMissionDetails.mission
+    const error = singleMissionDetails.error
 
     const [search, setSearch] = useState("")
 
@@ -118,12 +127,16 @@ export default () => {
 
                     ) : (
                         <>
-                            { shop &&
-                            ( <SingleShopDetails shop ={shop} />)  }
+                            { mission &&
+                            (
+                                // <SingleShopDetails shop ={shop} />
+                                <MissionCardDetails mission={mission}  />
+                            )
+                            }
                         </>
                     )}
 
-                    {idOrder?  <OrderDetailsForSingleShop  /> : <OrderDetailsToDeliverShop /> }
+                    {/*{idOrder?  <OrderDetailsForSingleShop  /> : <OrderDetailsToDeliverShop /> }*/}
 
                     {/*<Card>*/}
                     {/*    eeeee*/}
@@ -134,46 +147,51 @@ export default () => {
                 <Col xs={12} xl={4}>
                     <Row>
                         <Col xs={12}>
-                            <ShopManagerCard shop ={shop} />
-                        </Col>
-                        <Col xs={12}>
 
-
-                            {loading ? (
-                                <Box className="m-5" sx={{ display: 'flex',alignItems: 'center',
-                                    justifyContent: 'center',  }} >
-                                    <CircularProgress style={{color:"#323854"}} />
-                                </Box>
-                            ) : error ? (
-
-                                <Alert className="m-2" sx={{ width: '100%' }} variant="filled" severity="error">
-                                    Ay ay ay! looks like you have network problems :(
-                                    <ul>
-                                        <li> try reloading your page </li>
-                                        <li>  try checking your internet connection</li>
-                                    </ul>
-                                    {"\n"} <strong>Error: {error} </strong>
-                                </Alert>
-
-                            ) : (
-                                <>
-                                    { shop &&
-                                    ( <MapSingleShop shop ={shop} />)  }
-                                </>
-                            )}
+                                 <AgentCard />
                         </Col>
 
+
+                        {/*<Col xs={12}>*/}
+
+
+                        {/*    {loading ? (*/}
+                        {/*        <Box className="m-5" sx={{ display: 'flex',alignItems: 'center',*/}
+                        {/*            justifyContent: 'center',  }} >*/}
+                        {/*            <CircularProgress style={{color:"#323854"}} />*/}
+                        {/*        </Box>*/}
+                        {/*    ) : error ? (*/}
+
+                        {/*        <Alert className="m-2" sx={{ width: '100%' }} variant="filled" severity="error">*/}
+                        {/*            Ay ay ay! looks like you have network problems :(*/}
+                        {/*            <ul>*/}
+                        {/*                <li> try reloading your page </li>*/}
+                        {/*                <li>  try checking your internet connection</li>*/}
+                        {/*            </ul>*/}
+                        {/*            {"\n"} <strong>Error: {error} </strong>*/}
+                        {/*        </Alert>*/}
+
+                        {/*    ) : (*/}
+                        {/*        <>*/}
+                        {/*            { agent &&*/}
+                        {/*            (*/}
+                        {/*                <h1>eeeeee</h1>*/}
+                        {/*                // <MapSingleShop shop ={shop} />*/}
+                        {/*                )  }*/}
+                        {/*        </>*/}
+                        {/*    )}*/}
+                        {/*</Col>*/}
 
 
                     </Row>
                 </Col>
 
 
-                <Card border="light" className="bg-white shadow-lg mb-4 mt-4" >
-                    <CardContent>
-                        <OrderListByShop idShop={idShop} />
-                    </CardContent>
-                </Card>
+                {/*<Card border="light" className="bg-white shadow-lg mb-4 mt-4" >*/}
+                {/*    <CardContent>*/}
+                {/*        /!*<OrderListByShop idShop={idShop} />*!/*/}
+                {/*    </CardContent>*/}
+                {/*</Card>*/}
 
             </Row>
 

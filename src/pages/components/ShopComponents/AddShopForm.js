@@ -11,7 +11,7 @@ export default () => {
         name: '',
         latitude: '',
         longitude: '',
-        country: '',
+        country: 'Tunisia',
         city: '',
         streetName:'' ,
         streetNumber: '',
@@ -89,7 +89,7 @@ export default () => {
     const [errorPhoneNumber, setErrorPhoneNumber] = useState(false)
     const [errorStreetName, setErrorStreetName] = useState(false)
     const [errorStreetNumber, setErrorStreetNumber] = useState(false)
-    const [errorCity, setErrorCity] = useState(false)
+
     const [errorCountry, setErrorCountry] = useState(false)
     const [errorZip, setErrorZip] = useState(false)
     const [errorImage, setErrorImage] = useState(false)
@@ -99,8 +99,6 @@ export default () => {
         if (shopData.name !== ''
             && shopData.streetName !== ''
             && shopData.streetNumber !== ''
-            && shopData.city !== ''
-            && shopData.country !== ''
             && shopData.zipcode !== ''
             && shopData.phoneNumber.length === 8
             // && shopData.image !== ''
@@ -219,41 +217,67 @@ export default () => {
                     </Row>
                     <Row>
                         {/*dropdown countries*/}
-                        <Col sm={4} className="mb-3">
-                            <Form.Group id="country">
-                                <Form.Label>Country:</Form.Label>
-                                <Form.Control required type="text" placeholder="Country"  value={shopData.country}
-                                              isInvalid={errorCountry}
-                                              onChange={(e) =>{ setShopData({
-                                                  ...shopData,
-                                                  country: e.target.value
-                                              })
-                                                  if (e.target.value.length === 0  ||/^\d+$/.test(e.target.value) ) {
-                                                      setErrorCountry(true);
-                                                  } else setErrorCountry(false);
-                                              }}
 
-                                />
-                                <Form.Control.Feedback type="invalid" >
-                                    Country is invalid !
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Col>
-                        <Col sm={4} className="mb-3">
+
+                        {/*<Col sm={4} className="mb-3">*/}
+                        {/*    <Form.Group id="country">*/}
+                        {/*        <Form.Label>Country:</Form.Label>*/}
+                        {/*        <Form.Control required type="text" placeholder="Country"  value={shopData.country}*/}
+                        {/*                      isInvalid={errorCountry}*/}
+                        {/*                      onChange={(e) =>{ setShopData({*/}
+                        {/*                          ...shopData,*/}
+                        {/*                          country: e.target.value*/}
+                        {/*                      })*/}
+                        {/*                          if (e.target.value.length === 0  ||/^\d+$/.test(e.target.value) ) {*/}
+                        {/*                              setErrorCountry(true);*/}
+                        {/*                          } else setErrorCountry(false);*/}
+                        {/*                      }}*/}
+
+                        {/*        />*/}
+                        {/*        <Form.Control.Feedback type="invalid" >*/}
+                        {/*            Country is invalid !*/}
+                        {/*        </Form.Control.Feedback>*/}
+                        {/*    </Form.Group>*/}
+                        {/*</Col>*/}
+
+
+                        <Col sm={6} className="mb-3">
 
                             <Form.Group id="city">
                                 <Form.Label>City:</Form.Label>
-                                <Form.Control required type="text" placeholder="City"  value={shopData.city}
-                                              isInvalid={errorCity}
+                                <Form.Control required as="select" placeholder="City" defaultValue="Tunis"  value={shopData.city}
+
                                               onChange={(e) =>{ setShopData({
                                                   ...shopData,
                                                   city: e.target.value
-                                              })
-                                                  if (e.target.value.length === 0  ||/^\d+$/.test(e.target.value)) {
-                                                  setErrorCity(true);
-                                              } else setErrorCity(false);
-                                              }}
-                                />
+                                              }) }}
+                                >
+                                <option value="Tunis">Tunis</option>
+                                <option value="Bizerte">Bizerte</option>
+                                <option value="Ariana">Ariana</option>
+                                <option value="Manouba">Manouba</option>
+                                <option value="Ben Arous">Ben Arous</option>
+                                <option value="Zaghouan">Zaghouan</option>
+                                <option value="Nabeul">Nabeul</option>
+                                <option value="Siliana">Siliana</option>
+                                <option value="Beja">Beja</option>
+                                <option value="Jendouba">Jendouba</option>
+                                <option value="Kef">Kef</option>
+                                <option value="Sousse">Sousse</option>
+                                <option value="Monastir">Monastir</option>
+                                <option value="Mahdia">Mahdia</option>
+                                <option value="Kairouan">Kairouan</option>
+                                <option value="Kaisserine">Kaisserine</option>
+                                <option value="Sidi Bouzid">Sidi Bouzid</option>
+                                <option value="Sfax">Sfax</option>
+                                <option value="Gabes">Gabes</option>
+                                <option value="Medenine">Medenine</option>
+                                <option value="Tataouine">Tataouine</option>
+                                <option value="Gafsa">Gafsa</option>
+                                <option value="Tozeur">Tozeur</option>
+                                <option value="Kebili">Kebili</option>
+
+                                </Form.Control>
                                 <Form.Control.Feedback type="invalid" >
                                    City is invalid !
                                 </Form.Control.Feedback>

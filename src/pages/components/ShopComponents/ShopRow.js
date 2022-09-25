@@ -51,7 +51,7 @@ export default ({shop}) => {
             </td>
             <td>
           <span className="fw-normal">
-          {shop.country}
+          {shop.city}
           </span>
 
             </td>

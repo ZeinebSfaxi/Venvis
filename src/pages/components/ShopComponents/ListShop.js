@@ -61,7 +61,7 @@ export const ListShop = ({search}) => {
                                 <th className="border-bottom">ID</th>
                                 <th className="border-bottom">Name</th>
                                 <th className="border-bottom">Address</th>
-                                <th className="border-bottom">Country</th>
+                                <th className="border-bottom">City</th>
                                 <th className="border-bottom">PhoneNumber</th>
                                 <th className="border-bottom">Action</th>
                             </tr>

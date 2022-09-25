@@ -54,7 +54,7 @@ export const ListCompetitor = ({search}) => {
 
     return (
         <>
-           < h5 className="my-4">From Amazone</h5>
+           < h5 className="my-4">From Amazon</h5>
         <Card>
 
 

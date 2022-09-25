@@ -6,6 +6,8 @@ export const Routes = {
 
     //newpages
     Shops: { path: "/shops" },
+    Missions: { path: "/missions" },
+    MissionDetails: {path: `/missions/missionDetails/:missionId/:agentId?`},
     ShopDetails: {path: `/shops/shopDetails/:shopId/:orderId?`},
     Managers: { path: "/managers" },
     Competitors: { path: "/competitors" },

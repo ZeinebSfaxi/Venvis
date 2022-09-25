@@ -16,10 +16,13 @@ import {
 } from "./reducers/shopManagerReducers";
 import {competitorListReducer} from "./reducers/competitorsReducer";
 import {
+    affectOrderToMissionReducer,
+    OrderByMissionReducer, OrderByRegionReducer,
     OrderByShopReducer,
     OrderListReducer, OrderToDeliverReducer,
     singleOrderReducer,
     stateOrderReducer,
+    unaffectOrderFromMissionReducer,
     validateOrderReducer
 } from "./reducers/ordersReducers";
 import {
@@ -29,6 +32,13 @@ import {
     deleteAgentReducer,
     updateAgentReducer
 } from "./reducers/agentsReducer";
+import {
+    deleteMissionReducer,
+    missionCreateReducer,
+    missionDetailsReducer,
+    MissionListReducer,
+    updateMissionReducer
+} from "./reducers/missionReducer";
 
 
 const reducer = combineReducers({
@@ -48,8 +58,12 @@ const reducer = combineReducers({
     orderList: OrderListReducer,
     singleOrder: singleOrderReducer,
     validateOrder: validateOrderReducer,
+    affectOrderToMission: affectOrderToMissionReducer,
+    unaffectOrderFromMission: unaffectOrderFromMissionReducer,
     stateOrder: stateOrderReducer,
     ordersByShop: OrderByShopReducer,
+    ordersByRegion: OrderByRegionReducer,
+    ordersByMission: OrderByMissionReducer,
     OrderToDeliver: OrderToDeliverReducer,
 
 
@@ -59,6 +73,11 @@ const reducer = combineReducers({
     agentCreate: agentCreateReducer,
     agentDelete: deleteAgentReducer,
 
+    missionList: MissionListReducer,
+    missionDetails: missionDetailsReducer,
+    missionCreate: missionCreateReducer,
+    missionUpdate: updateMissionReducer,
+    missionDelete: deleteMissionReducer,
 
     competitorList: competitorListReducer,
 })

@@ -126,8 +126,28 @@ export const OrderDetailsForSingleShop = () => {
 
                             </Row>
 
-                        {order.validated === 'to review' || moment(today).format('DD-MM-YYYY') < moment(order.sendingDate).add(2,'days').format('DD-MM-YYYY')  ?
-                            (<>
+
+                        {order.validated !== 'to review' || moment(today).format('DD-MM-YYYY') > moment(order.sendingDate).add(2,'days').format('DD-MM-YYYY')  ?
+
+                          (
+                                <>
+
+                                    <Row className="d-flex justify-content-lg-end align-items-end mb-3">
+                                        <Col className="col-auto ">
+                                            <Button  disabled  size="sm" className="me-2"  >
+                                                <FontAwesomeIcon icon={faCheck} className="me-1" /> Accept
+                                            </Button>
+                                        </Col>
+
+                                        <Col className="col-auto ">
+                                            <Button  disabled  size="sm" className="me-2" >
+                                                <FontAwesomeIcon icon={faBan} className="me-1" /> Reject
+                                            </Button>
+                                        </Col>
+                                    </Row>
+
+                                </>
+                            ) :    (<>
                                 <Row className="d-flex justify-content-lg-end align-items-end mb-3">
                                     <Col className="col-auto ">
                                         <Button  style={{backgroundColor: "#0aae0d", borderColor:"#0aae0d"}} size="sm" className="me-2"   onClick={(e) => {
@@ -148,25 +168,7 @@ export const OrderDetailsForSingleShop = () => {
                                     </Col>
                                 </Row>
 
-                            </>) : (
-                                <>
-
-                                    <Row className="d-flex justify-content-lg-end align-items-end mb-3">
-                                        <Col className="col-auto ">
-                                            <Button  disabled  size="sm" className="me-2"  >
-                                                <FontAwesomeIcon icon={faCheck} className="me-1" /> Accept
-                                            </Button>
-                                        </Col>
-
-                                        <Col className="col-auto ">
-                                            <Button  disabled  size="sm" className="me-2" >
-                                                <FontAwesomeIcon icon={faBan} className="me-1" /> Reject
-                                            </Button>
-                                        </Col>
-                                    </Row>
-
-                                </>
-                            )
+                            </>)
                         }
 
                         <Form>

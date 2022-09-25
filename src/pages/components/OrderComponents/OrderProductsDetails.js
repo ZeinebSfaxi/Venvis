@@ -36,7 +36,7 @@ export const OrderProductsDetails = ({product}) => {
                             <h6 className="fw-bolder "  style={{color:"#4974a5"}}>{product.family.toUpperCase()}</h6>
                         </Col>
                     </Row>
-                    <h4 className="mt-2"  style={{color:"#262b40"}}>${product.price}</h4>
+                    <h4 className="mt-2"  style={{color:"#262b40"}}>TND{product.price}</h4>
 
                 </div>
                 </CardContent>
