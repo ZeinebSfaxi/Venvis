@@ -152,11 +152,14 @@ export default () => {
               <Image src={LogoSizeTwo} />
               </Container>
 
-              <p className="text-muted fw-light mb-5 h5 ">Your Sales Force Solution</p>
+              <p className="text-muted fw-light mb-4 h5 ">Your Sales Force Solution</p>
               <div style={LogoStyle} className="d-flex align-items-center justify-content-center">
-                <Button variant="secondary" as={Link} to={Routes.DashboardOverview.path} className="text-dark me-3">
-                  Explore dashboard <FontAwesomeIcon icon={faExternalLinkAlt} className="d-none d-sm-inline ms-1" />
-                </Button>
+                {keycloak.authenticated && (
+                    <Button variant="secondary" as={Link} to={Routes.DashboardOverview.path} className="text-dark me-3">
+                      Access Venvis <FontAwesomeIcon icon={faExternalLinkAlt} className="d-none d-sm-inline ms-1" />
+                    </Button>
+                )}
+
                 {/*<GitHubButton className="mt-lg-2" href="https://github.com/themesberg/volt-react-dashboard" data-size="large" data-show-count="true" aria-label="Star themesberg/volt-react-dashboard on GitHub">Star</GitHubButton>*/}
               </div>
               {/*<div className="d-flex justify-content-center flex-column mb-6 mb-lg-5 mt-5">*/}
