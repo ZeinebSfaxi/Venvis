@@ -7,25 +7,16 @@ import {ListMissions} from "../../../actions/missionAction";
 import MissionRow from "./MissionRow";
 
 
-export const ListMission = ({search}) => {
+export const ListMission = ({missions, loading, error, search}) => {
 
-    //display managers
-    const dispatch = useDispatch();
 
-    const missionList = useSelector (state => state.missionList);
-    const missions = missionList.missions
-    const loading = missionList.loading
-    const error = missionList.error
+
 
     // filter
     const [state, setState] = useState(false);
     const handleState = () => setState(true);
 
 
-    useEffect(() => {
-        dispatch(ListMissions())
-
-    }, [dispatch])
 
     /****** PAGINATION****/
     const [activePage, setActivePage] = useState(1);
