@@ -2,11 +2,71 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCog, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown } from '@themesberg/react-bootstrap';
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import ReactMockupImg from "../assets/img/react-mockup.png";
 
 import { TransactionsTable } from "../components/Tables";
 
+const columns =[
+  {title :"Name", field:"name"},
+  {title :"Email", field:"email"},
+  {title :"Year", field:"year",type:"numeric"},
+  {title :"Fee", field:"fee",type:"currency"},
+]
+
+const studentData=[
+  {
+    id:1,
+    name:'benitez',
+    email:'3amtek@gmail.com',
+    year: 2022,
+    floucha:8000,
+  },
+  {
+    id:2,
+    name:'Kamel',
+    email:'5altek@gmail.com',
+    year: 2022,
+    floucha:7500,
+  },
+  {
+    id:3,
+    name:'Gaddour',
+    email:'ebbayek@gmail.com',
+    year: 2022,
+    floucha:6000,
+  },
+  {
+    id:4,
+    name:'Samira',
+    email:'mamak@gmail.com',
+    year: 2022,
+    floucha:5000,
+  }
+]
+
+
+
+
+
 export default () => {
+
+  const pdfGenerate = () => {
+    let doc = new jsPDF('landscape','px','a4','false');
+    doc.addImage(ReactMockupImg,'PNG',65,20,500,400)
+    doc.addPage()
+    doc.text('Name',60,60)
+    autoTable(doc,{columnStyles: { europe: { halign: 'center' } },
+      columns:columns.map(col=>({...col,dataKey:col.field})),
+      body:studentData
+    })
+    doc.save('Try1.pdf')
+  }
+
+
   return (
+
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div className="d-block mb-4 mb-md-0">
@@ -21,7 +81,13 @@ export default () => {
         <div className="btn-toolbar mb-2 mb-md-0">
           <ButtonGroup>
             <Button variant="outline-primary" size="sm">Share</Button>
-            <Button variant="outline-primary" size="sm">Export</Button>
+            <Button variant="outline-primary" size="sm"
+            onClick={(e) => {
+              e.preventDefault();
+              pdfGenerate();
+            }
+            }
+            >Export</Button>
           </ButtonGroup>
         </div>
       </div>
