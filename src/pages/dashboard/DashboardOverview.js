@@ -171,7 +171,7 @@ export default () => {
         <Col xs={6} className="mb-4 d-none d-sm-block">
           <SalesValueWidget
             title="Orders received this year"
-            value={ordersList.length}
+            value={ordersList?.length}
             percentage={10.57}
             orders={orders}
           />
@@ -179,7 +179,7 @@ export default () => {
         <Col xs={6} className="mb-4 d-none d-sm-block">
           <SalesValueWidgetMissions
               title="Missions created this year"
-              value={missionsList.length}
+              value={missionsList?.length}
               percentage={10.57}
               missions={missions}
           />
@@ -187,7 +187,7 @@ export default () => {
         <Col xs={12} className="mb-4 d-sm-none">
           <SalesValueWidgetPhone
               title="Orders received this year"
-              value={ordersList.length}
+              value={ordersList?.length}
               orders={orders}
           />
         </Col>
@@ -195,7 +195,7 @@ export default () => {
           <div >
           <SalesValueWidgetMissionsPhone
               title="Missions created this year"
-              value={missionsList.length}
+              value={missionsList?.length}
               missions={missions}
           />
           </div>
