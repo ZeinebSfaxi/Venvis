@@ -30,6 +30,22 @@ export const missionDetailsReducer = (state = { mission: {} }, action) => {
     }
 }
 
+export const MissionNumberReducer = (state = { missionNumber: [] }, action) => {
+    switch (action.type) {
+        case "MISSION_NUMBER_REQUEST":
+            return { loading: true, missionNumber: [] }
+        case "MISSION_NUMBER_SUCCESS":
+            return {
+                loading: false,
+                missionNumber: action.payload,
+            }
+        case "MISSION_NUMBER_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
 export const missionCreateReducer = (state = {}, action) => {
     switch (action.type) {
         case "MISSION_CREATE_REQUEST":

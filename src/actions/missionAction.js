@@ -15,6 +15,22 @@ export const ListMissions = () => async (dispatch) => {
     }
 }
 
+
+export const MissionNumberByMonth = () => async (dispatch) => {
+    try {
+        dispatch({type: "MISSION_NUMBER_REQUEST"})
+
+        const {data} = await axios.get("http://localhost:4000/missions/numberstats")
+        dispatch({type: "MISSION_NUMBER_SUCCESS", payload: data })
+
+    } catch (error) {
+        dispatch({type: "MISSION_NUMBER_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
 export const GetMissionDetails = (id) => async (dispatch) => {
     try {
         dispatch({type: "MISSION_DETAILS_REQUEST"})

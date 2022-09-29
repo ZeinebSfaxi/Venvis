@@ -60,6 +60,21 @@ export const GetOrdesrByMission = (id) => async (dispatch) => {
     }
 }
 
+export const OrderNumberByMonth = () => async (dispatch) => {
+    try {
+        dispatch({type: "ORDER_NUMBER_REQUEST"})
+
+        const {data} = await axios.get("http://localhost:4000/orders/numberstats")
+        dispatch({type: "ORDER_NUMBER_SUCCESS", payload: data })
+
+    } catch (error) {
+        dispatch({type: "ORDER_NUMBER_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
 
 export const GetOrderDetails = (id) => async (dispatch) => {
     try {
