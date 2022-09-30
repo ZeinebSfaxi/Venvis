@@ -13,16 +13,22 @@ import RoutingMachine from "./RoutingMachine";
 import RoutingMachine2 from "./RoutingMachine2";
 import {useDispatch, useSelector} from "react-redux";
 import {GetOrdesrByMission} from "../../../actions/orderAction";
+import {GetshopDetails, listShops} from "../../../actions/shopAction";
+import ProfileCover from "../../../assets/img/profile-cover.jpg";
+import {useHistory} from "react-router";
 
 
-export default ({missions}) => {
+export default ({missions, missionIdSelected}) => {
 
     const dispatch = useDispatch();
+
+    const history = useHistory ();
 
     const position = [35.8815639, 10.3272283]
     const depotNord = [36.815429, 10.304515]
     const depotSud = [34.724008, 10.780275]
     const depotCentre = [35.829300, 10.640630]
+    const eee = [ L.latLng([36.815429, 10.304515]), L.latLng([34.724008, 10.780275])]
 
 
     const myIcon = new Icon({
@@ -43,33 +49,48 @@ export default ({missions}) => {
         )
     }
 
+
+    //show orders
     const orderList = useSelector (state => state.ordersByMission);
     const orders = orderList.ordersByMission
-    const loading = orderList.loading
-    const error = orderList.error
 
-    const [arrShops, setArrShops]=useState([]);
+    useEffect(() => {
+        if (missionIdSelected) {
+            dispatch(GetOrdesrByMission(missionIdSelected))
+        }
+    }, [missionIdSelected])
 
-    // useEffect(() => {
-    //     if (missions) {
-    //         missions.map((m)=> {
-    //             dispatch(GetOrdesrByMission(m._id))
-    //         })
-    //
-    //     }
-    // }, [missions])
-    //
-    //
-    // useEffect(() => {
-    //     orders.map((o)=> {
-    //         if (!arrShops.includes(o))
-    //         setArrShops([...arrShops, o])
-    //         console.log("eeeee",o)
-    //
-    //     })
-    // }, [orders])
-    //
-    // console.log("hedhi arrShops", arrShops)
+
+    const shopList = useSelector (state => state.shopList);
+    const shops = shopList.shops
+
+    useEffect(() => {
+        dispatch(listShops())
+
+    }, [dispatch])
+
+
+    const array = [];
+    const arrayShops = [];
+    useEffect(() => {
+
+            orders.map((order) =>  {
+                shops.map((s) => {
+                    if (order.shop_id === s._id)
+                    {
+                       console.log("YALAAA YA HAKIIIM111", s)
+                        array.push(L.latLng([s.latitude, s.longitude]))
+                        arrayShops.push([s.latitude, s.longitude])
+                        console.log("YALAAA YA FAYCELLL", arrayShops)
+                        console.log("YALAAA YA KARIIIM", array)
+                    }
+
+                })
+            })
+
+    }, [orders])
+    // console.log("YALAAA YAAA HAKIIM shop dataa", shopData)
+
 
     return (
         <Card>
@@ -95,6 +116,28 @@ export default ({missions}) => {
                 />
                 <>
 
+
+                    {shops.map((row) =>
+                        <Marker position={[row.latitude, row.longitude]} icon={myIcon}>
+                            <Popup >
+                                <Card  style={{  height:"20%"}} border="light" className="shadow-sm mb-2" >
+                                    {/*<div style={{  backgroundImage: `url(${Profile1})`}}  className="profile-cover rounded-top" />*/}
+                                    {/*<div className="profile-cover rounded-top" />*/}
+                                    {row.image ? (
+                                        <div style={{  backgroundImage: `url(${row.image})`}}  className="profile-cover rounded-top" />
+                                    ) :  <div style={{  backgroundImage: `url(${ProfileCover})`}}  className="profile-cover rounded-top" />}
+                                    <Card.Body className="pb-2" >
+                                        {/*<Card.Img src={Profile1} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />*/}
+                                        <Card.Title>{row.name}</Card.Title>
+                                        <Card.Subtitle className="fw-normal mb-2">{row.streetNumber},{row.streetName}</Card.Subtitle>
+                                        <Card.Text className="text-gray mb-2">{row.country}, {row.city}</Card.Text>
+                                        <Button variant="secondary" size="sm" onClick={() =>  history.push(`/shops/shopDetails/${row._id}`)}>Details</Button>
+                                    </Card.Body>
+                                </Card>
+
+                            </Popup>
+                        </Marker>
+                    )}
 
                     <Marker position={depotCentre} icon={myWarehouse}>
                         <Popup >
@@ -139,27 +182,8 @@ export default ({missions}) => {
                         </Popup>
                     </Marker>
 
-                    <RoutingMachine depotSud={depotSud} depotNord={depotNord} depotCentre={depotCentre} />
-                    {/*<RoutingMachine2 depotSud={depotSud} depotNord={depotNord} depotCentre={depotCentre} />*/}
+                    <RoutingMachine depotSud={depotSud} depotNord={depotNord} depotCentre={depotCentre}  array={array}/>
 
-                    {/*<Marker position={[shop.latitude, shop.longitude]} icon={myIcon}>*/}
-                    {/*    <Popup >*/}
-                    {/*        <Card  style={{  height:"20%"}} border="light" className="shadow-sm mb-2" >*/}
-                    {/*            /!*<div style={{  backgroundImage: `url(${Profile1})`}}  className="profile-cover rounded-top" />*!/*/}
-                    {/*            {shop.image ? (*/}
-                    {/*                <div style={{  backgroundImage: `url(${shop.image})`}}  className="profile-cover rounded-top" />*/}
-                    {/*            ) :  <div style={{  backgroundImage: `url(${ProfileCover})`}}  className="profile-cover rounded-top" />}*/}
-                    {/*            <Card.Body className="pb-2" >*/}
-                    {/*                /!*<Card.Img src={Profile1} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />*!/*/}
-                    {/*                <Card.Title>{shop.name}</Card.Title>*/}
-                    {/*                <Card.Subtitle className="fw-normal mb-2">{shop.streetNumber},{shop.streetName}</Card.Subtitle>*/}
-                    {/*                <Card.Text className="text-gray mb-2">{shop.country}, {shop.city}</Card.Text>*/}
-
-                    {/*            </Card.Body>*/}
-                    {/*        </Card>*/}
-
-                    {/*    </Popup>*/}
-                    {/*</Marker>*/}
 
                 </>
             </MapContainer>

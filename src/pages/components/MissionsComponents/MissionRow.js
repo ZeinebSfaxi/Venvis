@@ -20,7 +20,7 @@ import {deleteMission} from "../../../actions/missionAction";
 import {ListMission} from "./ListMission";
 
 
-export default ({mission}) => {
+export default ({mission, setMissionIdSelected}) => {
 
     const dispatch = useDispatch();
 
@@ -76,7 +76,7 @@ export default ({mission}) => {
 
     return (
         <>
-            <tr>
+            <tr onClick={()=> {setMissionIdSelected(missionId)}}>
                 <td>
           <span className="fw-normal">
           MIS-{mission._id?.slice(mission._id.length -5, mission._id.length).toUpperCase()}

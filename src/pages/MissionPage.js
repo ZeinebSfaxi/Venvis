@@ -46,6 +46,8 @@ export default () => {
         setDialogueForm(false);
     };
 
+    const [missionIdSelected, setMissionIdSelected ] = useState();
+
 
 
     return (
@@ -90,7 +92,7 @@ export default () => {
                 </Row>
             </div>
             <Row>
-                <ListMission missions={missions} error={error} loading={loading} search={search} />
+                <ListMission setMissionIdSelected={setMissionIdSelected} missions={missions} error={error} loading={loading} search={search} />
 
             </Row>
             <Row>
@@ -99,7 +101,7 @@ export default () => {
 
             </Row>
             <Row>
-                <MapMissions missions={missions} />
+                <MapMissions missions={missions} missionIdSelected={missionIdSelected} />
             </Row>
             <Dialog
                 fullWidth

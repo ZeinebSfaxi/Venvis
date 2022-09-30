@@ -7,7 +7,7 @@ import {ListMissions} from "../../../actions/missionAction";
 import MissionRow from "./MissionRow";
 
 
-export const ListMission = ({missions, loading, error, search}) => {
+export const ListMission = ({missions, loading, error, search, setMissionIdSelected}) => {
 
 
 
@@ -77,7 +77,7 @@ export const ListMission = ({missions, loading, error, search}) => {
                                         return row;
                                     }
                                 }).map((mission) => (
-                                    <MissionRow key= {mission._id} mission={mission} />
+                                    <MissionRow  key= {mission._id} mission={mission} setMissionIdSelected={setMissionIdSelected}/>
 
                                 ))}
                                 </tbody>
