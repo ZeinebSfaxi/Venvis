@@ -17,7 +17,10 @@ import AddMissionForm from "./components/MissionsComponents/AddMissionForm";
 import MapMissions from "./components/MissionsComponents/MapMissions";
 import {ListMissions} from "../actions/missionAction";
 
-
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 
 export default () => {
@@ -47,7 +50,10 @@ export default () => {
     };
 
     const [missionIdSelected, setMissionIdSelected ] = useState();
-
+    const [value, setValue] = React.useState('1');
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
 
     return (
@@ -80,6 +86,7 @@ export default () => {
                             </InputGroup.Text>
                             <Form.Control type="text" placeholder="Search"    onChange={(e) => setSearch(e.target.value)}/>
                         </InputGroup>
+
                     </Col>
                     <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
                         <Button variant="secondary" size="sm" onClick={() => {
@@ -95,14 +102,30 @@ export default () => {
                 <ListMission setMissionIdSelected={setMissionIdSelected} missions={missions} error={error} loading={loading} search={search} />
 
             </Row>
-            <Row>
-                <MapMissions  missions={missions} missionIdSelected={missionIdSelected} />
-            </Row>
-            <Row>
 
-               <MissionCalendar setDialogueForm={setDialogueForm} />
+            <Card sx={{ width: '100%', typography: 'body1' }}>
+                <TabContext value={value}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                        <TabList onChange={handleChange}  variant="fullWidth" aria-label="lab API tabs example">
+                            <Tab label="Map" value="1" />
+                            <Tab label="Calendar" value="2" />
 
-            </Row>
+                        </TabList>
+                    </Box>
+                    <TabPanel value="1"><MapMissions  missions={missions} missionIdSelected={missionIdSelected} /></TabPanel>
+                    <TabPanel value="2"><MissionCalendar setDialogueForm={setDialogueForm} /></TabPanel>
+
+                </TabContext>
+            </Card>
+
+            {/*<Row>*/}
+            {/*    <MapMissions  missions={missions} missionIdSelected={missionIdSelected} />*/}
+            {/*</Row>*/}
+            {/*<Row>*/}
+
+            {/*   <MissionCalendar setDialogueForm={setDialogueForm} />*/}
+
+            {/*</Row>*/}
 
             <Dialog
                 fullWidth
