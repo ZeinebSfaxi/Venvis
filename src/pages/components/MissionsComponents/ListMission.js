@@ -31,7 +31,7 @@ export const ListMission = ({missions, loading, error, search, setMissionIdSelec
 
     return (
         <>
-            <Card border="light" className="table-wrapper table-responsive shadow-sm">
+            <Card border="light" className="table-wrapper table-responsive shadow-sm mb-4">
                 <Card.Body className="pt-0">
 
                     {loading ? (

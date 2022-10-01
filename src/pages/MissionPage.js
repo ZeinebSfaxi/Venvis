@@ -96,13 +96,14 @@ export default () => {
 
             </Row>
             <Row>
+                <MapMissions  missions={missions} missionIdSelected={missionIdSelected} />
+            </Row>
+            <Row>
 
                <MissionCalendar setDialogueForm={setDialogueForm} />
 
             </Row>
-            <Row>
-                <MapMissions missions={missions} missionIdSelected={missionIdSelected} />
-            </Row>
+
             <Dialog
                 fullWidth
                 open={dialogueForm}

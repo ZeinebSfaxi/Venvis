@@ -10,12 +10,13 @@ import {Button, Card} from "@themesberg/react-bootstrap";
 import WarehouseCover from "../../../assets/img/2308901.jpg";
 import warehouse from "../../../assets/img/warehouse-inventory-icon-33852.png";
 import RoutingMachine from "./RoutingMachine";
-import RoutingMachine2 from "./RoutingMachine2";
+
 import {useDispatch, useSelector} from "react-redux";
 import {GetOrdesrByMission} from "../../../actions/orderAction";
 import {GetshopDetails, listShops} from "../../../actions/shopAction";
 import ProfileCover from "../../../assets/img/profile-cover.jpg";
 import {useHistory} from "react-router";
+import {Routing2} from "./RoutingMachine2";
 
 
 export default ({missions, missionIdSelected}) => {
@@ -50,15 +51,45 @@ export default ({missions, missionIdSelected}) => {
     }
 
 
-    //show orders
-    const orderList = useSelector (state => state.ordersByMission);
-    const orders = orderList.ordersByMission
-
-    useEffect(() => {
-        if (missionIdSelected) {
-            dispatch(GetOrdesrByMission(missionIdSelected))
-        }
-    }, [missionIdSelected])
+    // //show orders
+    // const orderList = useSelector (state => state.ordersByMission);
+    // const orders = orderList.ordersByMission
+    //
+    // useEffect(() => {
+    //     if (missionIdSelected) {
+    //         dispatch(GetOrdesrByMission(missionIdSelected))
+    //     }
+    // }, [missionIdSelected])
+    //
+    //
+    // const shopList = useSelector (state => state.shopList);
+    // const shops = shopList.shops
+    //
+    // useEffect(() => {
+    //     dispatch(listShops())
+    //
+    // }, [dispatch])
+    //
+    //
+    // const [array , setArray] = useState([]);
+    // const arrayShops = [];
+    // useEffect(() => {
+    //
+    //         orders.map((order) =>  {
+    //             shops.map((s) => {
+    //                 if (order.shop_id === s._id)
+    //                 {
+    //                    // console.log("YALAAA YA HAKIIIM111", s)
+    //                     // setArray(...array, L.latLng([s.latitude, s.longitude]))
+    //                     arrayShops.push([s.latitude, s.longitude])
+    //                     console.log("YALAAA YA FAYCELLL", arrayShops)
+    //                     // console.log("YALAAA YA KARIIIM", array)
+    //                 }
+    //
+    //             })
+    //         })
+    //
+    // }, [orders])
 
 
     const shopList = useSelector (state => state.shopList);
@@ -69,27 +100,6 @@ export default ({missions, missionIdSelected}) => {
 
     }, [dispatch])
 
-
-    const array = [];
-    const arrayShops = [];
-    useEffect(() => {
-
-            orders.map((order) =>  {
-                shops.map((s) => {
-                    if (order.shop_id === s._id)
-                    {
-                       console.log("YALAAA YA HAKIIIM111", s)
-                        array.push(L.latLng([s.latitude, s.longitude]))
-                        arrayShops.push([s.latitude, s.longitude])
-                        console.log("YALAAA YA FAYCELLL", arrayShops)
-                        console.log("YALAAA YA KARIIIM", array)
-                    }
-
-                })
-            })
-
-    }, [orders])
-    // console.log("YALAAA YAAA HAKIIM shop dataa", shopData)
 
 
     return (
@@ -182,7 +192,8 @@ export default ({missions, missionIdSelected}) => {
                         </Popup>
                     </Marker>
 
-                    <RoutingMachine depotSud={depotSud} depotNord={depotNord} depotCentre={depotCentre}  array={array}/>
+                    {/*<RoutingMachine depotSud={depotSud} depotNord={depotNord} depotCentre={depotCentre}  array={array}/>*/}
+                    <Routing2 depotSud={depotSud} depotNord={depotNord} depotCentre={depotCentre} missionIdSelected={missionIdSelected}  />
 
 
                 </>
