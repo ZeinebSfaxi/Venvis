@@ -1,4 +1,4 @@
-import {Button, ButtonGroup, Card, Dropdown, Nav, Table} from "@themesberg/react-bootstrap";
+import {Button, ButtonGroup, Card, Col, Dropdown, Nav, Table} from "@themesberg/react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert, Pagination} from "@mui/lab";
@@ -33,6 +33,7 @@ export const ListMission = ({missions, loading, error, search, setMissionIdSelec
         <>
             <Card border="light" className="table-wrapper table-responsive shadow-sm mb-4">
                 <Card.Body className="pt-0">
+                    <p className="mb-4 mt-4 fw-bolder" style={{color:"#5c96de"}}>Select an order for directions.</p>
 
                     {loading ? (
                         <Box className="m-5" sx={{ display: 'flex',alignItems: 'center',
