@@ -14,11 +14,27 @@ import {MissionCalendar} from "./components/MissionsComponents/MissionCalendar";
 import {Alert, Pagination} from "@mui/lab";
 import MissionRow from "./components/MissionsComponents/MissionRow";
 import AddMissionForm from "./components/MissionsComponents/AddMissionForm";
+import MapMissions from "./components/MissionsComponents/MapMissions";
+import {ListMissions} from "../actions/missionAction";
 
 
 
 
 export default () => {
+
+    //display managers
+    const dispatch = useDispatch();
+
+    const missionList = useSelector (state => state.missionList);
+    const missions = missionList.missions
+    const loading = missionList.loading
+    const error = missionList.error
+
+    useEffect(() => {
+        dispatch(ListMissions())
+
+    }, [dispatch])
+
 
 
     //search
@@ -29,6 +45,8 @@ export default () => {
     const handleCloseDialogue = value => {
         setDialogueForm(false);
     };
+
+    const [missionIdSelected, setMissionIdSelected ] = useState();
 
 
 
@@ -74,8 +92,11 @@ export default () => {
                 </Row>
             </div>
             <Row>
-                <ListMission search={search} />
+                <ListMission setMissionIdSelected={setMissionIdSelected} missions={missions} error={error} loading={loading} search={search} />
 
+            </Row>
+            <Row>
+                <MapMissions  missions={missions} missionIdSelected={missionIdSelected} />
             </Row>
             <Row>
 
