@@ -8,8 +8,41 @@ import AddShopForm from "./components/ShopComponents/AddShopForm";
 import {ListManagers} from "./components/ShopManagerComponents/ListManagers";
 import AddManagerForm from "./components/ShopManagerComponents/AddManagerForm";
 import {ListOrders} from "./components/OrderComponents/ListOrders";
+import jsPDF from "jspdf";
+import venvisBlack from "../assets/img/Venvis/venvisBlack.png";
+import autoTable from "jspdf-autotable";
+import {useSelector} from "react-redux";
 
 export default () => {
+    const orderList = useSelector (state => state.orderList);
+    const orders = orderList.orders;
+
+    const columns =[
+        {title :"ID", field:"_id"},
+        {title :"Creation Date", field:"sendingDate" },
+        {title :"Due Date", field:"deliveryDate"},
+        {title :"Shop ID", field:"shop_id"},
+        {title :"Validation", field:"validated"},
+        {title :"State", field:"state"},
+    ]
+    const pdfGenerate = () => {
+        let doc = new jsPDF('landscape','px','a4','false');
+        doc.addImage(venvisBlack,'PNG',65,20,100,20)
+        // doc.addPage()
+        doc.setFontSize(20)
+        doc.text('2022 Orders List:',270,70)
+
+
+        autoTable(doc,{columnStyles: { europe: { halign: 'center' } },
+            startY:100,
+            columns:columns.map(col=>({...col,dataKey:col.field})),
+            body:orders
+        })
+        doc.setFontSize(10)
+        doc.text('Copyright © 2022 Venvis s.r.o.', 20, 430)
+
+        doc.save('Orders Table.pdf')
+    }
 
     //search
     const [search, setSearch] = useState('');
@@ -30,8 +63,14 @@ export default () => {
                 </div>
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <ButtonGroup>
-                        <Button variant="outline-primary" size="sm">Share</Button>
-                        <Button variant="outline-primary" size="sm">Export</Button>
+                        <ButtonGroup>
+                            <Button variant="outline-primary" size="sm"  onClick={(e) => {
+                                e.preventDefault();
+                                pdfGenerate();
+                            }
+                            }
+                            >Export</Button>
+                        </ButtonGroup>
                     </ButtonGroup>
                 </div>
             </div>
