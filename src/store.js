@@ -11,7 +11,7 @@ import {
 import {
     deleteManagerReducer,
     ManagerByShopReducer,
-    managerCreateReducer, ManagerListReducer,
+    managerCreateReducer, ManagerListReducer, shopManagerDetailsReducer,
     updateManagerReducer
 } from "./reducers/shopManagerReducers";
 import {competitorListReducer} from "./reducers/competitorsReducer";
@@ -39,6 +39,12 @@ import {
     MissionListReducer,
     updateMissionReducer
 } from "./reducers/missionReducer";
+import {
+    conversationByMemberReducer,
+    conversationCreateReducer,
+    messageCreateReducer,
+    MessagesListReducer
+} from "./reducers/chatReducer";
 
 
 const reducer = combineReducers({
@@ -54,6 +60,7 @@ const reducer = combineReducers({
     managerUpdate: updateManagerReducer,
     managerDelete: deleteManagerReducer,
     managerList: ManagerListReducer,
+    shopManagerDetails: shopManagerDetailsReducer,
 
     orderList: OrderListReducer,
     singleOrder: singleOrderReducer,
@@ -78,6 +85,11 @@ const reducer = combineReducers({
     missionCreate: missionCreateReducer,
     missionUpdate: updateMissionReducer,
     missionDelete: deleteMissionReducer,
+
+    messagesList: MessagesListReducer,
+    conversationCreate: conversationCreateReducer,
+    conversationByMember: conversationByMemberReducer,
+    messageCreate: messageCreateReducer,
 
     competitorList: competitorListReducer,
 })

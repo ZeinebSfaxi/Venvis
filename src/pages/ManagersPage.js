@@ -11,6 +11,7 @@ import {useSelector} from "react-redux";
 import jsPDF from "jspdf";
 import venvisBlack from "../assets/img/Venvis/venvisBlack.png";
 import autoTable from "jspdf-autotable";
+import messenger from "../scss/messenger.css"
 
 export default () => {
 

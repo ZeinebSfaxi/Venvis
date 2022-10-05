@@ -10,7 +10,7 @@ import {
   faSignOutAlt,
   faTimes,
   faMapPin,
-  faTruck, faTags, faShoppingBasket, faPhone, faUserSecret, faUser, faStore, faHardHat, faHatCowboy, faUserTie
+  faTruck, faTags, faShoppingBasket, faPhone, faUserSecret, faUser, faStore, faHardHat, faHatCowboy, faUserTie, faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -125,7 +125,7 @@ export default (props = {}) => {
 
               <Dropdown.Divider className="my-3 border-indigo" />
 
-              <NavItem title="News" icon={faNewspaper}/>
+              <NavItem title="Chat" link={Routes.Messenger.path} icon={faUsers}/>
 
               <NavItem title="Customer care" icon={faPhone}/>
               <NavItem title="Competitors" icon={faUserSecret} link={Routes.Competitors.path}/>
