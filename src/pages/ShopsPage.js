@@ -6,6 +6,10 @@ import {ListShop} from "./components/ShopComponents/ListShop";
 import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import AddShopForm from "./components/ShopComponents/AddShopForm";
 import MapShops from "./components/ShopComponents/MapShops";
+import jsPDF from "jspdf";
+import venvisBlack from "../assets/img/Venvis/venvisBlack.png";
+import autoTable from "jspdf-autotable";
+import {useSelector} from "react-redux";
 
 export default () => {
 
@@ -18,6 +22,34 @@ export default () => {
         setDialogueForm(false);
     };
 
+    /******************PDF ********************/
+
+    const shopList = useSelector (state => state.shopList);
+    const shops = shopList.shops
+
+    const columns =[
+        {title :"ID", field:"_id"},
+        {title :"Shop Name", field:"name" },
+        {title :"Adress", field:"streetName"},
+        {title :"City", field:"city"},
+        {title :"Phone Number", field:"phoneNumber"},
+    ]
+    const pdfGenerate = () => {
+        let doc = new jsPDF('landscape','px','a4','false');
+        doc.addImage(venvisBlack,'PNG',65,20,100,20)
+        // doc.addPage()
+        doc.setFontSize(20)
+        doc.text('2022 Shops List:',270,70)
+
+        autoTable(doc,{columnStyles: { europe: { halign: 'center' } },
+            startY:100,
+            columns:columns.map(col=>({...col,dataKey:col.field})),
+            body:shops
+        })
+        doc.setFontSize(10)
+        doc.text('Copyright © 2022 Venvis s.r.o.', 20, 430)
+        doc.save('Shops.pdf')
+    }
     return (
         <>
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -32,8 +64,12 @@ export default () => {
                 </div>
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <ButtonGroup>
-                        <Button variant="outline-primary" size="sm">Share</Button>
-                        <Button variant="outline-primary" size="sm">Export</Button>
+                        <Button variant="outline-primary" size="sm"  onClick={(e) => {
+                            e.preventDefault();
+                            pdfGenerate();
+                        }
+                        }
+                        >Export</Button>
                     </ButtonGroup>
                 </div>
             </div>

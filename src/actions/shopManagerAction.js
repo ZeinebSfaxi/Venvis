@@ -48,6 +48,23 @@ export const deleteManager = (id) => async (dispatch) => {
     }
 }
 
+
+export const GetshopManagerDetails = (id) => async (dispatch) => {
+    try {
+        dispatch({type: "SHOP_MANAGER_DETAILS_REQUEST"})
+
+        const {data} = await axios.get( `http://localhost:5000/shopManagers/${id}`)
+        dispatch({type: "SHOP_MANAGER_DETAILS_SUCCESS", payload: data })
+
+
+    } catch (error) {
+        dispatch({type: "SHOP_MANAGER_DETAILS_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
 export const updateManager = (id, updatedManager) => async (dispatch) => {
     try {
         dispatch({type: "MANAGER_UPDATE_REQUEST"})

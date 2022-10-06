@@ -15,6 +15,9 @@ import {ListOrders} from "./components/OrderComponents/ListOrders";
 import {OrderDetailsForSingleShop} from "./components/OrderComponents/OrderDetailsForSingleShop";
 import {OrderListByShop} from "./components/OrderComponents/OrderListByShop";
 import {OrderDetailsToDeliverShop} from "./components/OrderComponents/OrderDetailsToDeliverSingle";
+import jsPDF from "jspdf";
+import venvisBlack from "../assets/img/Venvis/venvisBlack.png";
+import autoTable from "jspdf-autotable";
 
 
 
@@ -36,6 +39,23 @@ export default () => {
     const error = singleShopDetails.error
 
 const [search, setSearch] = useState("")
+
+
+    /*************************PDF*******************/
+    //
+    // const pdfGenerate = () => {
+    //     let doc = new jsPDF('landscape','px','a4','false');
+    //     doc.addImage(venvisBlack,'PNG',65,20,100,20)
+    //     // doc.addPage()
+    //     doc.text('2022 Orders List:',270,70)
+    //
+    //     autoTable(doc,{columnStyles: { europe: { halign: 'center' } },
+    //         startY:100,
+    //         columns:columns.map(col=>({...col,dataKey:col.field})),
+    //         body:orders
+    //     })
+    //     doc.save('Orders Table.pdf')
+    // }
 
 
     return (

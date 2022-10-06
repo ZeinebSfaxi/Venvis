@@ -21,9 +21,14 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import jsPDF from "jspdf";
+import venvisBlack from "../assets/img/Venvis/venvisBlack.png";
+import autoTable from "jspdf-autotable";
 
 
 export default () => {
+
+
 
     //display managers
     const dispatch = useDispatch();
@@ -56,6 +61,32 @@ export default () => {
     };
 
 
+    /********************PDF *****************/
+
+    const columns =[
+        {title :"ID", field:"_id"},
+        {title :"Creation Date", field:"sendingDate" },
+        {title :"Due Date", field:"deliveryDate"},
+        {title :"Agent ID", field:"agent_id"},
+        {title :"State", field:"state"},
+    ]
+    const pdfGenerate = () => {
+        let doc = new jsPDF('landscape','px','a4','false');
+        doc.addImage(venvisBlack,'PNG',65,20,100,20)
+        // doc.addPage()
+        doc.setFontSize(20)
+        doc.text('2022 Mission List:',270,70)
+
+        autoTable(doc,{columnStyles: { europe: { halign: 'center' } },
+            startY:100,
+            columns:columns.map(col=>({...col,dataKey:col.field})),
+            body:missions
+        })
+        doc.setFontSize(10)
+        doc.text('Copyright © 2022 Venvis s.r.o.', 20, 430)
+        doc.save('Missions Table.pdf')
+    }
+
     return (
         <>
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -71,8 +102,12 @@ export default () => {
                 </div>
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <ButtonGroup>
-                        <Button variant="outline-primary" size="sm">Share</Button>
-                        <Button variant="outline-primary" size="sm">Export</Button>
+                        <Button variant="outline-primary" size="sm"  onClick={(e) => {
+                            e.preventDefault();
+                            pdfGenerate();
+                        }
+                        }
+                        >Export</Button>
                     </ButtonGroup>
                 </div>
             </div>
