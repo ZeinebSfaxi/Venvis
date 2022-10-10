@@ -33,11 +33,13 @@ import {
     updateAgentReducer
 } from "./reducers/agentsReducer";
 import {
+    affectAgentToMissionReducer,
     deleteMissionReducer,
     missionCreateReducer,
     missionDetailsReducer,
     MissionListReducer,
-    updateMissionReducer
+    updateMissionReducer,
+    UpdateMissionStateReducer
 } from "./reducers/missionReducer";
 
 
@@ -78,6 +80,8 @@ const reducer = combineReducers({
     missionCreate: missionCreateReducer,
     missionUpdate: updateMissionReducer,
     missionDelete: deleteMissionReducer,
+    missionAffect: affectAgentToMissionReducer,
+    missionUpdateState: UpdateMissionStateReducer,
 
     competitorList: competitorListReducer,
 })

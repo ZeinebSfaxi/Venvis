@@ -79,3 +79,37 @@ export const deleteMission = (id) => async (dispatch) => {
         })
     }
 }
+
+export const affectAgentToMission = (id, updatedMission) => async (dispatch) => {
+    try {
+        dispatch({type: "AFFECT_MANAGER_TO_SHOP_REQUEST"})
+
+        const {data} = await axios.patch( `http://localhost:4000/missions/affectAgentToMission/${id}`, updatedMission)
+        dispatch({type: "AFFECT_MANAGER_TO_SHOP_SUCCESS", payload: data })
+
+
+
+    } catch (error) {
+        dispatch({type: "AFFECT_MANAGER_TO_SHOP_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
+export const UpdateMissionState = (id, updatedMission) => async (dispatch) => {
+    try {
+        dispatch({type: "UPDATE_MISSION_STATE_REQUEST"})
+
+        const {data} = await axios.patch( `http://localhost:4000/missions/updateMissionState/${id}`, updatedMission)
+        dispatch({type: "UPDATE_MISSION_STATE_SUCCESS", payload: data })
+
+
+
+    } catch (error) {
+        dispatch({type: "UPDATE_MISSION_STATE_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}

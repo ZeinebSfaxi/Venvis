@@ -76,3 +76,35 @@ export const deleteMissionReducer = (state = {}, action) => {
             return state
     }
 }
+
+export const affectAgentToMissionReducer = (state = { mission: {} }, action) => {
+    switch (action.type) {
+        case "AFFECT_AGENT_TO_MISSION_REQUEST":
+            return { loading: true }
+        case "AFFECT_AGENT_TO_MISSION_SUCCESS":
+            return {
+                loading: false,
+                mission: action.payload
+            }
+        case "AFFECT_AGENT_TO_MISSION_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+export const UpdateMissionStateReducer = (state = { mission: {} }, action) => {
+    switch (action.type) {
+        case "UPDATE_MISSION_STATE_REQUEST":
+            return { loading: true }
+        case "UPDATE_MISSION_STATE_SUCCESS":
+            return {
+                loading: false,
+                mission: action.payload
+            }
+        case "UPDATE_MISSION_STATE_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}

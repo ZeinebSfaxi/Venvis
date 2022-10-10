@@ -25,6 +25,8 @@ export const ListMission = ({missions, loading, error, search, setMissionIdSelec
         console.log(value);
     };
 
+
+
     //ShowDetailsIcon
     // const [showDetailsIcon, setShowDetailsIcon] = useState(true);
 

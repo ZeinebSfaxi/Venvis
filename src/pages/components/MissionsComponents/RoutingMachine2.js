@@ -12,7 +12,7 @@ import {listShops} from "../../../actions/shopAction";
 export const Routing2 = ({ depotNord, depotCentre,depotSud, missionIdSelected}) => {
 
 /********************************/
-
+    const dispatch = useDispatch()
     //show orders
     const orderList = useSelector (state => state.ordersByMission);
     const orders = orderList.ordersByMission
@@ -66,7 +66,7 @@ export const Routing2 = ({ depotNord, depotCentre,depotSud, missionIdSelected}) 
 
 
 /********************************/
-  const dispatch = useDispatch()
+
     useEffect(() => {
         createLayer( arrayShops)
 
