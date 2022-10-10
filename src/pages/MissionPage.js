@@ -24,6 +24,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import jsPDF from "jspdf";
 import venvisBlack from "../assets/img/Venvis/venvisBlack.png";
 import autoTable from "jspdf-autotable";
+import {useKeycloak} from "@react-keycloak/web";
 
 
 export default () => {
@@ -43,7 +44,7 @@ export default () => {
 
     }, [dispatch])
 
-
+    const {keycloak} = useKeycloak();
 
     //search
     const [search, setSearch] = useState('');
@@ -87,6 +88,8 @@ export default () => {
         doc.save('Missions Table.pdf')
     }
 
+    console.log("HEDHA KEYCLOAK", keycloak.tokenParsed)
+
     return (
         <>
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -108,6 +111,7 @@ export default () => {
                         }
                         }
                         >Export</Button>
+
                     </ButtonGroup>
                 </div>
             </div>

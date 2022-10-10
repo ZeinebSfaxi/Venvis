@@ -66,6 +66,12 @@ export default ({mission, setMissionIdSelected}) => {
             dispatch(UpdateMissionState(mission._id, {state: "confirmed"}))
             dispatch(ListMissions())
         }
+        // if(mission.state !== "delivered") {
+        //     if (moment(mission.deliveryDate).format('DD-MM-YYYY') < moment(today).format('DD-MM-YYYY')) {
+        //         dispatch(UpdateMissionState(mission._id, {state: "late"}))
+        //         dispatch(ListMissions())
+        //     }
+        // }
     }, [])
 
 
