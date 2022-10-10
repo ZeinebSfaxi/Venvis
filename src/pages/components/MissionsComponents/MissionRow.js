@@ -16,8 +16,8 @@ import {
 } from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {GetOrdesrByMission, unaffectOrderFromMission} from "../../../actions/orderAction";
-import {deleteMission} from "../../../actions/missionAction";
-import {ListMission} from "./ListMission";
+import {deleteMission, ListMissions, UpdateMissionState} from "../../../actions/missionAction"
+
 
 
 export default ({mission, setMissionIdSelected}) => {
@@ -57,9 +57,23 @@ export default ({mission, setMissionIdSelected}) => {
         setDialogueForm(false);
     };
 
-
 // // today
     const today = new Date()
+
+
+    useEffect(() => {
+        if (mission.state === "standby" && mission.agent_id && (moment(today).format('DD-MM-YYYY') > moment(mission.sendingDate).add(3,'days').format('DD-MM-YYYY')) ) {
+            dispatch(UpdateMissionState(mission._id, {state: "confirmed"}))
+            dispatch(ListMissions())
+        }
+        // if(mission.state !== "delivered") {
+        //     if (moment(mission.deliveryDate).format('DD-MM-YYYY') < moment(today).format('DD-MM-YYYY')) {
+        //         dispatch(UpdateMissionState(mission._id, {state: "late"}))
+        //         dispatch(ListMissions())
+        //     }
+        // }
+    }, [])
+
 
 
 
@@ -117,6 +131,8 @@ export default ({mission, setMissionIdSelected}) => {
                     { mission.state === 'standby' ?
 
                         <Chip label="Stand by" className="fw-bolder" style={{backgroundColor: "#CCCCCC"}} />
+                        : mission.state=== 'confirmed' ?
+                            <Chip label="Confirmed" className="fw-bolder" style={{backgroundColor: "#1dbbca"}} />
                         : mission.state=== 'delivered' ?
                             <Chip label="Delivered" className="fw-bolder" style={{backgroundColor: "#0aae0d"}} />
                             : mission.state=== 'on going' ?
@@ -137,7 +153,7 @@ export default ({mission, setMissionIdSelected}) => {
 
 
 
-                    {mission.state !== 'standby' || moment(today).format('DD-MM-YYYY') > moment(mission.sendingDate).add(2,'days').format('DD-MM-YYYY')  ?
+                    {mission.state !== 'standby' || moment(today).format('DD-MM-YYYY') > moment(mission.sendingDate).add(3,'days').format('DD-MM-YYYY')  ?
                         (
 
                             <> <FontAwesomeIcon  icon={faTrashAlt}

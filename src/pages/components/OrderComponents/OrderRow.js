@@ -19,6 +19,7 @@ import {useDispatch} from "react-redux";
 import {faBan, faCheck} from "@fortawesome/free-solid-svg-icons";
 import {ListOrder, stateOrder, validateOrder} from "../../../actions/orderAction";
 import {ShopDetailsCard} from "./ShopDetailsCard";
+import {ListMissions, UpdateMissionState} from "../../../actions/missionAction";
 
 
 export default ({order, showDetailsIcon}) => {
@@ -84,6 +85,14 @@ export default ({order, showDetailsIcon}) => {
 // // today
     const today = new Date()
 
+    useEffect(() => {
+
+        if(order.state !== "delivered" || order.state !== "rejected" ) {
+            if ( moment(order.deliveryDate).format('DD-MM-YYYY') < moment(today).format('DD-MM-YYYY') ) {
+            dispatch(stateOrder(order._id, {state: "late"}))
+            dispatch(ListOrder())
+        }}
+    }, [])
 
     return (
         <>

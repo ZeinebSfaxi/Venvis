@@ -33,11 +33,13 @@ import {
     updateAgentReducer
 } from "./reducers/agentsReducer";
 import {
+    affectAgentToMissionReducer,
     deleteMissionReducer,
     missionCreateReducer,
     missionDetailsReducer,
     MissionListReducer,
-    updateMissionReducer
+    updateMissionReducer,
+    UpdateMissionStateReducer
 } from "./reducers/missionReducer";
 import {
     conversationByMemberReducer,
@@ -85,6 +87,8 @@ const reducer = combineReducers({
     missionCreate: missionCreateReducer,
     missionUpdate: updateMissionReducer,
     missionDelete: deleteMissionReducer,
+    missionAffect: affectAgentToMissionReducer,
+    missionUpdateState: UpdateMissionStateReducer,
 
     messagesList: MessagesListReducer,
     conversationCreate: conversationCreateReducer,

@@ -329,15 +329,22 @@ export default ({mission}) => {
                             </Col>
                             {/*{moment(data.sendingDate).format("MM/DD/YYYY") >= deadline &&*/}
 
-                            <Col className="col-auto">
 
-                                <Button variant="primary" size="sm" className="me-2" onClick={() => {
+                            <Col className="col-auto">
+                                {mission.state === "standby" ?
+                                (<Button variant="primary" size="sm" className="me-2" onClick={() => {
                                     setEditable(true)
                                     setArrayToremove([]);
                                     setArrayOrders([]);
                                 }}>
                                     <FontAwesomeIcon icon={faEdit} className="me-1"/> Edit
-                                </Button>
+                                </Button> ) : (
+                                        <Button variant="primary" size="sm"  disabled  className="me-2" >
+                                            <FontAwesomeIcon icon={faEdit} className="me-1"/> Edit
+                                        </Button>
+                                    )
+                                }
+
 
                             </Col>
 
