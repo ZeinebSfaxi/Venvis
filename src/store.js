@@ -48,6 +48,7 @@ import {
     messageCreateReducer,
     MessagesListReducer
 } from "./reducers/chatReducer";
+import {reclamationDetailsReducer, reclamationListReducer, updateReclamationReducer} from "./reducers/savReducers";
 
 
 const reducer = combineReducers({
@@ -97,6 +98,10 @@ const reducer = combineReducers({
     conversationByMember: conversationByMemberReducer,
     messageCreate: messageCreateReducer,
     missionNumber: MissionNumberReducer,
+
+    reclamationList: reclamationListReducer,
+    reclamationDetails: reclamationDetailsReducer,
+    updateReclamation: updateReclamationReducer,
 
     competitorList: competitorListReducer,
 })

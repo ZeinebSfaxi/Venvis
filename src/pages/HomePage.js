@@ -65,6 +65,8 @@ import AgentDetailsPage from "./AgentDetailsPage";
 import MissionPage from "./MissionPage";
 import MissionDetailsPage from "./MissionDetailsPage";
 import MessengerPage from "./MessengerPage";
+import SAVPage from "./SAVPage";
+import ProductsPage from "./ProductsPage";
 
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
@@ -150,7 +152,9 @@ export default () => (
       <RouteWithSidebar exact path={Routes.Managers.path} component={ManagersPage} />
       <RouteWithSidebar exact path={Routes.Competitors.path} component={CompetitorsPage} />
       <RouteWithSidebar exact path={Routes.Orders.path} component={OrdersPage} />
+      <RouteWithSidebar exact path={Routes.Products.path} component={ProductsPage} />
       <RouteWithSidebar exact path={Routes.Agents.path} component={AgentPage} />
+      <RouteWithSidebar exact path={Routes.SAV.path} component={SAVPage} />
 
     {/* components */}
     <RouteWithSidebar exact path={Routes.Accordions.path} component={Accordion} />
