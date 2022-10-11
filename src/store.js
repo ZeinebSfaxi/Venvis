@@ -38,7 +38,6 @@ import {
     missionCreateReducer,
     missionDetailsReducer,
     MissionListReducer,
-    updateMissionReducer,
     UpdateMissionStateReducer,
     MissionNumberReducer,
     updateMissionReducer

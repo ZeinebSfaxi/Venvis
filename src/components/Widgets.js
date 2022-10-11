@@ -517,7 +517,7 @@ export const AcquisitionWidget = ({managers, agents}) => {
             </div>
             <div className="d-block">
               <label className="mb-0">Shop Managers</label>
-              <h4 className="mb-0">{managers.length}</h4>
+              <h4 className="mb-0">{managers?.length}</h4>
             </div>
           </div>
           <div className="d-flex align-items-center pt-3">
@@ -526,7 +526,7 @@ export const AcquisitionWidget = ({managers, agents}) => {
             </div>
             <div className="d-block">
               <label className="mb-0">Commercial Agents</label>
-              <h4 className="mb-0">{agents.length}</h4>
+              <h4 className="mb-0">{agents?.length}</h4>
             </div>
           </div>
         </div>
