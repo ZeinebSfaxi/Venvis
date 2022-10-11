@@ -131,7 +131,7 @@ export default (props = {}) => {
               <Dropdown.Divider className="my-3 border-indigo" />
               {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
               <>
-                <NavItem title="Products" icon={faTags}/>
+                <NavItem title="Products" icon={faTags} link={Routes.Products.path}/>
                 <NavItem title="Orders" icon={faShoppingBasket} link={Routes.Orders.path}/>
               </>
               }
@@ -142,7 +142,7 @@ export default (props = {}) => {
               <NavItem title="Chat" link={Routes.Messenger.path} icon={faUsers}/>
               {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
               <>
-                <NavItem title="Customer care" icon={faPhone}/>
+                <NavItem title="Customer care" icon={faPhone}  link={Routes.SAV.path}/>
               </>
               }
               <NavItem title="Competitors" icon={faUserSecret} link={Routes.Competitors.path}/>
