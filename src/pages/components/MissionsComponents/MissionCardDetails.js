@@ -2,12 +2,12 @@ import React, {useEffect, useState} from "react";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Chip, Divider, Typography} from "@mui/material";
-import {Button, Col, Form, InputGroup, Row, Table} from "@themesberg/react-bootstrap";
+import {Button, Col, Form, InputGroup, Nav, Row, Table} from "@themesberg/react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheckCircle, faEdit} from "@fortawesome/free-regular-svg-icons";
 import {createShop, updateShop} from "../../../actions/shopAction";
 import {useDispatch, useSelector} from "react-redux";
-import {faCalendarAlt, faUpload, faUserEdit} from "@fortawesome/free-solid-svg-icons";
+import {faCalendarAlt, faCheck, faTruck, faUpload, faUserEdit} from "@fortawesome/free-solid-svg-icons";
 import Datetime from "react-datetime";
 import moment from "moment-timezone";
 import {OrderProductsDetails} from "../OrderComponents/OrderProductsDetails";
@@ -19,10 +19,11 @@ import {
     unaffectOrderFromMission,
     GetOrdesrByMission,
     GetOrdesrByRegion,
-    GetOrdesrByShop
+    GetOrdesrByShop, stateOrder
 } from "../../../actions/orderAction";
-import {updateMission} from "../../../actions/missionAction";
+import {GetMissionDetails, ListMissions, updateMission, UpdateMissionState} from "../../../actions/missionAction";
 import OrderOfMissionEdit from "./OrderOfMissionEdit";
+import {useKeycloak} from "@react-keycloak/web";
 
 
 
@@ -149,6 +150,9 @@ export default ({mission}) => {
     }, [ErrorOrder, ErrorDate]);
 
     console.log("error date",ErrorDate)
+
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
 
     return (
         <>
@@ -313,6 +317,8 @@ export default ({mission}) => {
                                         { data.state === 'standby' ?
 
                                             <Chip label="Stand by" className="fw-bolder" style={{backgroundColor: "#CCCCCC"}} />
+                                            : data.state=== 'confirmed' ?
+                                                <Chip label="Confirmed" className="fw-bolder" style={{backgroundColor: "#1dbbca"}} />
                                             : data.state=== 'delivered' ?
                                                 <Chip label="Delivered" className="fw-bolder" style={{backgroundColor: "#0aae0d"}} />
                                                 : data.state=== 'on going' ?
@@ -330,7 +336,9 @@ export default ({mission}) => {
                             {/*{moment(data.sendingDate).format("MM/DD/YYYY") >= deadline &&*/}
 
 
-                            <Col className="col-auto">
+
+                            {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" ?
+                           ( <Col className="col-auto">
                                 {mission.state === "standby" ?
                                 (<Button variant="primary" size="sm" className="me-2" onClick={() => {
                                     setEditable(true)
@@ -346,7 +354,27 @@ export default ({mission}) => {
                                 }
 
 
-                            </Col>
+                            </Col> ) : (
+                                    <Col className="col-auto">
+                                        {mission.state === "confirmed" ?
+                                            (<Button variant="primary" style={{backgroundColor: "#adfcad", borderColor:"#adfcad"}} size="sm" className="me-2" onClick={() => {
+                                             dispatch(UpdateMissionState(mission._id, {state: "on going"}) )
+                                                dispatch(GetMissionDetails(mission._id))
+                                            }}>
+                                                <FontAwesomeIcon icon={faTruck} className="me-1"/> On going
+                                            </Button> ) : mission.state === "on going" && (
+                                                <Button variant="primary" size="sm"  style={{backgroundColor: "#0aae0d", borderColor:"#0aae0d"}} onClick={() => {
+                                                    dispatch(UpdateMissionState(mission._id, {state: "delivered"}) )
+                                                    dispatch(GetMissionDetails(mission._id))
+                                                }}  className="me-2" >
+                                                    <FontAwesomeIcon icon={faCheck} className="me-1"/> Delivered
+                                                </Button>
+                                            )
+                                        }
+
+
+                                    </Col>
+                                )}
 
                         </Row>
                         <Form>
@@ -390,13 +418,13 @@ export default ({mission}) => {
                                         <th className="border-bottom">Shop ID</th>
                                         <th className="border-bottom">Validated</th>
                                         <th className="border-bottom" >State</th>
-                                        <th className="border-bottom">Action</th>
+                                        {/*<th className="border-bottom">Action</th>*/}
                                     </tr>
                                     </thead>
 
                                     <tbody>
                                     {orders?.map((order) => (
-                                        <OrderOfMissionRow key= {order._id} order={order} />
+                                        <OrderOfMissionRow mission={mission} key= {order._id} order={order} />
                                         // <OrderProductsDetails product={product} />
                                     ))}
                                     </tbody>

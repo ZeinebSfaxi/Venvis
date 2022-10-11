@@ -1,4 +1,4 @@
-import {Button, Card, Col} from "@themesberg/react-bootstrap";
+import {Button, Card, Col, Nav} from "@themesberg/react-bootstrap";
 import ProfileCover from "../../../assets/img/profile-cover.jpg";
 import Profile1 from "../../../assets/img/team/profile-picture-1.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -21,6 +21,7 @@ import {
 import {Alert} from "@mui/lab";
 import {GetAgentDetails, listAgents} from "../../../actions/agentAction";
 import AffectAgentCard from "../MissionsComponents/AffectAgentCard";
+import {useKeycloak} from "@react-keycloak/web";
 
 export const AgentCard = ({mission}) => {
 
@@ -70,6 +71,9 @@ export const AgentCard = ({mission}) => {
         dispatch(listAgents())
 
     }, [dispatch])
+
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
 
 
     return (
@@ -131,7 +135,8 @@ export const AgentCard = ({mission}) => {
                                             <Card.Text className="text-gray mb-0">{agent?.email}</Card.Text>
                                             <Card.Text className="text-gray mb-4">{agent.attributes?.phone}</Card.Text>
 
-
+                                            {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
+                                          <>
                                             {mission.state === "standby" ?
                                                 (<Button variant="primary" size="sm" className="me-2" onClick={() => {
                                                 setDialogueForm(true)
@@ -143,6 +148,7 @@ export const AgentCard = ({mission}) => {
                                                     </Button>
                                                 )}
                                             <Button variant="secondary" size="sm">Send Message</Button>
+                                          </> }
                                         </Card.Body>
                                     </>
 

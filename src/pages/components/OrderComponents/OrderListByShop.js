@@ -9,6 +9,7 @@ import {useParams} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import CardContent from "@mui/material/CardContent";
+import {useKeycloak} from "@react-keycloak/web";
 
 export const OrderListByShop = ({idShop}) => {
 
@@ -42,6 +43,9 @@ export const OrderListByShop = ({idShop}) => {
         console.log(value);
     };
 
+
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
 
     return (
         <>
@@ -81,7 +85,9 @@ export const OrderListByShop = ({idShop}) => {
                                     <th className="border-bottom">Due Date</th>
                                     <th className="border-bottom">Validated</th>
                                     <th className="border-bottom" >State</th>
+                                    {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
                                     <th className="border-bottom">Action</th>
+                                    }
                                 </tr>
                                 </thead>
 

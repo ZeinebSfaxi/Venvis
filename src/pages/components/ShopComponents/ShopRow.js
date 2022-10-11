@@ -6,6 +6,8 @@ import {useHistory} from "react-router";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import { deleteShop, listShops} from "../../../actions/shopAction";
 import {useDispatch, useSelector} from "react-redux";
+import {useKeycloak} from "@react-keycloak/web";
+import {Nav} from "@themesberg/react-bootstrap";
 
 export default ({shop}) => {
 
@@ -27,6 +29,8 @@ export default ({shop}) => {
     };
 
 
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
 
   return (
     <>
@@ -68,10 +72,12 @@ export default ({shop}) => {
                                   style={{color: "#00aa9b"}}
                                   onClick={() => goToSingleShop()}
                                  className="me-2"/>
+
+                {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
                 <FontAwesomeIcon icon={faTrashAlt}
                                  style={{color: "#ef4641"}}
                                  onClick={()=> setDialogue(true)}
-                                 className="me-2"/>
+                                 className="me-2"/> }
             </td>
         </tr>
 
@@ -94,6 +100,8 @@ export default ({shop}) => {
                 >
                     Cancel
                 </Button>
+
+
                 <Button size="sm" variant="contained" color="error" type="submit"
                         onClick={(e) => {
                             e.preventDefault();

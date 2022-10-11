@@ -5,6 +5,7 @@ import {Alert, Pagination} from "@mui/lab";
 import {Box, CircularProgress, Stack} from "@mui/material";
 import {ListMissions} from "../../../actions/missionAction";
 import MissionRow from "./MissionRow";
+import {useKeycloak} from "@react-keycloak/web";
 
 
 export const ListMission = ({missions, loading, error, search, setMissionIdSelected}) => {
@@ -26,6 +27,8 @@ export const ListMission = ({missions, loading, error, search, setMissionIdSelec
     };
 
 
+const keycloak = useKeycloak()
+    const userId = keycloak.keycloak.subject;
 
     //ShowDetailsIcon
     // const [showDetailsIcon, setShowDetailsIcon] = useState(true);
@@ -66,8 +69,8 @@ export const ListMission = ({missions, loading, error, search, setMissionIdSelec
                                     <th className="border-bottom">Action</th>
                                 </tr>
                                 </thead>
-
-                                <tbody>
+                                {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" ?
+                              (  <tbody>
 
 
                                 {missions?.filter((row) => {
@@ -80,10 +83,23 @@ export const ListMission = ({missions, loading, error, search, setMissionIdSelec
                                         return row;
                                     }
                                 }).map((mission) => (
-                                    <MissionRow  key= {mission._id} mission={mission} setMissionIdSelected={setMissionIdSelected}/>
+                                    <MissionRow  key= {mission._id} userId={userId} mission={mission} setMissionIdSelected={setMissionIdSelected}/>
 
                                 ))}
-                                </tbody>
+                                </tbody>) : (
+                                        <tbody>
+
+
+                                        {missions?.filter((row) => {
+                                            if (row.agent_id === userId) {
+                                                return row;
+                                            }
+                                        }).map((mission) => (
+                                            <MissionRow  key= {mission._id} userId={userId} mission={mission} setMissionIdSelected={setMissionIdSelected}/>
+
+                                        ))}
+                                        </tbody>
+                                    ) }
                             </Table>
 
                             <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">

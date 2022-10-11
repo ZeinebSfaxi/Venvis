@@ -17,10 +17,12 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {GetOrdesrByMission, unaffectOrderFromMission} from "../../../actions/orderAction";
 import {deleteMission, ListMissions, UpdateMissionState} from "../../../actions/missionAction"
+import {Col, Table} from "@themesberg/react-bootstrap";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 
 
-export default ({mission, setMissionIdSelected}) => {
+export default ({mission, setMissionIdSelected, userId}) => {
 
     const dispatch = useDispatch();
 
@@ -151,7 +153,8 @@ export default ({mission, setMissionIdSelected}) => {
                                       onClick={() => history.push(`/missions/missionDetails/${missionId}/${agentId}`)}
                                       className="me-2"/>
 
-
+                    {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
+                        (<>
 
                     {mission.state !== 'standby' || moment(today).format('DD-MM-YYYY') > moment(mission.sendingDate).add(3,'days').format('DD-MM-YYYY')  ?
                         (
@@ -170,7 +173,7 @@ export default ({mission, setMissionIdSelected}) => {
                                               className="me-2"/>
                         </>)
                     }
-
+                        </>)}
                 </td>
             </tr>
 

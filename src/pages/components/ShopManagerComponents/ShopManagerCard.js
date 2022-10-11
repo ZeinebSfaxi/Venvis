@@ -1,4 +1,4 @@
-import {Button, Card, Col} from "@themesberg/react-bootstrap";
+import {Button, Card, Col, Nav} from "@themesberg/react-bootstrap";
 import ProfileCover from "../../../assets/img/profile-cover.jpg";
 import Profile1 from "../../../assets/img/team/profile-picture-1.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import {Alert} from "@mui/lab";
 import {AffectManagerCard} from "./AffectManagerCard";
+import {useKeycloak} from "@react-keycloak/web";
 
 function CategoryOutlinedIcon() {
     return null;
@@ -67,6 +68,9 @@ export const ShopManagerCard = ({shop}) => {
     }, [dispatch])
 
 
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
+
     return (
         <>
             <Card border="light" className="text-center p-0 mb-4">
@@ -103,13 +107,15 @@ export const ShopManagerCard = ({shop}) => {
                             <Card.Text className="text-gray mb-0">{shopmanager.email}</Card.Text>
                             <Card.Text className="text-gray mb-4">{shopmanager.phoneNumber}</Card.Text>
 
-
+                            {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
+                            <>
                             <Button variant="primary" size="sm" className="me-2"  onClick={() => {
                                 setDialogueForm(true)
                             }}>
                                 <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Replace Manager
                             </Button>
                             <Button variant="secondary" size="sm">Send Message</Button>
+                             </> }
                         </Card.Body>
                         </>
 
@@ -117,13 +123,15 @@ export const ShopManagerCard = ({shop}) => {
                             <Card.Body className="pb-5">
                                 <Card.Title> No managers for this shop</Card.Title>
                                 <Card.Subtitle className="fw-normal">No manager is available for this shop</Card.Subtitle>
+                                {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
+                                    <>
                                 <Card.Text className="text-gray mb-4">Would you like to assign a new manager ?</Card.Text>
 
                                 <Button variant="primary" size="sm" className="me-2" onClick={() => {
                                     setDialogueForm(true)
                                 }}>
                                     <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Assign
-                                </Button>
+                                </Button> </> }
                             </Card.Body>
                         ) }
                 </>

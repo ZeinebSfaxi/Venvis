@@ -1,4 +1,4 @@
-import {Button, Col, Form, Row} from "@themesberg/react-bootstrap";
+import {Button, Col, Form, Nav, Row} from "@themesberg/react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {
     CardContent,
@@ -21,6 +21,7 @@ import {OrderProductsDetails} from "./OrderProductsDetails";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import {faBan, faCheck} from "@fortawesome/free-solid-svg-icons";
+import {useKeycloak} from "@react-keycloak/web";
 
 
 export const OrderDetailsForSingleShop = () => {
@@ -78,6 +79,8 @@ export const OrderDetailsForSingleShop = () => {
     // // today
     const today = new Date()
 
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
 
     return (
 
@@ -127,6 +130,8 @@ export const OrderDetailsForSingleShop = () => {
                             </Row>
 
 
+                            {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
+                        <>
                         {order.validated !== 'to review' || moment(today).format('DD-MM-YYYY') > moment(order.sendingDate).add(2,'days').format('DD-MM-YYYY')  ?
 
                           (
@@ -170,6 +175,8 @@ export const OrderDetailsForSingleShop = () => {
 
                             </>)
                         }
+
+                        </> }
 
                         <Form>
                             <Row>
