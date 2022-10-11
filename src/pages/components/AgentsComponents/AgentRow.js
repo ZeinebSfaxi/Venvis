@@ -331,10 +331,10 @@ export default ({agent}) => {
 
 
                 <td>
-                   <FontAwesomeIcon icon={faTruck}
-                                                       style={{color: "#00aa9b"}}
-                                                       onClick={() => history.push(`/agents/agentDetails/${agent.id}`)}
-                                                       className="me-2"/>
+                   {/*<FontAwesomeIcon icon={faTruck}*/}
+                   {/*                                    style={{color: "#00aa9b"}}*/}
+                   {/*                                    onClick={() => history.push(`/agents/agentDetails/${agent.id}`)}*/}
+                   {/*                                    className="me-2"/>*/}
 
                     {editable?
                         <>

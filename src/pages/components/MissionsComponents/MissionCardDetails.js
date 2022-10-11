@@ -357,7 +357,7 @@ export default ({mission}) => {
                             </Col> ) : (
                                     <Col className="col-auto">
                                         {mission.state === "confirmed" ?
-                                            (<Button variant="primary" style={{backgroundColor: "#adfcad", borderColor:"#adfcad"}} size="sm" className="me-2" onClick={() => {
+                                            (<Button variant="primary" style={{backgroundColor: "#91e291", borderColor:"#91e291"}} size="sm" className="me-2" onClick={() => {
                                              dispatch(UpdateMissionState(mission._id, {state: "on going"}) )
                                                 dispatch(GetMissionDetails(mission._id))
                                             }}>
