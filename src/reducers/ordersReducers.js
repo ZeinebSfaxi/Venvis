@@ -30,6 +30,22 @@ export const OrderByShopReducer = (state = { ordersByShop: [] }, action) => {
     }
 }
 
+export const OrderNumberReducer = (state = { orderNumber: [] }, action) => {
+    switch (action.type) {
+        case "ORDER_NUMBER_REQUEST":
+            return { loading: true, orderNumber: [] }
+        case "ORDER_NUMBER_SUCCESS":
+            return {
+                loading: false,
+                orderNumber: action.payload,
+            }
+        case "ORDER_NUMBER_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
 export const OrderByRegionReducer = (state = { ordersByRegion: [] }, action) => {
     switch (action.type) {
         case "ORDER_BY_REGION_REQUEST":
