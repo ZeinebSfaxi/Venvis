@@ -23,42 +23,13 @@ import OrderOfMissionEdit from "./OrderOfMissionEdit";
 
 
 
-export default ({order}) => {
+export default ({order, mission}) => {
 
     const dispatch = useDispatch();
 
     //goToDetails
     let orderId = order._id;
     const history = useHistory ();
-    // const goToSingleShop = () => {
-    //
-    //     history.push(`/shops/shopDetails/${shopId}/${orderId}`);
-    // };
-
-    // const [data , setData] = useState({
-    //     _id: '',
-    //     deliverDate: '',
-    //     sendingDate: '',
-    //     state: '',
-    //     validated:'',
-    //     shop_id: '',
-    //     affectedToMission: ''
-    // })
-    //
-    // useEffect(() => {
-    //     if (data2) {
-    //         setData({
-    //             _id: data2._id,
-    //             deliverDate: data2.deliverDate,
-    //             sendingDate: data2.sendingDate,
-    //             state: data2.state,
-    //             validated: data2.validated,
-    //             shop_id: data2.shop_id,
-    //             affectedToMission: data2.affectedToMission
-    //         })
-    //     }
-    //
-    // }, [data2])
 
 
     //alert
@@ -85,7 +56,15 @@ export default ({order}) => {
 // // today
     const today = new Date()
 
-
+    useEffect(() => {
+        if (mission.state === "on going")
+        {
+            dispatch(stateOrder(order._id, {state:"on going"}))
+        }
+        if (mission.state === "delivered") {
+            dispatch(stateOrder(order._id, {state:"delivered"}))
+        }
+    }, [])
 
 
 
@@ -171,61 +150,18 @@ export default ({order}) => {
                 </td>
 
 
-                <td>
+                {/*<td>*/}
 
-                    <FontAwesomeIcon  icon={faEye}
-                                      style={{color: "#00aa9b"}}
-                                      // onClick={() => goToSingleShop()}
-                                      className="me-2"/>
+                {/*    <FontAwesomeIcon  icon={faEye}*/}
+                {/*                      style={{color: "#00aa9b"}}*/}
+                {/*                      // onClick={() => goToSingleShop()}*/}
+                {/*                      className="me-2"/>*/}
 
 
-
-                </td>
+                {/*</td>*/}
             </tr>
 
-            {/*Refuse Dialogue*/}
-            {/*<Dialog open={dialogue} onClose={handleCloseDialogue} style={{width: '100%'}}>*/}
-            {/*    <DialogTitle>*/}
-            {/*        Are You Sure You Want To Reject This Order ?*/}
-            {/*    </DialogTitle>*/}
-            {/*    <DialogContent>*/}
-            {/*        <DialogContentText id="alert-dialog-slide-description">*/}
-            {/*            Please provide below a reason for the rejection. This will be sent to the shop's manager.*/}
 
-            {/*            <Form.Group controlId="exampleForm.ControlTextarea1" required type="text" placeholder="Enter Your message here">*/}
-            {/*                <Form.Label>Your Message </Form.Label>*/}
-            {/*                <Form.Control as="textarea" rows="3" />*/}
-            {/*            </Form.Group>*/}
-
-            {/*        </DialogContentText>*/}
-            {/*    </DialogContent>*/}
-            {/*    <DialogActions>*/}
-            {/*        <Button*/}
-            {/*            size="sm"*/}
-            {/*            variant="primary" type="submit"*/}
-            {/*            onClick={handleCloseDialogue}*/}
-            {/*        >*/}
-            {/*            Cancel*/}
-            {/*        </Button>*/}
-            {/*        <Button size="sm" variant="contained" color="error" type="submit"*/}
-            {/*                onClick={(e) => {*/}
-            {/*                    e.preventDefault();*/}
-            {/*                    refuseValidation();*/}
-            {/*                    handleCloseDialogue();*/}
-            {/*                }}>Reject</Button>*/}
-
-            {/*    </DialogActions>*/}
-
-            {/*</Dialog>*/}
-
-
-            {/*<Snackbar open={open}  autoHideDuration={6000} sx={{ backgroundColor: "#0aae0d", color:"#0aae0d" }} onClose={handleClose}>*/}
-            {/*    <Alert variant="filled" severity="success" sx={{ width: '100%' }} onClose={handleClose}>*/}
-            {/*        <AlertTitle>Success!</AlertTitle>*/}
-            {/*        You just accepted a new order!*/}
-            {/*        <strong>   PVC-{order.shop_id?.slice(order.shop_id.length -5, order.shop_id.length).toUpperCase()}</strong>*/}
-            {/*    </Alert>*/}
-            {/*</Snackbar>*/}
 
 
 

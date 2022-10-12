@@ -19,6 +19,8 @@ import {useDispatch} from "react-redux";
 import {faBan, faCheck} from "@fortawesome/free-solid-svg-icons";
 import {ListOrder, stateOrder, validateOrder} from "../../../actions/orderAction";
 import {ShopDetailsCard} from "./ShopDetailsCard";
+import {ListMissions, UpdateMissionState} from "../../../actions/missionAction";
+import {useKeycloak} from "@react-keycloak/web";
 
 
 export default ({order, showDetailsIcon}) => {
@@ -84,6 +86,18 @@ export default ({order, showDetailsIcon}) => {
 // // today
     const today = new Date()
 
+    useEffect(() => {
+
+        if(order.state !== "delivered" || order.state !== "rejected" ) {
+            if ( moment(order.deliveryDate).format('DD-MM-YYYY') < moment(today).format('DD-MM-YYYY') ) {
+            dispatch(stateOrder(order._id, {state: "late"}))
+            dispatch(ListOrder())
+        }}
+    }, [])
+
+
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
 
     return (
         <>
@@ -168,7 +182,7 @@ export default ({order, showDetailsIcon}) => {
                     }
                 </td>
 
-
+                {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
                 <td>
                     {showDetailsIcon &&
                         <FontAwesomeIcon  icon={faEye}
@@ -178,36 +192,40 @@ export default ({order, showDetailsIcon}) => {
                     }
 
 
-                    {order.validated !== 'to review' || moment(today).format('DD-MM-YYYY') > moment(order.sendingDate).add(2,'days').format('DD-MM-YYYY')  ?
-                      (
 
-                        <> <FontAwesomeIcon  icon={faCheck}
-                        style={{color: "#a2a1a1"}}
-                        className="me-2"/>
-                        <FontAwesomeIcon  icon={faBan}
-                        style={{color: "#a2a1a1"}}
-                        className="me-2"/>
 
-                     </>
-                        )  : (<> <FontAwesomeIcon  icon={faCheck}
-                                                  style={{color: "#0aae0d"}}
-                                                  onClick={(e) => {
-                                                      e.preventDefault();
-                                                      acceptValidation();
+                        {order.validated !== 'to review' || moment(today).format('DD-MM-YYYY') > moment(order.sendingDate).add(2, 'days').format('DD-MM-YYYY') ?
+                            (
 
-                                                  }}
-                                                  className="me-2"/>
-                          <FontAwesomeIcon  icon={faBan}
-                                            style={{color: "#ef4641"}}
-                                            onClick={() => {
-                                                setDialogue(true)
-                                            }}
-                                            className="me-2"/>
-                      </>)
-                    }
+                                <> <FontAwesomeIcon icon={faCheck}
+                                                    style={{color: "#a2a1a1"}}
+                                                    className="me-2"/>
+                                    <FontAwesomeIcon icon={faBan}
+                                                     style={{color: "#a2a1a1"}}
+                                                     className="me-2"/>
+
+                                </>
+                            ) : (<> <FontAwesomeIcon icon={faCheck}
+                                                     style={{color: "#0aae0d"}}
+                                                     onClick={(e) => {
+                                                         e.preventDefault();
+                                                         acceptValidation();
+
+                                                     }}
+                                                     className="me-2"/>
+                                <FontAwesomeIcon icon={faBan}
+                                                 style={{color: "#ef4641"}}
+                                                 onClick={() => {
+                                                     setDialogue(true)
+                                                 }}
+                                                 className="me-2"/>
+                            </>)
+                        }
+
 
                 </td>
-            </tr>
+            }
+                </tr>
 
             {/*Refuse Dialogue*/}
             <Dialog open={dialogue} onClose={handleCloseDialogue} style={{width: '100%'}}>

@@ -1,10 +1,10 @@
-import {Button, Card, Col} from "@themesberg/react-bootstrap";
+import {Button, Card, Col, Nav} from "@themesberg/react-bootstrap";
 import ProfileCover from "../../../assets/img/profile-cover.jpg";
 import Profile1 from "../../../assets/img/team/profile-picture-1.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserEdit} from "@fortawesome/free-solid-svg-icons";
 import React, {useEffect ,useState} from "react";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 import {affectManagerToShop, GetManagerByShop, listManagers} from "../../../actions/shopManagerAction";
@@ -19,23 +19,22 @@ import {
     DialogTitle
 } from "@mui/material";
 import {Alert} from "@mui/lab";
-import {GetAgentDetails} from "../../../actions/agentAction";
+import {GetAgentDetails, listAgents} from "../../../actions/agentAction";
+import AffectAgentCard from "../MissionsComponents/AffectAgentCard";
+import {useKeycloak} from "@react-keycloak/web";
 
-
-function CategoryOutlinedIcon() {
-    return null;
-}
-
-function CategoryIcon() {
-    return null;
-}
-
-export const AgentCard = () => {
+export const AgentCard = ({mission}) => {
 
     const routeParams = useParams();
     const idAgent = routeParams.agentId;
     const dispatch = useDispatch()
 
+
+    const history = useHistory ();
+    const goToChat = () => {
+
+        history.push(`/chat`);
+    };
 
     useEffect(() => {
 
@@ -67,6 +66,20 @@ export const AgentCard = () => {
     const handleChange = (event) => {
         setChecked(event.target.checked);
     };
+
+    const agentList = useSelector (state => state.agentList);
+    const agents = agentList.agents
+    const loading2 = agentList.loading
+    const error2 = agentList.error
+
+    useEffect(()=> {
+
+        dispatch(listAgents())
+
+    }, [dispatch])
+
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
 
 
     return (
@@ -128,13 +141,20 @@ export const AgentCard = () => {
                                             <Card.Text className="text-gray mb-0">{agent?.email}</Card.Text>
                                             <Card.Text className="text-gray mb-4">{agent.attributes?.phone}</Card.Text>
 
-
-                                            {/*<Button variant="primary" size="sm" className="me-2"  onClick={() => {*/}
-                                            {/*    setDialogueForm(true)*/}
-                                            {/*}}>*/}
-                                            {/*    <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Replace Manager*/}
-                                            {/*</Button>*/}
-                                            <Button variant="secondary" size="sm">Send Message</Button>
+                                            {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
+                                          <>
+                                            {mission.state === "standby" ?
+                                                (<Button variant="primary" size="sm" className="me-2" onClick={() => {
+                                                setDialogueForm(true)
+                                            }}>
+                                                <FontAwesomeIcon icon={faUserEdit} className="me-1"/> Replace Agent
+                                            </Button>) : (
+                                                    <Button variant="primary" size="sm" className="me-2"  disabled>
+                                                        <FontAwesomeIcon icon={faUserEdit} className="me-1"/> Replace Agent
+                                                    </Button>
+                                                )}
+                                            <Button variant="secondary" size="sm" onClick={goToChat}>Send Message</Button>
+                                          </> }
                                         </Card.Body>
                                     </>
 
@@ -150,60 +170,53 @@ export const AgentCard = () => {
 
             {/*************Dialogue*/}
 
-            {/*<Dialog*/}
-            {/*    fullWidth*/}
-            {/*    open={dialogueForm}*/}
-            {/*    onClose={handleCloseDialogue}*/}
-            {/*    aria-labelledby="draggable-dialog-title"*/}
-            {/*    // TransitionComponent={Transition}*/}
-            {/*>*/}
-            {/*    <DialogTitle id="draggable-dialog-title">*/}
-            {/*        Assign a manager*/}
-            {/*    </DialogTitle>*/}
-            {/*    <DialogContent>*/}
-            {/*        <DialogContentText>*/}
-            {/*            {loading ? (*/}
-            {/*                <Box sx={{ display: 'flex' }}>*/}
-            {/*                    <CircularProgress />*/}
-            {/*                </Box>*/}
-            {/*            ) : error ? (*/}
+            <Dialog
+                fullWidth
+                open={dialogueForm}
+                onClose={handleCloseDialogue}
+                aria-labelledby="draggable-dialog-title"
+                // TransitionComponent={Transition}
+            >
+                <DialogTitle id="draggable-dialog-title">
+                    Assign an agent
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {loading2 ? (
+                            <Box sx={{ display: 'flex' }}>
+                                <CircularProgress />
+                            </Box>
+                        ) : error2 ? (
 
-            {/*                <Alert variant="filled"  sx={{ width: '100%' }} severity="error">*/}
-            {/*                    Ay ay ay! looks like you have network problems :(*/}
-            {/*                    try reloading your page*/}
-            {/*                    try checking your internet connection*/}
-            {/*                    Error: {error}*/}
-            {/*                </Alert>*/}
+                            <Alert variant="filled"  sx={{ width: '100%' }} severity="error">
+                                Ay ay ay! looks like you have network problems :(
+                                try reloading your page
+                                try checking your internet connection
+                                Error: {error2}
+                            </Alert>
 
-            {/*            ) : (*/}
-            {/*                <>*/}
-            {/*                    <div className=" m-2 ">*/}
-            {/*                        <Checkbox*/}
-            {/*                            checked={checked}*/}
-            {/*                            onChange={handleChange}*/}
-            {/*                            inputProps={{ 'aria-label': 'controlled' }}*/}
-            {/*                        />*/}
-            {/*                        Show unassigned managers only*/}
-            {/*                    </div>*/}
-            {/*                    { checked?*/}
-            {/*                        (  managers?.map((manager) => (*/}
-            {/*                            // manager doesnt have shopID*/}
-            {/*                            !manager.shop_id &&*/}
-            {/*                            <AffectManagerCard key= {manager._id} dialogueForm={dialogueForm} manager={manager} />*/}
-            {/*                        )))*/}
-            {/*                        :*/}
-            {/*                        (*/}
-            {/*                            managers?.map((manager) => (*/}
-            {/*                                // <ShopRow key= {shop._id} shop={shop}/>*/}
-            {/*                                <AffectManagerCard key= {manager._id} setDialogueForm={setDialogueForm} manager={manager} />*/}
-            {/*                            )))*/}
-            {/*                    }*/}
+                        ) : (
+                            <>
+                                <div className=" m-2 ">
+                                    <Checkbox
+                                        checked={checked}
+                                        // onChange={handleChange}
+                                        inputProps={{ 'aria-label': 'controlled' }}
+                                    />
+                                    Show unassigned agents only
+                                </div>
 
-            {/*                </>*/}
-            {/*            )}*/}
-            {/*        </DialogContentText>*/}
-            {/*    </DialogContent>*/}
-            {/*</Dialog>*/}
+
+                                { agents?.map((row) => (
+                                            <AffectAgentCard key= {row.id} setDialogueForm={setDialogueForm} row={row} />
+                                        ))
+                                }
+
+                            </>
+                        )}
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
 
 
         </>

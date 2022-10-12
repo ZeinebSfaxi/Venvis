@@ -19,6 +19,7 @@ import { Routes } from "../routes";
 import venvisLogo from "../assets/img/Venvis/edited-venvis.png";
 import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 import {faCalendar, faNewspaper} from "@fortawesome/free-regular-svg-icons";
+import {useKeycloak} from "@react-keycloak/web";
 
 
 export default (props = {}) => {
@@ -32,6 +33,7 @@ export default (props = {}) => {
   const CollapsableNavItem = (props) => {
     const { eventKey, title, icon, children = null } = props;
     const defaultKey = pathname.indexOf(eventKey) !== -1 ? eventKey : "";
+
 
     return (
       <Accordion as={Nav.Item} defaultActiveKey={defaultKey}>
@@ -74,9 +76,13 @@ export default (props = {}) => {
       </Nav.Item>
     );
   };
+  const keycloak = useKeycloak();
+  const userId = keycloak.keycloak.subject;
+
 
   return (
-    <>
+
+      <>
       <Navbar expand={false} collapseOnSelect variant="dark" className="navbar-theme-primary px-4 d-md-none">
         <Navbar.Brand className="me-lg-5" as={Link} to={Routes.DashboardOverview.path}>
           <Image src={venvisLogo} className="navbar-brand-light" />
@@ -114,68 +120,33 @@ export default (props = {}) => {
 
               {/*new*/}
               <NavItem title="Shops" icon={faStore} link={Routes.Shops.path} />
-              <NavItem title="Managers" icon={faUserTie} link={Routes.Managers.path} />
-              <NavItem title="Commercial Agents" icon={faTruck} link={Routes.Agents.path} />
+
+              {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
+              <>
+              <NavItem title="Managers" icon={faUserTie} link={Routes.Managers.path}/>
+                <NavItem title="Commercial Agents" icon={faTruck} link={Routes.Agents.path} />
+              </>
+              }
 
               <Dropdown.Divider className="my-3 border-indigo" />
-
-              <NavItem title="Products" icon={faTags}/>
-              <NavItem title="Orders" icon={faShoppingBasket} link={Routes.Orders.path}/>
+              {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
+              <>
+                <NavItem title="Products" icon={faTags} link={Routes.Products.path}/>
+                <NavItem title="Orders" icon={faShoppingBasket} link={Routes.Orders.path}/>
+              </>
+              }
               <NavItem title="Missions" icon={faCalendar}  link={Routes.Missions.path}/>
 
               <Dropdown.Divider className="my-3 border-indigo" />
 
               <NavItem title="Chat" link={Routes.Messenger.path} icon={faUsers}/>
-
-              <NavItem title="Customer care" icon={faPhone}/>
+              {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
+              <>
+                <NavItem title="Customer care" icon={faPhone}  link={Routes.SAV.path}/>
+              </>
+              }
               <NavItem title="Competitors" icon={faUserSecret} link={Routes.Competitors.path}/>
 
-              {/*<NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />*/}
-
-              {/*<CollapsableNavItem eventKey="tables/" title="Tables" icon={faTable}>*/}
-              {/*  <NavItem title="Bootstrap Table" link={Routes.BootstrapTables.path} />*/}
-              {/*</CollapsableNavItem>*/}
-
-              {/*<CollapsableNavItem eventKey="examples/" title="Page Examples" icon={faFileAlt}>*/}
-              {/*  <NavItem title="Sign In" link={Routes.Signin.path} />*/}
-              {/*  <NavItem title="Sign Up" link={Routes.Signup.path} />*/}
-              {/*  <NavItem title="Forgot password" link={Routes.ForgotPassword.path} />*/}
-              {/*  <NavItem title="Reset password" link={Routes.ResetPassword.path} />*/}
-              {/*  <NavItem title="Lock" link={Routes.Lock.path} />*/}
-              {/*  <NavItem title="404 Not Found" link={Routes.NotFound.path} />*/}
-              {/*  <NavItem title="500 Server Error" link={Routes.ServerError.path} />*/}
-              {/*</CollapsableNavItem>*/}
-
-
-              {/*<Dropdown.Divider className="my-3 border-indigo" />*/}
-
-              {/*<CollapsableNavItem eventKey="documentation/" title="Getting Started" icon={faBook}>*/}
-              {/*  <NavItem title="Overview" link={Routes.DocsOverview.path} />*/}
-              {/*  <NavItem title="Download" link={Routes.DocsDownload.path} />*/}
-              {/*  <NavItem title="Quick Start" link={Routes.DocsQuickStart.path} />*/}
-              {/*  <NavItem title="License" link={Routes.DocsLicense.path} />*/}
-              {/*  <NavItem title="Folder Structure" link={Routes.DocsFolderStructure.path} />*/}
-              {/*  <NavItem title="Build Tools" link={Routes.DocsBuild.path} />*/}
-              {/*  <NavItem title="Changelog" link={Routes.DocsChangelog.path} />*/}
-              {/*</CollapsableNavItem>*/}
-              {/*<CollapsableNavItem eventKey="components/" title="Components" icon={faBoxOpen}>*/}
-              {/*  <NavItem title="Accordion" link={Routes.Accordions.path} />*/}
-              {/*  <NavItem title="Alerts" link={Routes.Alerts.path} />*/}
-              {/*  <NavItem title="Badges" link={Routes.Badges.path} />*/}
-              {/*  <NavItem title="Breadcrumbs" link={Routes.Breadcrumbs.path} />*/}
-              {/*  <NavItem title="Buttons" link={Routes.Buttons.path} />*/}
-              {/*  <NavItem title="Forms" link={Routes.Forms.path} />*/}
-              {/*  <NavItem title="Modals" link={Routes.Modals.path} />*/}
-              {/*  <NavItem title="Navbars" link={Routes.Navbars.path} />*/}
-              {/*  <NavItem title="Navs" link={Routes.Navs.path} />*/}
-              {/*  <NavItem title="Pagination" link={Routes.Pagination.path} />*/}
-              {/*  <NavItem title="Popovers" link={Routes.Popovers.path} />*/}
-              {/*  <NavItem title="Progress" link={Routes.Progress.path} />*/}
-              {/*  <NavItem title="Tables" link={Routes.Tables.path} />*/}
-              {/*  <NavItem title="Tabs" link={Routes.Tabs.path} />*/}
-              {/*  <NavItem title="Toasts" link={Routes.Toasts.path} />*/}
-              {/*  <NavItem title="Tooltips" link={Routes.Tooltips.path} />*/}
-              {/*</CollapsableNavItem>*/}
 
             </Nav>
           </div>

@@ -1,0 +1,9 @@
+.ct-chart .ct-series.stroke-green .ct-bar {
+    stroke: green !important;
+}
+.ct-chart .ct-series.stroke-yellow .ct-bar {
+    stroke: rgba(255, 167, 38, 0.8)!important;
+}
+.ct-chart .ct-series.stroke-red .ct-bar {
+    stroke: rgba(230, 20, 20, 0.8)!important;
+}

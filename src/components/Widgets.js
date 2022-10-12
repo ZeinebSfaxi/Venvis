@@ -1,10 +1,29 @@
 
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp, faChartArea, faChartBar, faChartLine, faFlagUsa, faFolderOpen, faGlobeEurope, faPaperclip, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAngleDown,
+  faAngleUp,
+  faChartArea,
+  faChartBar,
+  faChartLine,
+  faFlagUsa,
+  faFolderOpen,
+  faGlobeEurope,
+  faPaperclip, faTruck,
+  faUserPlus,
+  faUserTie
+} from '@fortawesome/free-solid-svg-icons';
 import { faAngular, faBootstrap, faReact, faVuejs } from "@fortawesome/free-brands-svg-icons";
 import { Col, Row, Card, Image, Button, ListGroup, ProgressBar } from '@themesberg/react-bootstrap';
-import { CircleChart, BarChart, SalesValueChart, SalesValueChartphone } from "./Charts";
+import {
+  CircleChart,
+  BarChart,
+  SalesValueChart,
+  SalesValueChartphone,
+  MissionsValueChart,
+  SalesValueChartMissionphone, CircleChartMission, CircleChartShops
+} from "./Charts";
 
 import Profile1 from "../assets/img/team/profile-picture-1.jpg";
 import ProfileCover from "../assets/img/profile-cover.jpg";
@@ -63,7 +82,7 @@ export const ChoosePhotoWidget = (props) => {
 };
 
 export const CounterWidget = (props) => {
-  const { icon, iconColor, category, title, period, percentage } = props;
+  const { icon, iconColor, category, title, period, percentage, competitor } = props;
   const percentageIcon = percentage < 0 ? faAngleDown : faAngleUp;
   const percentageColor = percentage < 0 ? "text-danger" : "text-success";
 
@@ -76,21 +95,15 @@ export const CounterWidget = (props) => {
               <FontAwesomeIcon icon={icon} />
             </div>
             <div className="d-sm-none">
-              <h5>{category}</h5>
-              <h3 className="mb-1">{title}</h3>
+              <h5>Your Competitors</h5>
+              <h3 className="mb-1">Your Competitors</h3>
             </div>
           </Col>
           <Col xs={12} xl={7} className="px-xl-0">
             <div className="d-none d-sm-block">
-              <h5>{category}</h5>
-              <h3 className="mb-1">{title}</h3>
-            </div>
-            <small>{period}, <FontAwesomeIcon icon={faGlobeEurope} size="xs" /> WorldWide</small>
-            <div className="small mt-2">
-              <FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />
-              <span className={`${percentageColor} fw-bold`}>
-                {percentage}%
-              </span> Since last month
+              <h5>Your Competitors </h5>
+              <p>Your Competitors products on sale</p>
+              <h3 className="mb-1">{competitor?.length}</h3>
             </div>
           </Col>
         </Row>
@@ -99,7 +112,40 @@ export const CounterWidget = (props) => {
   );
 };
 
-export const CircleChartWidget = (props) => {
+
+export const CounterWidgetProducts = (props) => {
+  const { icon, iconColor, category, title, period, products, percentage, competitor } = props;
+  const percentageIcon = percentage < 0 ? faAngleDown : faAngleUp;
+  const percentageColor = percentage < 0 ? "text-danger" : "text-success";
+
+  return (
+      <Card border="light" className="shadow-sm">
+        <Card.Body>
+          <Row className="d-block d-xl-flex align-items-center">
+            <Col xl={5} className="text-xl-center d-flex align-items-center justify-content-xl-center mb-3 mb-xl-0">
+              <div className={`icon icon-shape icon-md icon-${iconColor} rounded me-4 me-sm-0`}>
+                <FontAwesomeIcon icon={icon} />
+              </div>
+              <div className="d-sm-none">
+                <h5>Your Products</h5>
+                <h3 className="mb-1">Your Products number</h3>
+              </div>
+            </Col>
+            <Col xs={12} xl={7} className="px-xl-0">
+              <div className="d-none d-sm-block">
+                <h5>Your Products </h5>
+                <p>Number of products available.</p>
+                <h3 className="mb-1">{products?.length}</h3>
+              </div>
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
+  );
+};
+
+
+export const CircleChartOrdersWidget = (props) => {
   const { title, data = [] } = props;
   const series = data.map(d => d.value);
 
@@ -114,7 +160,7 @@ export const CircleChartWidget = (props) => {
             <h5 className="mb-3">{title}</h5>
 
             {data.map(d => (
-              <h6 key={`circle-element-${d.id}`} className="fw-normal text-gray">
+              <h6 key={`circle-element-${d.id}`} className="fw-normal" style={{color: d.color}} >
                 <FontAwesomeIcon icon={d.icon} className={`icon icon-xs text-${d.color} w-20 me-1`} />
                 {` ${d.label} `}{`${d.value}%`}
               </h6>
@@ -126,10 +172,66 @@ export const CircleChartWidget = (props) => {
   );
 };
 
-export const BarChartWidget = (props) => {
-  const { title, value, percentage, data = [] } = props;
-  const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+export const CircleChartMissionWidget = (props) => {
+  const { title, data = [] } = props;
   const series = data.map(d => d.value);
+
+  return (
+      <Card border="light" className="shadow-sm">
+        <Card.Body>
+          <Row className="d-block d-xl-flex align-items-center">
+            <Col xs={12} xl={5} className="text-xl-center d-flex align-items-center justify-content-xl-center mb-3 mb-xl-0">
+              <CircleChartMission series={series} />
+            </Col>
+            <Col xs={12} xl={7} className="px-xl-0">
+              <h5 className="mb-3">{title}</h5>
+
+              {data.map(d => (
+                  <h6 key={`circle-element-${d.id}`} className="fw-normal" style={{color: d.color}}>
+                    <FontAwesomeIcon icon={d.icon} className={`icon icon-xs text-${d.color} w-20 me-1`} />
+                    {` ${d.label} `}{`${d.value}%`}
+                  </h6>
+              ))}
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
+  );
+};
+
+export const CircleChartShopsnWidget = (props) => {
+  const { title, data = [] } = props;
+  const series = data.map(d => d.value);
+
+  return (
+      <Card border="light" className="shadow-sm">
+        <div style={{height:225}}>
+        <Card.Body>
+          <Row className="d-block d-xl-flex align-items-center">
+            <Col xs={12} xl={5} className="text-xl-center d-flex align-items-center justify-content-xl-center mb-3 mb-xl-0">
+              <CircleChartShops series={series} />
+            </Col>
+            <Col xs={12} xl={7} className="px-xl-0">
+              <h5 className="mb-3">{title}</h5>
+
+              {data.map(d => (
+                  <h6 key={`circle-element-${d.id}`} className="fw-normal " style={{color: d.color}}>
+                    <FontAwesomeIcon icon={d.icon} className={`icon icon-xs text-${d.color} w-20 me-1`} />
+                    {` ${d.label} `}{`${d.value}%`}
+                  </h6>
+              ))}
+            </Col>
+          </Row>
+        </Card.Body>
+        </div>
+      </Card>
+  );
+};
+
+export const BarChartWidget = (props) => {
+  const { title, value, percentage, savs,data = [] } = props;
+  const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const series = [savs];
   const percentageIcon = percentage < 0 ? faAngleDown : faAngleUp;
   const percentageColor = percentage < 0 ? "text-danger" : "text-success";
 
@@ -138,22 +240,22 @@ export const BarChartWidget = (props) => {
       <Card.Body className="d-flex flex-row align-items-center flex-0 border-bottom">
         <div className="d-block">
           <h6 className="fw-normal text-gray mb-2">{title}</h6>
-          <h3>{value}</h3>
-          <small className="mt-2">
-            <FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />
-            <span className={`${percentageColor} fw-bold`}>
-              {percentage}%
-            </span>
-          </small>
+          <h3>{value} complaints</h3>
+          {/*<small className="mt-2">*/}
+          {/*  <FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />*/}
+          {/*  <span className={`${percentageColor} fw-bold`}>*/}
+          {/*    {percentage}%*/}
+          {/*  </span>*/}
+          {/*</small>*/}
         </div>
-        <div className="d-block ms-auto">
-          {data.map(d => (
-            <div key={`bar-element-${d.id}`} className="d-flex align-items-center text-end mb-2">
-              <span className={`shape-xs rounded-circle bg-${d.color} me-2`} />
-              <small className="fw-normal">{d.label}</small>
-            </div>
-          ))}
-        </div>
+        {/*<div className="d-block ms-auto">*/}
+        {/*  {data.map(d => (*/}
+        {/*    <div key={`bar-element-${d.id}`} className="d-flex align-items-center text-end mb-2">*/}
+        {/*      <span className={`shape-xs rounded-circle bg-${d.color} me-2`} />*/}
+        {/*      <small className="fw-normal">{d.label}</small>*/}
+        {/*    </div>*/}
+        {/*  ))}*/}
+        {/*</div>*/}
       </Card.Body>
       <Card.Body className="p-2">
         <BarChart labels={labels} series={series} />
@@ -304,7 +406,7 @@ export const RankingWidget = () => {
 };
 
 export const SalesValueWidget = (props) => {
-  const { title, value, percentage } = props;
+  const { title, value, percentage, orders } = props;
   const percentageIcon = percentage < 0 ? faAngleDown : faAngleUp;
   const percentageColor = percentage < 0 ? "text-danger" : "text-success";
 
@@ -315,29 +417,62 @@ export const SalesValueWidget = (props) => {
           <h5 className="fw-normal mb-2">
             {title}
           </h5>
-          <h3>${value}</h3>
+          <h3>{value} Orders</h3>
           <small className="fw-bold mt-2">
-            <span className="me-2">Yesterday</span>
-            <FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />
-            <span className={percentageColor}>
-              {percentage}%
-            </span>
+            {/*<span className="me-2">Yesterday</span>*/}
+            {/*<FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />*/}
+            {/*<span className={percentageColor}>*/}
+            {/*  {percentage}%*/}
+            {/*</span>*/}
           </small>
         </div>
-        <div className="d-flex ms-auto">
-          <Button variant="secondary" size="sm" className="me-2">Month</Button>
-          <Button variant="primary" size="sm" className="me-3">Week</Button>
-        </div>
+        {/*<div className="d-flex ms-auto">*/}
+        {/*  <Button variant="secondary" size="sm" className="me-2">Month</Button>*/}
+        {/*  <Button variant="primary" size="sm" className="me-3">Week</Button>*/}
+        {/*</div>*/}
       </Card.Header>
       <Card.Body className="p-2">
-        <SalesValueChart />
+        <SalesValueChart orders={orders} />
       </Card.Body>
     </Card>
   );
 };
 
+export const SalesValueWidgetMissions = (props) => {
+  const { title, value, percentage, missions } = props;
+  const percentageIcon = percentage < 0 ? faAngleDown : faAngleUp;
+  const percentageColor = percentage < 0 ? "text-danger" : "text-success";
+
+  return (
+      <Card className="bg-secondary-alt shadow-sm">
+        <Card.Header className="d-flex flex-row align-items-center flex-0">
+          <div className="d-block">
+            <h5 className="fw-normal mb-2">
+              {title}
+            </h5>
+            <h3>{value} Missions</h3>
+            <small className="fw-bold mt-2">
+            {/*  <span className="me-2">Yesterday</span>*/}
+            {/*  <FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />*/}
+            {/*  <span className={percentageColor}>*/}
+            {/*  {percentage}%*/}
+            {/*</span>*/}
+            </small>
+          </div>
+          {/*<div className="d-flex ms-auto">*/}
+          {/*  <Button variant="secondary" size="sm" className="me-2">Month</Button>*/}
+          {/*  <Button variant="primary" size="sm" className="me-3">Week</Button>*/}
+          {/*</div>*/}
+        </Card.Header>
+        <Card.Body className="p-2">
+          <MissionsValueChart missions={missions} />
+        </Card.Body>
+      </Card>
+  );
+};
+
 export const SalesValueWidgetPhone = (props) => {
-  const { title, value, percentage } = props;
+  const { title, value, percentage, orders } = props;
   const percentageIcon = percentage < 0 ? faAngleDown : faAngleUp;
   const percentageColor = percentage < 0 ? "text-danger" : "text-success";
 
@@ -348,50 +483,83 @@ export const SalesValueWidgetPhone = (props) => {
           <h5 className="fw-normal mb-2">
             {title}
           </h5>
-          <h3>${value}</h3>
+          <h3>{value}</h3>
           <small className="fw-bold mt-2">
-            <span className="me-2">Yesterday</span>
-            <FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />
-            <span className={percentageColor}>
-              {percentage}%
-            </span>
+            {/*<span className="me-2">Yesterday</span>*/}
+            {/*<FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />*/}
+            {/*<span className={percentageColor}>*/}
+            {/*  {percentage}%*/}
+            {/*</span>*/}
           </small>
         </div>
         <div className="d-flex ms-auto">
-          <Button variant="secondary" size="sm" className="me-2">Month</Button>
-          <Button variant="primary" size="sm" className="me-3">Week</Button>
+          {/*<Button variant="secondary" size="sm" className="me-2">Month</Button>*/}
+          {/*<Button variant="primary" size="sm" className="me-3">Week</Button>*/}
         </div>
       </Card.Header>
       <Card.Body className="p-2">
-        <SalesValueChartphone />
+        <SalesValueChartphone orders={orders} />
       </Card.Body>
     </Card>
   );
 };
 
-export const AcquisitionWidget = () => {
+export const SalesValueWidgetMissionsPhone = (props) => {
+  const { title, value, percentage ,missions } = props;
+  const percentageIcon = percentage < 0 ? faAngleDown : faAngleUp;
+  const percentageColor = percentage < 0 ? "text-danger" : "text-success";
+
+  return (
+      <Card className="bg-secondary-alt shadow-sm">
+        <Card.Header className="d-md-flex flex-row align-items-center flex-0">
+          <div className="d-block mb-3 mb-md-0">
+            <h5 className="fw-normal mb-2">
+              {title}
+            </h5>
+            <h3>{value}</h3>
+            <small className="fw-bold mt-2">
+            {/*  <span className="me-2">Yesterday</span>*/}
+            {/*  <FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />*/}
+            {/*  <span className={percentageColor}>*/}
+            {/*  {percentage}%*/}
+            {/*</span>*/}
+            </small>
+          </div>
+          <div className="d-flex ms-auto">
+            {/*<Button variant="secondary" size="sm" className="me-2">Month</Button>*/}
+            {/*<Button variant="primary" size="sm" className="me-3">Week</Button>*/}
+          </div>
+        </Card.Header>
+        <Card.Body className="p-2">
+          <SalesValueChartMissionphone missions={missions} />
+        </Card.Body>
+      </Card>
+  );
+};
+
+export const AcquisitionWidget = ({managers, agents}) => {
   return (
     <Card border="light" className="shadow-sm">
       <Card.Body>
-        <h5>Acquisition</h5>
-        <p>Tells you where your visitors originated from, such as search engines, social networks or website referrals.</p>
+        <h5>Your Employees</h5>
+        <p>The sum of all your staff.</p>
         <div className="d-block">
           <div className="d-flex align-items-center pt-3 me-5">
             <div className="icon icon-shape icon-sm icon-shape-danger rounded me-3">
-              <FontAwesomeIcon icon={faChartBar} />
+              <FontAwesomeIcon icon={faUserTie} />
             </div>
             <div className="d-block">
-              <label className="mb-0">Bounce Rate</label>
-              <h4 className="mb-0">33.50%</h4>
+              <label className="mb-0">Shop Managers</label>
+              <h4 className="mb-0">{managers?.length}</h4>
             </div>
           </div>
           <div className="d-flex align-items-center pt-3">
             <div className="icon icon-shape icon-sm icon-shape-quaternary rounded me-3">
-              <FontAwesomeIcon icon={faChartArea} />
+              <FontAwesomeIcon icon={faTruck} />
             </div>
             <div className="d-block">
-              <label className="mb-0">Sessions</label>
-              <h4 className="mb-0">9,567</h4>
+              <label className="mb-0">Commercial Agents</label>
+              <h4 className="mb-0">{agents?.length}</h4>
             </div>
           </div>
         </div>

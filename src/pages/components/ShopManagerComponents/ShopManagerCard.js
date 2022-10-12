@@ -1,10 +1,10 @@
-import {Button, Card, Col} from "@themesberg/react-bootstrap";
+import {Button, Card, Col, Nav} from "@themesberg/react-bootstrap";
 import ProfileCover from "../../../assets/img/profile-cover.jpg";
 import Profile1 from "../../../assets/img/team/profile-picture-1.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserEdit} from "@fortawesome/free-solid-svg-icons";
 import React, {useEffect ,useState} from "react";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 import {affectManagerToShop, GetManagerByShop, listManagers} from "../../../actions/shopManagerAction";
@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import {Alert} from "@mui/lab";
 import {AffectManagerCard} from "./AffectManagerCard";
+import {useKeycloak} from "@react-keycloak/web";
 
 function CategoryOutlinedIcon() {
     return null;
@@ -34,6 +35,13 @@ export const ShopManagerCard = ({shop}) => {
     const routeParams = useParams();
     const idShop = routeParams.shopId;
     const dispatch = useDispatch()
+
+    const history = useHistory ();
+    const goToChat = () => {
+
+        history.push(`/chat`);
+    };
+
 
     useEffect(() => {
         dispatch(GetManagerByShop(idShop))
@@ -66,6 +74,9 @@ export const ShopManagerCard = ({shop}) => {
 
     }, [dispatch])
 
+
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
 
     return (
         <>
@@ -103,13 +114,15 @@ export const ShopManagerCard = ({shop}) => {
                             <Card.Text className="text-gray mb-0">{shopmanager.email}</Card.Text>
                             <Card.Text className="text-gray mb-4">{shopmanager.phoneNumber}</Card.Text>
 
-
+                            {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
+                            <>
                             <Button variant="primary" size="sm" className="me-2"  onClick={() => {
                                 setDialogueForm(true)
                             }}>
                                 <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Replace Manager
                             </Button>
-                            <Button variant="secondary" size="sm">Send Message</Button>
+                            <Button variant="secondary" size="sm" onClick={goToChat}>Send Message</Button>
+                             </> }
                         </Card.Body>
                         </>
 
@@ -117,13 +130,15 @@ export const ShopManagerCard = ({shop}) => {
                             <Card.Body className="pb-5">
                                 <Card.Title> No managers for this shop</Card.Title>
                                 <Card.Subtitle className="fw-normal">No manager is available for this shop</Card.Subtitle>
+                                {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
+                                    <>
                                 <Card.Text className="text-gray mb-4">Would you like to assign a new manager ?</Card.Text>
 
                                 <Button variant="primary" size="sm" className="me-2" onClick={() => {
                                     setDialogueForm(true)
                                 }}>
                                     <FontAwesomeIcon icon={faUserEdit} className="me-1" /> Assign
-                                </Button>
+                                </Button> </> }
                             </Card.Body>
                         ) }
                 </>

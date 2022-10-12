@@ -8,6 +8,7 @@ import {faCheckCircle, faEdit} from "@fortawesome/free-regular-svg-icons";
 import {createShop, updateShop} from "../../../actions/shopAction";
 import {useDispatch} from "react-redux";
 import {faUpload, faUserEdit} from "@fortawesome/free-solid-svg-icons";
+import {useKeycloak} from "@react-keycloak/web";
 
 
 export default ({shop}) => {
@@ -116,6 +117,10 @@ export default ({shop}) => {
         }
 
     }, [url, data, dispatch]);
+
+
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
 
 
     return (
@@ -370,6 +375,7 @@ export default ({shop}) => {
                         <Col className="col-auto">
                             <h5 className="mb-4" style={{color:"#4974a5"}} >Shop: PVC-{data._id.slice(data._id.length -5, data._id.length).toUpperCase()}</h5>
                         </Col>
+                        {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
                         <Col className="col-auto">
 
                                 <Button variant="primary" size="sm"  className="me-2"  onClick={() => {
@@ -378,7 +384,7 @@ export default ({shop}) => {
                                     <FontAwesomeIcon icon={faEdit} className="me-1" /> Edit
                                 </Button>
 
-                        </Col>
+                        </Col> }
                     </Row>
                     <Form>
                         <Row>

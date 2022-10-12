@@ -148,7 +148,7 @@ export default () => {
                     <Row>
                         <Col xs={12}>
 
-                                 <AgentCard />
+                                 <AgentCard mission={mission}/>
                         </Col>
 
 

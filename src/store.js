@@ -19,7 +19,7 @@ import {
     affectOrderToMissionReducer,
     OrderByMissionReducer, OrderByRegionReducer,
     OrderByShopReducer,
-    OrderListReducer, OrderToDeliverReducer,
+    OrderListReducer, OrderNumberReducer, OrderToDeliverReducer,
     singleOrderReducer,
     stateOrderReducer,
     unaffectOrderFromMissionReducer,
@@ -33,10 +33,13 @@ import {
     updateAgentReducer
 } from "./reducers/agentsReducer";
 import {
+    affectAgentToMissionReducer,
     deleteMissionReducer,
     missionCreateReducer,
     missionDetailsReducer,
     MissionListReducer,
+    UpdateMissionStateReducer,
+    MissionNumberReducer,
     updateMissionReducer
 } from "./reducers/missionReducer";
 import {
@@ -45,6 +48,12 @@ import {
     messageCreateReducer,
     MessagesListReducer
 } from "./reducers/chatReducer";
+import {
+    reclamationDetailsReducer,
+    reclamationListReducer,
+    SAVNumberReducer,
+    updateReclamationReducer
+} from "./reducers/savReducers";
 
 
 const reducer = combineReducers({
@@ -72,6 +81,7 @@ const reducer = combineReducers({
     ordersByRegion: OrderByRegionReducer,
     ordersByMission: OrderByMissionReducer,
     OrderToDeliver: OrderToDeliverReducer,
+    orderNumber: OrderNumberReducer,
 
 
     agentList: AgentListReducer,
@@ -85,11 +95,19 @@ const reducer = combineReducers({
     missionCreate: missionCreateReducer,
     missionUpdate: updateMissionReducer,
     missionDelete: deleteMissionReducer,
+    missionAffect: affectAgentToMissionReducer,
+    missionUpdateState: UpdateMissionStateReducer,
 
     messagesList: MessagesListReducer,
     conversationCreate: conversationCreateReducer,
     conversationByMember: conversationByMemberReducer,
     messageCreate: messageCreateReducer,
+    missionNumber: MissionNumberReducer,
+
+    reclamationList: reclamationListReducer,
+    reclamationDetails: reclamationDetailsReducer,
+    updateReclamation: updateReclamationReducer,
+    SAVNumber :SAVNumberReducer,
 
     competitorList: competitorListReducer,
 })

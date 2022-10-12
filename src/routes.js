@@ -14,6 +14,8 @@ export const Routes = {
     Competitors: { path: "/competitors" },
     Orders: { path: "/orders" },
     Agents: { path: "/agents" },
+    SAV: { path: "/sav" },
+    Products: { path: "/products" },
     AgentDetails: { path: "/agents/agentDetails/:agentId" },
 
     Transactions: { path: "/transactions" },
