@@ -9,7 +9,7 @@ import {
   faCloudUploadAlt,
   faDesktop, faGlasses, faMapPin, faMarker,
   faPlus,
-  faRocket,
+  faRocket, faTags,
   faTasks, faTruck, faUserSecret,
   faUserShield
 } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +28,7 @@ import {
   SalesValueWidgetMissionsPhone,
   CircleChartOrdersWidget,
   CircleChartMissionWidget,
-  CircleChartShopsnWidget
+  CircleChartShopsnWidget, CounterWidgetProducts
 } from "../../components/Widgets";
 import { PageVisitsTable } from "../../components/Tables";
 import { trafficShares, totalOrders } from "../../data/charts";
@@ -41,6 +41,8 @@ import {listShops} from "../../actions/shopAction";
 import {listManagers} from "../../actions/shopManagerAction";
 import {listAgents} from "../../actions/agentAction";
 import {listCompetitors} from "../../actions/competitorAction";
+import {products} from "../../data/products"
+import {listSavs, SAVNumberByMonth} from "../../actions/savAction";
 
 export default () => {
 
@@ -56,6 +58,14 @@ export default () => {
 
   const orderNumbers = useSelector (state => state.orderNumber);
   const orders = orderNumbers.orderNumber
+
+  useEffect(() => {
+    dispatch(SAVNumberByMonth())
+
+  }, [dispatch])
+
+  const savNumbers = useSelector (state => state.SAVNumber);
+  const savs = savNumbers.savNumber
 
   useEffect(() => {
     dispatch(ListOrder())
@@ -90,6 +100,7 @@ export default () => {
   const [arrOrder, setArrOrder] = useState([]);
   const [arrMission, setArrMission] = useState([]);
   const [arrShops, setArrShops] = useState([]);
+  const [arrSav, setArrSav] = useState([]);
 
 
   const shopList = useSelector (state => state.shopList);
@@ -127,6 +138,14 @@ export default () => {
   }, [dispatch])
 
 
+  const recList = useSelector (state => state.reclamationList);
+  const recs = recList.reclamations
+
+  useEffect(() => {
+    dispatch(listSavs())
+
+  }, [dispatch])
+
   useEffect(()=> {
   setArrOrder([
      { id: 1, label: "Delivered", value: ordersList.filter((o)=>o.state === "delivered").length, color: "#1b998b",  icon: faCheckCircle },
@@ -158,12 +177,21 @@ export default () => {
     )
   }, [shopsList])
 
+  useEffect(()=> {
+    setArrSav([
+          { id: 1, label: "north", value: recs.filter((o)=>o.state === "north").length, color: "#1b998b",  icon: faMapPin },
+          { id: 2, label: "center", value: shopsList.filter((o)=>o.region === "center").length, color: "#17a5ce", icon: faMapPin },
+          { id: 3, label: "south", value: shopsList.filter((o)=>o.region === "south").length, color: "#262b40", icon: faMapPin },
+        ]
+    )
+  }, [shopsList])
+
   return (
     <>
       
 
       <Row   className="justify-content-md-center">
-        <Col xs={6} className="mb-4 d-none d-sm-block">
+        <Col xs={6} className="mb-4 mt-5 d-none d-sm-block">
           <SalesValueWidget
             title="Orders received this year"
             value={ordersList?.length}
@@ -171,7 +199,7 @@ export default () => {
             orders={orders}
           />
         </Col>
-        <Col xs={6} className="mb-4 d-none d-sm-block">
+        <Col xs={6} className="mb-4 mt-5 d-none d-sm-block">
           <SalesValueWidgetMissions
               title="Missions created this year"
               value={missionsList?.length}
@@ -233,13 +261,14 @@ export default () => {
               {/*    data={trafficShares} />*/}
               {/*</div>*/}
               <Col xs={12}  className="mb-4">
-                <CounterWidget
+                <CounterWidgetProducts
                     category="Customers"
                     title="345k"
                     period="Feb 1 - Apr 1"
                     percentage={18.2}
-                    icon={faChartLine}
+                    icon={faTags}
                     iconColor="shape-secondary"
+                    products={products}
                 />
               </Col>
 
@@ -266,10 +295,12 @@ export default () => {
 
                 <Col xs={8}  className="mb-4">
                   <BarChartWidget
-                    title="Total orders"
-                    value={452}
-                    percentage={18.2}
-                    data={totalOrders} />
+                    title="Customer service complaints"
+                    value={recs?.length}
+                    // percentage={18.2}
+                    data={totalOrders}
+                    savs = {savs}
+                  />
                 </Col>
 
 

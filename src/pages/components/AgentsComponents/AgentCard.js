@@ -4,7 +4,7 @@ import Profile1 from "../../../assets/img/team/profile-picture-1.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserEdit} from "@fortawesome/free-solid-svg-icons";
 import React, {useEffect ,useState} from "react";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 import {affectManagerToShop, GetManagerByShop, listManagers} from "../../../actions/shopManagerAction";
@@ -29,6 +29,12 @@ export const AgentCard = ({mission}) => {
     const idAgent = routeParams.agentId;
     const dispatch = useDispatch()
 
+
+    const history = useHistory ();
+    const goToChat = () => {
+
+        history.push(`/chat`);
+    };
 
     useEffect(() => {
 
@@ -147,7 +153,7 @@ export const AgentCard = ({mission}) => {
                                                         <FontAwesomeIcon icon={faUserEdit} className="me-1"/> Replace Agent
                                                     </Button>
                                                 )}
-                                            <Button variant="secondary" size="sm">Send Message</Button>
+                                            <Button variant="secondary" size="sm" onClick={goToChat}>Send Message</Button>
                                           </> }
                                         </Card.Body>
                                     </>

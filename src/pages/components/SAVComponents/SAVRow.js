@@ -69,6 +69,14 @@ const SavRow = ({rec}) => {
 
           </span>
                 </td>
+
+                <td>
+         <span className="fw-normal">
+            {moment(rec.sendingDate).format('DD-MM-YYYY')}
+          </span>
+
+                </td>
+
                 <td>
          <span className="fw-normal">
            {rec.title}

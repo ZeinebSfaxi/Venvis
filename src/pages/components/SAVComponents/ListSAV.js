@@ -61,6 +61,7 @@ const ListSav = ({search}) => {
                             <thead>
                             <tr>
                                 <th className="border-bottom">ID</th>
+                                <th className="border-bottom">Receiving Date</th>
                                 <th className="border-bottom">Title</th>
                                 <th className="border-bottom">Description</th>
                                 <th className="border-bottom">Shop ID</th>

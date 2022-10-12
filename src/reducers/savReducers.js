@@ -45,3 +45,20 @@ export const updateReclamationReducer = (state = { reclamation: {} }, action) =>
             return state
     }
 }
+
+export const SAVNumberReducer = (state = { savNumber: [] }, action) => {
+    switch (action.type) {
+        case "SAV_NUMBER_REQUEST":
+            return { loading: true, savNumber: [] }
+        case "SAV_NUMBER_SUCCESS":
+            return {
+                loading: false,
+                savNumber: action.payload,
+            }
+        case "SAV_NUMBER_FAIL":
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+

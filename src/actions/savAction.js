@@ -50,3 +50,18 @@ export const updateSAV = (id, updatedSAV) => async (dispatch) => {
     }
 }
 
+export const SAVNumberByMonth = () => async (dispatch) => {
+    try {
+        dispatch({type: "SAV_NUMBER_REQUEST"})
+
+        const {data} = await axios.get("http://localhost:4000/sav/numberstats/")
+        dispatch({type: "SAV_NUMBER_SUCCESS", payload: data })
+
+    } catch (error) {
+        dispatch({type: "SAV_NUMBER_FAIL", payload: error.response && error.response.data.message?
+                error.response.data.message
+                : error.message
+        })
+    }
+}
+
