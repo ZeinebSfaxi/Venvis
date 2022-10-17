@@ -137,27 +137,10 @@ export const OrderDetailsToDeliverShop = () => {
                             </Row>
                             {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
                             <>
-                                {order.validated !== 'to review' || moment(today).format('DD-MM-YYYY') > moment(order.sendingDate).add(2, 'days').format('DD-MM-YYYY') ?
+                                {/*{order.validated !== 'to review' || moment(today).format('DD-MM-YYYY') > moment(order.sendingDate).add(2, 'days').format('DD-MM-YYYY') ?*/}
 
-                                    (
-                                        <>
-
-                                            <Row className="d-flex justify-content-lg-end align-items-end mb-3">
-                                                <Col className="col-auto ">
-                                                    <Button disabled size="sm" className="me-2">
-                                                        <FontAwesomeIcon icon={faCheck} className="me-1"/> Accept
-                                                    </Button>
-                                                </Col>
-
-                                                <Col className="col-auto ">
-                                                    <Button disabled size="sm" className="me-2">
-                                                        <FontAwesomeIcon icon={faBan} className="me-1"/> Reject
-                                                    </Button>
-                                                </Col>
-                                            </Row>
-
-                                        </>
-                                    ) : (<>
+                                    {((moment(order.sendingDate).add(2, 'days').isAfter(today))  )|| order.validated === 'to review'  ?
+                                    (<>
                                         <Row className="d-flex justify-content-lg-end align-items-end mb-3">
                                             <Col className="col-auto ">
                                                 <Button style={{backgroundColor: "#0aae0d", borderColor: "#0aae0d"}}
@@ -180,8 +163,26 @@ export const OrderDetailsToDeliverShop = () => {
                                             </Col>
                                         </Row>
 
-                                    </>)
-                                }
+                                    </>) :  (
+                                            <>
+
+                                                <Row className="d-flex justify-content-lg-end align-items-end mb-3">
+                                                    <Col className="col-auto ">
+                                                        <Button disabled size="sm" className="me-2">
+                                                            <FontAwesomeIcon icon={faCheck} className="me-1"/> Accept
+                                                        </Button>
+                                                    </Col>
+
+                                                    <Col className="col-auto ">
+                                                        <Button disabled size="sm" className="me-2">
+                                                            <FontAwesomeIcon icon={faBan} className="me-1"/> Reject
+                                                        </Button>
+                                                    </Col>
+                                                </Row>
+
+                                            </>
+                                        )
+                                    }
                             </>
                             }
 

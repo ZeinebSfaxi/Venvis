@@ -23,7 +23,7 @@ import OrderOfMissionEdit from "./OrderOfMissionEdit";
 
 
 
-export default ({order, mission}) => {
+export default ({order, mission, setChanged, changed}) => {
 
     const dispatch = useDispatch();
 
@@ -51,20 +51,44 @@ export default ({order, mission}) => {
 
     // see a shop name
     const [showDetails, setShowDetails] = useState(false)
+    const [missionData, setMissionData] = useState("")
 
 
 // // today
     const today = new Date()
 
     useEffect(() => {
-        if (mission.state === "on going")
-        {
-            dispatch(stateOrder(order._id, {state:"on going"}))
-        }
-        if (mission.state === "delivered") {
-            dispatch(stateOrder(order._id, {state:"delivered"}))
-        }
-    }, [])
+
+        setMissionData("")
+    }, [mission])
+
+    useEffect(() => {
+
+        setMissionData("")
+    }, [changed])
+
+
+    // useEffect(() => {
+    // setMissionData(mission.state)
+    // }, [])
+
+
+    useEffect(() => {
+       if(missionData ==="") {
+        setMissionData(mission.state)
+       }
+        else {
+           if (missionData === "on going") {
+               dispatch(stateOrder(order._id, {state: "on going"}))
+           } else if (missionData === "delivered") {
+               dispatch(stateOrder(order._id, {state: "delivered"}))
+           } else if (missionData === "confirmed" || missionData === "standby") {
+               dispatch(stateOrder(order._id, {state: "to review"}))
+           }
+       }
+    }, [missionData])
+
+
 
 
 
@@ -135,20 +159,13 @@ export default ({order, mission}) => {
                 </td>
 
                 <td>
-                    { order.state === 'to review' ?
-
-                        <Chip label="Stand by" className="fw-bolder" style={{backgroundColor: "#CCCCCC"}} />
-                        : order.state=== 'delivered' ?
-                            <Chip label="Delivered" className="fw-bolder" style={{backgroundColor: "#0aae0d"}} />
-                            : order.state=== 'on going' ?
-                                <Chip label="On going" className="fw-bolder" style={{backgroundColor: "#adfcad"}} />
-                                : order.state=== 'rejected' ?
-                                    <Chip label="Rejected"  className="fw-bolder" style={{backgroundColor: "#d61d1d"}} />
-                                    : order.state ==='late' &&
-                                    <Chip label="Late"  className="fw-bolder" style={{backgroundColor: "#f6a01e"}} />
-                    }
+                {mission.state === "confirmed" || mission.state === "standby" ?
+                        <Chip label="Stand by" className="fw-bolder" style={{backgroundColor: "#CCCCCC"}}/>
+                : mission.state === "on going" ?   <Chip label="On going" className="fw-bolder" style={{backgroundColor: "#adfcad"}}/> :
+                        mission.state === "delivered" ?   <Chip label="Delivered" className="fw-bolder" style={{backgroundColor: "#0aae0d"}}/> :
+                            mission.state === "late" &&  <Chip label="Late" className="fw-bolder" style={{backgroundColor: "#f6a01e"}}/>
+                }
                 </td>
-
 
                 {/*<td>*/}
 

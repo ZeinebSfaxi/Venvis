@@ -85,19 +85,24 @@ export default ({order, showDetailsIcon}) => {
 
 // // today
     const today = new Date()
+    const today2 =  moment(today).format('DD-MM-YYYY')
+    // const now = moment()
 
-    useEffect(() => {
+    // useEffect(() => {
+    //
+    //     if(order.state !== "delivered" || order.state !== "rejected" ) {
+    //         if ( moment(order.deliveryDate).isBefore(moment(today))  ) {
+    //         dispatch(stateOrder(order._id, {state: "late"}))
+    //         dispatch(ListOrder())
+    //     }}
+    // }, [])
 
-        if(order.state !== "delivered" || order.state !== "rejected" ) {
-            if ( moment(order.deliveryDate).format('DD-MM-YYYY') < moment(today).format('DD-MM-YYYY') ) {
-            dispatch(stateOrder(order._id, {state: "late"}))
-            dispatch(ListOrder())
-        }}
-    }, [])
 
 
     const keycloak = useKeycloak();
     const userId = keycloak.keycloak.subject;
+
+
 
     return (
         <>
@@ -194,18 +199,8 @@ export default ({order, showDetailsIcon}) => {
 
 
 
-                        {order.validated !== 'to review' || moment(today).format('DD-MM-YYYY') > moment(order.sendingDate).add(2, 'days').format('DD-MM-YYYY') ?
-                            (
-
-                                <> <FontAwesomeIcon icon={faCheck}
-                                                    style={{color: "#a2a1a1"}}
-                                                    className="me-2"/>
-                                    <FontAwesomeIcon icon={faBan}
-                                                     style={{color: "#a2a1a1"}}
-                                                     className="me-2"/>
-
-                                </>
-                            ) : (<> <FontAwesomeIcon icon={faCheck}
+                        {((moment(order.sendingDate).add(2, 'days').isAfter(today))  )|| order.validated === 'to review'  ?
+                            (<> <FontAwesomeIcon icon={faCheck}
                                                      style={{color: "#0aae0d"}}
                                                      onClick={(e) => {
                                                          e.preventDefault();
@@ -219,7 +214,17 @@ export default ({order, showDetailsIcon}) => {
                                                      setDialogue(true)
                                                  }}
                                                  className="me-2"/>
-                            </>)
+                            </>) :  (
+
+                                <> <FontAwesomeIcon icon={faCheck}
+                                                    style={{color: "#a2a1a1"}}
+                                                    className="me-2"/>
+                                    <FontAwesomeIcon icon={faBan}
+                                                     style={{color: "#a2a1a1"}}
+                                                     className="me-2"/>
+
+                                </>
+                            )
                         }
 
 

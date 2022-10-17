@@ -32,7 +32,7 @@ export default ({mission}) => {
 
     const missionId = mission._id;
     const today = new Date();
-    const deadline = moment(today).add(3, "days").format("MM/DD/YYYY")
+    const deadline = moment(today).add(2, "days")
 
     // display data
     const [data, setData] = useState({
@@ -102,7 +102,7 @@ export default ({mission}) => {
 
     useEffect(() => {
         if(date!=="") {
-            if (moment(date).format("MM/DD/YYYY") >= deadline) {
+            if (moment(date).isAfter(deadline) ) {
                 setData( {
                     ...data,
                     deliveryDate: moment(date).format("YYYY-MM-DD")
@@ -133,6 +133,7 @@ export default ({mission}) => {
 
 
     const [ErrorOrder, setErrorOrder] = useState(false)
+    const [changed, setChanged] = useState(false)
 
     useEffect(() => {
       if ( (ArrayToremove.length >= orders.length) && (ArrayOrders.length===0)) {
@@ -153,6 +154,8 @@ export default ({mission}) => {
 
     const keycloak = useKeycloak();
     const userId = keycloak.keycloak.subject;
+
+
 
     return (
         <>
@@ -359,13 +362,20 @@ export default ({mission}) => {
                                         {mission.state === "confirmed" ?
                                             (<Button variant="primary" style={{backgroundColor: "#91e291", borderColor:"#91e291"}} size="sm" className="me-2" onClick={() => {
                                              dispatch(UpdateMissionState(mission._id, {state: "on going"}) )
-                                                dispatch(GetMissionDetails(mission._id))
+
+                                                dispatch(GetMissionDetails(mission._id));
+                                                 setChanged(true)
+                                                window.location.reload()
                                             }}>
                                                 <FontAwesomeIcon icon={faTruck} className="me-1"/> On going
                                             </Button> ) : mission.state === "on going" && (
                                                 <Button variant="primary" size="sm"  style={{backgroundColor: "#0aae0d", borderColor:"#0aae0d"}} onClick={() => {
                                                     dispatch(UpdateMissionState(mission._id, {state: "delivered"}) )
-                                                    dispatch(GetMissionDetails(mission._id))
+
+                                                    dispatch(GetMissionDetails(mission._id));
+                                                    setChanged(true)
+                                                    window.location.reload()
+
                                                 }}  className="me-2" >
                                                     <FontAwesomeIcon icon={faCheck} className="me-1"/> Delivered
                                                 </Button>
@@ -424,7 +434,7 @@ export default ({mission}) => {
 
                                     <tbody>
                                     {orders?.map((order) => (
-                                        <OrderOfMissionRow mission={mission} key= {order._id} order={order} />
+                                        <OrderOfMissionRow key= {order._id} setChanged={setChanged} changed={changed} mission={mission}  order={order} />
                                         // <OrderProductsDetails product={product} />
                                     ))}
                                     </tbody>

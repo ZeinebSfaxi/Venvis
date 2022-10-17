@@ -77,7 +77,7 @@ export const ListShop = ({search}) => {
                                     ) {
                                         return row;
                                     }
-                                }).slice((activePage - 1) * 5, activePage * 5).map((shop) => (
+                                }).map((shop) => (
                                     <ShopRow key= {shop._id} shop={shop}/>
                                 ))}
                             </tbody>
@@ -86,13 +86,13 @@ export const ListShop = ({search}) => {
                                     <Stack spacing={2}>
 
 
-                                        <Pagination
-                                            count={Math.trunc(shops.length / 5)}
-                                            page={activePage}
-                                            onChange={handleChange}
-                                            color="primary"
-                                            variant="outlined" shape="rounded"
-                                        />
+                                        {/*<Pagination*/}
+                                        {/*    count={Math.trunc(shops.length / 3)}*/}
+                                        {/*    page={activePage}*/}
+                                        {/*    onChange={handleChange}*/}
+                                        {/*    color="primary"*/}
+                                        {/*    variant="outlined" shape="rounded"*/}
+                                        {/*/>*/}
 
 
                                     </Stack>

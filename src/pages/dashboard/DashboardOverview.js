@@ -229,14 +229,16 @@ export default () => {
 
           <CircleChartOrdersWidget
               title="Orders Status"
-              data={arrOrder} />
+              data={arrOrder}
+              ordersList={ordersList}/>
 
         </Col>
 
         <Col xs={12} sm={6} xl={4} className="mb-4">
           <CircleChartMissionWidget
               title="Mission Status"
-              data={arrMission} />
+              data={arrMission}
+            missionsList={missionsList}/>
         </Col>
 
 
@@ -245,7 +247,8 @@ export default () => {
 
           <CircleChartShopsnWidget
             title="Shops Regions"
-            data={arrShops} />
+            data={arrShops}
+          shopsList={shopsList}/>
 
         </Col>
       </Row>

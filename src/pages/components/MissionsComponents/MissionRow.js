@@ -65,7 +65,8 @@ export default ({mission, setMissionIdSelected, userId}) => {
 
 
     useEffect(() => {
-        if (mission.state === "standby" && mission.agent_id && (moment(today).format('DD-MM-YYYY') > moment(mission.sendingDate).add(3,'days').format('DD-MM-YYYY')) ) {
+
+        if (mission.state === "standby" && mission.agent_id && (( moment(today).isAfter(moment(mission.sendingDate).add(2, 'days')))) ) {
             dispatch(UpdateMissionState(mission._id, {state: "confirmed"}))
             dispatch(ListMissions())
         }
@@ -157,7 +158,7 @@ export default ({mission, setMissionIdSelected, userId}) => {
                     {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
                         (<>
 
-                    {mission.state !== 'standby' || moment(today).format('DD-MM-YYYY') > moment(mission.sendingDate).add(3,'days').format('DD-MM-YYYY')  ?
+                    {mission.state !== 'standby' || moment(today).isAfter(moment(mission.sendingDate).add(3,'days'))   ?
                         (
 
                             <> <FontAwesomeIcon  icon={faTrashAlt}

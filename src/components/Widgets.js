@@ -146,8 +146,9 @@ export const CounterWidgetProducts = (props) => {
 
 
 export const CircleChartOrdersWidget = (props) => {
-  const { title, data = [] } = props;
+  const { title, ordersList,data = [] } = props;
   const series = data.map(d => d.value);
+
 
   return (
     <Card border="light" className="shadow-sm">
@@ -162,7 +163,7 @@ export const CircleChartOrdersWidget = (props) => {
             {data.map(d => (
               <h6 key={`circle-element-${d.id}`} className="fw-normal" style={{color: d.color}} >
                 <FontAwesomeIcon icon={d.icon} className={`icon icon-xs text-${d.color} w-20 me-1`} />
-                {` ${d.label} `}{`${d.value}%`}
+                {` ${d.label} `}{`${((d.value/ordersList?.length) * 100).toFixed(2)}%`}
               </h6>
             ))}
           </Col>
@@ -173,7 +174,7 @@ export const CircleChartOrdersWidget = (props) => {
 };
 
 export const CircleChartMissionWidget = (props) => {
-  const { title, data = [] } = props;
+  const { title, missionsList,data = [] } = props;
   const series = data.map(d => d.value);
 
   return (
@@ -189,7 +190,7 @@ export const CircleChartMissionWidget = (props) => {
               {data.map(d => (
                   <h6 key={`circle-element-${d.id}`} className="fw-normal" style={{color: d.color}}>
                     <FontAwesomeIcon icon={d.icon} className={`icon icon-xs text-${d.color} w-20 me-1`} />
-                    {` ${d.label} `}{`${d.value}%`}
+                    {` ${d.label} `}{`${((d.value/missionsList?.length) * 100).toFixed(2)}%`}
                   </h6>
               ))}
             </Col>
@@ -200,7 +201,7 @@ export const CircleChartMissionWidget = (props) => {
 };
 
 export const CircleChartShopsnWidget = (props) => {
-  const { title, data = [] } = props;
+  const { title, shopsList,data = [] } = props;
   const series = data.map(d => d.value);
 
   return (
@@ -217,7 +218,7 @@ export const CircleChartShopsnWidget = (props) => {
               {data.map(d => (
                   <h6 key={`circle-element-${d.id}`} className="fw-normal " style={{color: d.color}}>
                     <FontAwesomeIcon icon={d.icon} className={`icon icon-xs text-${d.color} w-20 me-1`} />
-                    {` ${d.label} `}{`${d.value}%`}
+                    {` ${d.label} `}{`${((d.value/shopsList?.length) * 100).toFixed(2)}%`}
                   </h6>
               ))}
             </Col>

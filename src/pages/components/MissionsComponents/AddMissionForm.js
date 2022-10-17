@@ -21,7 +21,7 @@ export default () => {
     const dispatch = useDispatch();
 
     const today = new Date();
-    const deadline = moment(today).add(3, "days").format("MM/DD/YYYY")
+    const deadline = moment(today).add(2, "days")
 
     const [region, setRegion] = useState("north")
     const [date, setDate] = useState("");
@@ -54,7 +54,7 @@ export default () => {
 
     useEffect(() => {
 
-        if (moment(date).format("MM/DD/YYYY") >= deadline) {
+        if (moment(date) .isAfter(deadline) ) {
             setMissionData( {
                 ...missionData,
                 deliveryDate: moment(date).format("YYYY-MM-DD")

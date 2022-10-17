@@ -95,15 +95,13 @@ export const ListOrders = ({search}) => {
                             <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
                                 <Stack spacing={2}>
 
-
-                                    <Pagination
-                                        count={Math.trunc(orders.length / 4)}
-                                        page={activePage}
-                                        onChange={handleChange}
-                                        color="primary"
-                                        variant="outlined" shape="rounded"
-                                    />
-
+                                    {/*<Pagination*/}
+                                    {/*    count={Math.trunc(orders.length / 10)}*/}
+                                    {/*    page={activePage}*/}
+                                    {/*    onChange={handleChange}*/}
+                                    {/*    color="primary"*/}
+                                    {/*    variant="outlined" shape="rounded"*/}
+                                    {/*/>*/}
 
                                 </Stack>
                             </Card.Footer>
