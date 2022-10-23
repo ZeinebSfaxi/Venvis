@@ -10,6 +10,7 @@ import jsPDF from "jspdf";
 import venvisBlack from "../assets/img/Venvis/venvisBlack.png";
 import autoTable from "jspdf-autotable";
 import {useSelector} from "react-redux";
+import {useKeycloak} from "@react-keycloak/web";
 
 export default () => {
 
@@ -50,6 +51,10 @@ export default () => {
         doc.text('Copyright © 2022 Venvis s.r.o.', 20, 430)
         doc.save('Shops.pdf')
     }
+
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
+
     return (
         <>
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -84,13 +89,15 @@ export default () => {
                             <Form.Control type="text" placeholder="Search"    onChange={(e) => setSearch(e.target.value)}/>
                         </InputGroup>
                     </Col>
+
                     <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
+                        {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
                         <Button variant="secondary" size="sm" onClick={() => {
                             setDialogueForm(true)
                         }} className="text-dark ">
                             <FontAwesomeIcon
                                 className="justify-content-between flex-md-nowrap" icon={faPlus}/> New
-                        </Button>
+                        </Button> }
                     </Col>
                 </Row>
             </div>

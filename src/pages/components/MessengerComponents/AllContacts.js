@@ -132,20 +132,20 @@ const AllContacts = ({search, userId, setConversationIdSelected, currentChat, se
                             }).map((agent) => (
                                 <ContactAgents key= {agent._id} receiver={receiver} currentChat={currentChat} setCurrentChat={setCurrentChat}  setReceiver={setReceiver}  agent={agent} conversations={conversations} setConversationIdSelected={setConversationIdSelected} conversationIDSelected={conversationIDSelected} />
                             ))}
-                            {managers?.filter((row) => {
-                                if (search === "") {
-                                    return row;
-                                } else if (
-                                    (row.name.toLowerCase().includes(search.toLowerCase()))
-                                    || (row.lastName.toLowerCase().includes(search.toLowerCase()))
-                                    || (row.email.toLowerCase().includes(search.toLowerCase()))
-                                ) {
-                                    return row;
-                                }
-                            }).map((manager) => (
-                                // <ShopRow key= {shop._id} shop={shop}/>
-                                <ContactManagers key= {manager._id} receiver={receiver} currentChat={currentChat} setCurrentChat={setCurrentChat} setReceiver={setReceiver} manager={manager} conversations={conversations} setConversationIdSelected={setConversationIdSelected} conversationIDSelected={conversationIDSelected}  />
-                            ))}
+                            {/*{managers?.filter((row) => {*/}
+                            {/*    if (search === "") {*/}
+                            {/*        return row;*/}
+                            {/*    } else if (*/}
+                            {/*        (row.name.toLowerCase().includes(search.toLowerCase()))*/}
+                            {/*        || (row.lastName.toLowerCase().includes(search.toLowerCase()))*/}
+                            {/*        || (row.email.toLowerCase().includes(search.toLowerCase()))*/}
+                            {/*    ) {*/}
+                            {/*        return row;*/}
+                            {/*    }*/}
+                            {/*}).map((manager) => (*/}
+                            {/*    // <ShopRow key= {shop._id} shop={shop}/>*/}
+                            {/*    <ContactManagers key= {manager._id} receiver={receiver} currentChat={currentChat} setCurrentChat={setCurrentChat} setReceiver={setReceiver} manager={manager} conversations={conversations} setConversationIdSelected={setConversationIdSelected} conversationIDSelected={conversationIDSelected}  />*/}
+                            {/*))}*/}
                             </tbody>
                         </Table>
 

@@ -1,4 +1,4 @@
-import {Button, Card, Col, Row} from "@themesberg/react-bootstrap";
+import {Button, Card, Col, Nav, Row} from "@themesberg/react-bootstrap";
 import ProfileCover from "../../../assets/img/profile-cover.jpg";
 import Profile1 from "../../../assets/img/team/profile-picture-1.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -31,6 +31,7 @@ import "@fullcalendar/timegrid/main.css";
 import moment from "moment-timezone";
 import {ListMissions} from "../../../actions/missionAction";
 import MissionRow from "./MissionRow";
+import {useKeycloak} from "@react-keycloak/web";
 
 
 export const MissionCalendar = ({setDialogueForm}) => {
@@ -55,17 +56,35 @@ export const MissionCalendar = ({setDialogueForm}) => {
 
     const [events, setEvents] = useState([])
 
+    const keycloak = useKeycloak();
+    const userId = keycloak.keycloak.subject;
 
     useEffect(() => {
-        missions.map((mission) => (
-            events.push (
-                {
-                    title: "MIS-"+mission._id?.slice(mission._id.length -5, mission._id.length).toUpperCase(),
-                    start: moment(mission.deliveryDate).format("YYYY-MM-DD"),
-                }
-            )
+        if (  userId === "032f27f2-22f4-436a-b697-b02c710ec22e" ) {
+            missions.map((mission) => (
+                events.push(
+                    {
+                        title: "MIS-" + mission._id?.slice(mission._id.length - 5, mission._id.length).toUpperCase(),
+                        start: moment(mission.deliveryDate).format("YYYY-MM-DD"),
+                    }
+                )
 
-        ))
+            ))
+         } else {
+            missions.filter((row) => {
+               if (row.agent_id === userId) {
+                    return row;
+                }
+            }).map((mission) => (
+                events.push(
+                    {
+                        title: "MIS-" + mission._id?.slice(mission._id.length - 5, mission._id.length).toUpperCase(),
+                        start: moment(mission.deliveryDate).format("YYYY-MM-DD"),
+                    }
+                )
+
+            ))
+        }
 
     }, [missions])
 

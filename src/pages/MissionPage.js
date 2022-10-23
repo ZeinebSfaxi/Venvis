@@ -44,7 +44,7 @@ export default () => {
 
     }, [dispatch])
 
-    const {keycloak} = useKeycloak();
+    const keycloak = useKeycloak();
 
     //search
     const [search, setSearch] = useState('');
@@ -88,7 +88,9 @@ export default () => {
         doc.save('Missions Table.pdf')
     }
 
-    console.log("HEDHA KEYCLOAK", keycloak.tokenParsed)
+
+
+    const userId = keycloak.keycloak.subject;
 
     return (
         <>
@@ -128,12 +130,14 @@ export default () => {
 
                     </Col>
                     <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
+                        {userId === "032f27f2-22f4-436a-b697-b02c710ec22e" &&
                         <Button variant="secondary" size="sm" onClick={() => {
                             setDialogueForm(true)
                         }} className="text-dark ">
                             <FontAwesomeIcon
                                 className="justify-content-between flex-md-nowrap" icon={faPlus}/> New
                         </Button>
+                        }
                     </Col>
                 </Row>
             </div>
